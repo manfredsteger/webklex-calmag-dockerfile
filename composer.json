@@ -1,0 +1,23 @@
+{
+    "name": "webklex/calmag",
+    "type": "project",
+    "description": "",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webklex",
+            "email": "info@webklex.com"
+        }
+    ],
+    "require": {
+        "php": "8.*",
+        "symfony/var-dumper": "^5.4",
+        "nesbot/carbon": "^3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webklex\\CalMag\\": "src/"
+        }
+    }
+}

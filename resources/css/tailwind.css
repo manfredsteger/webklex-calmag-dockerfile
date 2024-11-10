@@ -1,0 +1,15 @@
+/*TailwindCSS*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .side_navigation_menu_mobile {
+        min-height: calc(100vh - 84px);
+    }
+    .side_navigation_menu_desktop {
+        min-height: calc(100vh - 72px);
+        max-height: calc(100vh - 72px);
+    }
+}
+

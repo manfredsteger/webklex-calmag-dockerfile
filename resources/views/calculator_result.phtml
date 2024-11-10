@@ -1,0 +1,383 @@
+<?php $water = $calculator->getWater(); ?>
+
+<div class="w-full flex flex-wrap justify-center px-4 mt-1 md:mt-4">
+    <div class="container">
+
+        <div class="w-full flex flex-col min-w-0 break-words mb-8 text-center justify-center items-center">
+
+            <!--Form-->
+            <div class="w-full py-2">
+                <form method="POST" target="_self" action="#results" class="w-full">
+                    <div class="w-full flex flex-wrap justify-center items-center">
+                        <div class="w-full md:w-1/2 px-2 py-2">
+                            <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                <label for="fertilizer" class="font-semibold text-slate-900">
+                                    <?php echo __("content.form.fertilizer.label")?>
+                                </label>
+                                <br/>
+                                <select name="fertilizer" id="fertilizer" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                    <?php foreach ($calculator->getFertilizers() as $name => $fertilizer): ?>
+                                        <option value="<?php echo $name ?>" <?php echo $name == $form["fertilizer"] ? "selected" : "" ?>>
+                                            <?php echo $name ?> (<?php echo round($fertilizer["ratio"], 2) ?>:1)
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <p class="text-xs pt-2 text-slate-400">
+                                    <?php echo __("content.form.fertilizer.description")?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 px-2 py-2">
+                            <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                <label for="additive" class="font-semibold text-slate-900">
+                                    <?php echo __("content.form.additive.label")?>
+                                </label>
+                                <br/>
+                                <select name="additive" id="additive" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                    <?php foreach ($calculator->getAdditives() as $name => $additive): ?>
+                                        <option value="<?php echo $name ?>" <?php echo $name == $form["additive"] ? "selected" : "" ?>>
+                                            <?php echo $name ?> (<?php echo $additive["concentration"] ?>%)
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <p class="text-xs pt-2 text-slate-400">
+                                    <?php echo __("content.form.additive.description")?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-wrap justify-center items-center">
+
+                        <div class="w-full md:w-1/2 flex flex-wrap">
+                            <div class="w-full text-left px-2 py-2 ">
+                                <h6 class="w-full text-red-500 font-semibold">
+                                    <?php echo __("content.form.elements.title")?>
+                                </h6>
+                                <p class="text-xs pt-2 text-slate-400">
+                                    <?php echo __("content.form.elements.description")?>
+                                    <a href="https://google.com?q=<?php echo urlencode( __("content.calculator.google.query")) ?>"
+                                       target="_blank"
+                                       class="text-red-500 ">
+                                        <?php echo __("content.calculator.button.search_plz")?>
+                                    </a>
+                                </p>
+                            </div>
+
+                            <?php foreach (array_unique([...$calculator->getElements(), "sulphate", "nitrate", "nitrite"]) as $element): ?>
+                                <div class="w-1/2 md:w-1/2 px-2 py-2">
+                                    <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                        <label for="<?php echo $element ?>" class="font-semibold text-slate-900">
+                                            <?php echo __("content.form.element.$element.label")?> mg/L
+                                        </label>
+                                        <br/>
+                                        <input type="number" step="0.1" name="elements[<?php echo $element ?>]" id="<?php echo $element ?>" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["elements"][$element] ?? 0.0 ?>">
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        </div>
+
+                        <div class="w-full md:w-1/2 py-2 flex flex-wrap self-start">
+
+                            <div class="w-full md:w-1/2 px-2 py-2 ">
+                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                    <label for="ratio" class="font-semibold text-slate-900">
+                                        <?php echo __("content.form.ratio.label")?>
+                                    </label>
+                                    <br/>
+                                    <input type="number" step="0.1" name="ratio" id="ratio" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["ratio"] ?>" />
+                                    <p class="text-xs pt-2 text-slate-400">
+                                        <?php echo __("content.form.ratio.description")?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 px-2 py-2">
+                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                    <label for="region" class="font-semibold text-slate-900">
+                                        <?php echo __("content.form.region.label")?>
+                                    </label>
+                                    <br/>
+                                    <select name="region" id="region" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                        <?php foreach ($regions as $region => $name): ?>
+                                            <option value="<?php echo $region ?>" <?php echo $region == $form["region"] ? "selected" : "" ?>>
+                                                <?php echo __($name) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <p class="text-xs pt-2 text-slate-400">
+                                        <?php echo __("content.form.region.description")?>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="w-full pt-4">
+
+                                <button type="submit"
+                                        class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                    <?php echo __("content.calculator.button.calculate")?>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+            <?php if(($result ?? null) !== null): ?>
+                <div class="w-full pr-4 py-2 mt-8" id="results">
+                    <h6 class="text-red-500 text-4xl font-normal">
+                        <?php echo __("content.calculator.result.title")?>
+                    </h6>
+                </div>
+                <div class="px-2 lg:px-6 pt-2 pb-8 ">
+                    <?php if($result["deficiency"]["calcium"] > $result["deficiency"]["magnesium"] && $result["deficiency"]["calcium"] > $form["ratio"]): ?>
+                        <?php echo __("content.calculator.result.deficiency.magnesium", [
+                            "ratio" => '<span class="text-red-500 font-bold">'.round($result["deficiency"]["calcium"],2).":".round($result["deficiency"]["magnesium"],2)."</span>",
+                            "fertilizer" => '<span class="text-red-500 font-bold">'.$form["fertilizer"].'</span>',
+                            "additive" => '<span class="text-red-500 font-bold">'.$form["additive"].'</span>',
+                        ])?>
+                    <?php elseif($result["deficiency"]["magnesium"] > $result["deficiency"]["calcium"]): ?>
+                        <?php echo __("content.calculator.result.deficiency.calcium", [
+                            "ratio" => '<span class="text-red-500 font-bold">'.round($result["deficiency"]["calcium"],2).":".round($result["deficiency"]["magnesium"],2)."</span>",
+                            "fertilizer" => '<span class="text-red-500 font-bold">'.$form["fertilizer"].'</span>',
+                        ])?>
+                    <?php endif; ?>
+                </div>
+
+                <?php foreach ($result["results"] as $state => $results): ?>
+                    <div class="w-full pr-4 py-2">
+                        <h6 class="text-red-500 text-4xl font-normal">
+                            <?php echo __("content.calculator.state.$state")?>
+                            <span class="text-xs" title="<?php echo __("content.form.ratio.label") ?>">(<?php echo round($results["ratio"], 2) ?>:1)</span>
+                        </h6>
+                    </div>
+                    <div class="flex flex-wrap w-full py-2">
+
+                        <div class="w-full md:w-4/12 px-2 py-2">
+                            <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                        <span class="font-semibold text-slate-900">
+                                            <?php /*echo __("content.form.fertilizer.label")*/?>
+                                            <?php echo $results["fertilizer"]["name"]; ?>
+                                        </span>
+                                <br/>
+                                <span class=""><?php echo number_format($results["fertilizer"]["ml"], 2, ",", "."); ?> ml/L</span>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-4/12 px-2 py-2">
+                            <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                        <span class="font-semibold text-slate-900">
+                                            <?php /*echo __("content.form.additive.label")*/?>
+                                            <?php echo $results["additive"]["name"]; ?> (<?php echo $results["additive"]["concentration"]; ?>%)
+                                        </span>
+                                <br/>
+                                <span class=""><?php echo number_format($results["additive"]["ml"], 2, ",", "."); ?> ml/L</span>
+                            </div>
+                        </div>
+
+                        <?php foreach ([
+                                "calcium" => $results["elements"]["calcium"],
+                                "magnesium" => $results["elements"]["magnesium"],
+                                       ] as $element => $value): ?>
+                            <div class="w-full md:w-2/12 px-2 py-2">
+                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                            <span class="font-semibold text-slate-900">
+                                                <?php echo __("content.form.element.$element.label")?>
+                                            </span>
+                                    <br/>
+                                    <span class=""><?php echo number_format($value, 2, ",", "."); ?> mg/L</span>
+
+                                    <?php if (isset($results["missing"][$element])): ?>
+                                        <?php $missing = number_format($results["missing"][$element], 2, ",", "."); ?>
+                                        <span class="text-red-500 text-xs" title="<?php echo __('content.calculator.missing', ["value" => $missing,"name" => __("content.form.element.$element.label")] )?>">
+                                            (<?php echo $missing ?> mg/L)
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+
+                        <div class="w-full md:w-1/3 px-3 py-2">
+                            <table class="table w-full">
+                                <?php $colspan = count($results["elements"]); ?>
+                                <?php $fertilizer = $calculator->getFertilizerComponents($results["fertilizer"]["ml"]); ?>
+                                <?php $additive = $calculator->getAdditiveComponents($results["additive"]["ml"]); ?>
+
+                                <tr class="bg-red-500 text-slate-900">
+                                    <td colspan="<?php echo $colspan; ?>" class="font-semibold text-left">
+                                        <?php echo __("content.calculator.water.label")?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($results["elements"] as $element => $value): ?>
+                                        <td class="text-left font-semibold"><?php echo __("content.form.element.$element.label")?></td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($results["elements"] as $element => $value): ?>
+                                        <td class="text-left pb-2">
+                                            <?php if (isset($water["elements"][$element])): ?>
+                                                <?php echo number_format($water["elements"][$element], 2, ",", ".") ?> mg/L
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+
+                                <tr class="bg-green-700 text-slate-900">
+                                    <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
+                                        <?php echo $results["fertilizer"]["name"]; ?></td>
+                                    <td class="font-semibold text-right">
+                                        (<?php echo number_format($results["fertilizer"]["ml"], 2, ",", "."); ?> ml/L)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($results["elements"] as $element => $value): ?>
+                                        <td class="text-left pb-2">
+                                            <?php if (isset($fertilizer[$element])): ?>
+                                                <?php echo number_format($fertilizer[$element], 2, ",", "."); ?> mg/L
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+
+                                <tr class="bg-green-700 text-slate-900">
+                                    <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
+                                        <?php echo $results["additive"]["name"]; ?>
+                                        (<?php echo $results["additive"]["concentration"]; ?>%)
+                                    </td>
+                                    <td class="font-semibold text-right">
+                                        (<?php echo number_format($results["additive"]["ml"], 2, ",", "."); ?> ml/L)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($results["elements"] as $element => $value): ?>
+                                        <td class="text-left">
+                                            <?php if (isset($additive[$element])): ?>
+                                                <?php echo number_format($additive[$element], 2, ",", "."); ?> mg/L
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="w-full md:w-2/3 px-3 py-2 text-left">
+
+                            <?php if($results["missing"]["calcium"] > 0 && $results["missing"]["magnesium"] > 0): ?>
+                                <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_missing", [
+                                    "calcium" =>  number_format($results["missing"]["calcium"],2, ",", ""),
+                                    "magnesium" =>  number_format($results["missing"]["magnesium"],2, ",", ""),
+                                ])?>
+                            <?php elseif($results["missing"]["calcium"] > 0): ?>
+                                <?php echo __("content.calculator.result.deficiency.state.calcium_missing", [
+                                    "calcium" =>  number_format($results["missing"]["calcium"],2, ",", ""),
+                                ])?>
+                            <?php elseif($results["missing"]["magnesium"] > 0): ?>
+                                <?php echo __("content.calculator.result.deficiency.state.magnesium_missing", [
+                                    "magnesium" =>  number_format($results["missing"]["magnesium"],2, ",", ""),
+                                ])?>
+                            <?php elseif($results["missing"]["calcium"] < 0 && $results["missing"]["magnesium"] < 0): ?>
+                                <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_high", [
+                                    "calcium" =>  number_format($results["missing"]["calcium"]*-1,2, ",", ""),
+                                    "magnesium" =>  number_format($results["missing"]["magnesium"]*-1,2, ",", ""),
+                                ])?>
+                            <?php elseif($results["missing"]["calcium"] < 0): ?>
+                                <?php echo __("content.calculator.result.deficiency.state.calcium_high", [
+                                    "calcium" =>  number_format($results["missing"]["calcium"]*-1,2, ",", ""),
+                                ])?>
+                            <?php elseif($results["missing"]["magnesium"] < 0): ?>
+                                <?php echo __("content.calculator.result.deficiency.state.magnesium_high", [
+                                    "magnesium" =>  number_format($results["missing"]["magnesium"]*-1,2, ",", ""),
+                                ])?>
+                            <?php else: ?>
+                                <?php echo __("content.calculator.result.deficiency.state.magnesium_and_calcium_ok")?>
+                            <?php endif; ?>
+                            <br />
+
+                            <?php if($results["missing"]["calcium"] > 0 || $results["missing"]["magnesium"] > 0): ?>
+                                <?php if($results["additive"]["ml"] > 0): ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_missing_with_additive", [
+                                        "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
+                                        "additive_concentration" =>  $results["additive"]["concentration"],
+                                        "additive_name" =>  $results["additive"]["name"],
+                                        "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
+                                        "fertilizer_name" =>  $results["fertilizer"]["name"],
+                                    ])?>
+                                <?php else: ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_missing_without_additive", [
+                                        "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
+                                        "fertilizer_name" =>  $results["fertilizer"]["name"],
+                                    ])?>
+                                <?php endif; ?>
+                            <?php elseif ($results["missing"]["calcium"] < 0 || $results["missing"]["magnesium"] < 0): ?>
+                                <?php if($results["additive"]["ml"] > 0): ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_high_with_additive", [
+                                        "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
+                                        "additive_concentration" =>  $results["additive"]["concentration"],
+                                        "additive_name" =>  $results["additive"]["name"],
+                                        "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
+                                        "fertilizer_name" =>  $results["fertilizer"]["name"],
+                                    ])?>
+                                <?php else: ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_high_without_additive", [
+                                        "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
+                                        "additive_concentration" =>  $results["additive"]["concentration"],
+                                        "additive_name" =>  $results["additive"]["name"],
+                                        "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
+                                        "fertilizer_name" =>  $results["fertilizer"]["name"],
+                                    ])?>
+                                <?php endif; ?>
+                            <?php elseif ($results["fertilizer"]["ml"] > 0 || $results["additive"]["ml"] > 0): ?>
+                                <?php if ($results["fertilizer"]["ml"] > 0 && $results["additive"]["ml"] > 0): ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_ok_with_additive_and_fertilizer", [
+                                        "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
+                                        "additive_concentration" =>  $results["additive"]["concentration"],
+                                        "additive_name" =>  $results["additive"]["name"],
+                                        "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
+                                        "fertilizer_name" =>  $results["fertilizer"]["name"],
+                                    ])?>
+                                <?php elseif ($results["additive"]["ml"] > 0): ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_ok_with_additive_without_fertilizer", [
+                                        "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
+                                        "additive_concentration" =>  $results["additive"]["concentration"],
+                                        "additive_name" =>  $results["additive"]["name"],
+                                    ])?>
+                                <?php else: ?>
+                                    <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_ok_with_fertilizer_without_additive", [
+                                        "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
+                                        "fertilizer_name" =>  $results["fertilizer"]["name"],
+                                    ])?>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?php echo __("content.calculator.result.deficiency.state.no_action_needed")?>
+                            <?php endif; ?>
+                            <br />
+
+                            <?php echo __("content.calculator.result.deficiency.state.suggested_amount", [
+                                "calcium" =>  number_format($results["target"]["calcium"],2, ",", ""),
+                                "magnesium" =>  number_format($results["target"]["magnesium"],2, ",", ""),
+                            ])?>
+                        </div>
+
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<div class="container px-2 opacity-50">
+    <i class="fa fa-robot text-red-500"></i>
+    <i class="fa fa-heart text-red-500"></i>
+    Bots are welcome:
+    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>
+    <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1">curl -X POST -H "Content-Type: application/json" -d '{"fertilizer": "<?php echo $form["fertilizer"]?>","additive": "<?php echo $form["additive"]?>","elements": {"calcium": <?php echo $form["elements"]["calcium"]?>,"magnesium": <?php echo $form["elements"]["magnesium"]?>,"sulphate": <?php echo $form["elements"]["sulphate"]?>,"nitrate": <?php echo $form["elements"]["nitrate"]?>,"nitrite": <?php echo $form["elements"]["nitrite"]?>},"ratio": <?php echo $form["ratio"]?>,"region": "<?php echo __("region.default")?>"}' <?php echo $link?></div>
+</div>
