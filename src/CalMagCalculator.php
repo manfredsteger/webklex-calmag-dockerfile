@@ -142,6 +142,21 @@ class CalMagCalculator {
         $fertilizer = $this->fertilizers[$this->fertilizer];
         $additive = $this->additives[$this->additive];
         $elements = $this->summarizeElements($this->water["elements"]);
+        $dilution = 1.0;
+
+
+        foreach($target as $component => $value) {
+            if(!isset($elements[$component])) {
+                $elements[$component] = 0;
+            }
+            if($elements[$component] > $value) {
+                $stock = $value / $elements[$component];
+                foreach ($elements as $element => $element_value) {
+                    $elements[$element] = $element_value * $stock;
+                }
+                $dilution = $stock;
+            }
+        }
 
         $fertilizer_nanoliter = 0;
         while(($elements['calcium'] < $target['calcium']) && ($elements['calcium'] - $target['calcium'] < 0)) {
@@ -165,12 +180,12 @@ class CalMagCalculator {
                 if(!isset($elements[$component])) {
                     $elements[$component] = 0;
                 }
-                $elements[$component] += $value / 1000;
+                $elements[$component] += $value / 100;
             }
             $count++;
         }
         $result['additive'] = [
-            "ml" => $count/1000,
+            "ml" => $count/100,
             "name" => $this->additive,
             "concentration" => $additive['concentration'],
         ];
@@ -182,6 +197,9 @@ class CalMagCalculator {
         ];
         $result["ratio"] = $elements['calcium'] / $elements['magnesium'];
         $result["elements"] = $elements;
+        $result["dilution"] = $dilution;
+        $result["water"] = 1.0 - $dilution;
+
         return $result;
     }
 

@@ -11,6 +11,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.3.1] - 2024-11-11
+### Added
+- Water dilution support added
+
 ## [1.2.1] - 2024-11-11
 ### Added
 - Added the option to share and save a calculation

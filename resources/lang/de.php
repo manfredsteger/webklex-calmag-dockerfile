@@ -26,6 +26,10 @@ return [
     "footer" => [
         "impress" => "Impressum & Kontakt",
     ],
+    "dilution" => [
+        "stock" => "Dein Wasser",
+        "water" => "Osmosewasser",
+    ],
     "additive" => [
         "MgSO4" => "Bittersalz",
         "C6H6MgO7" => "Magnesiumhydrogencitrat",
@@ -70,8 +74,9 @@ return [
 
                         "no_action_needed" => 'Eine Zugabe von Calcium und Magnesium ist nicht notwendig.',
                         "suggested_amount" => 'Die häufig empfohlene Menge an <span class="text-red-500 font-bold">Calcium (:calcium mg/L)</span> und <span class="text-red-500 font-bold">Magnesium (:magnesium mg/L)</span> wird dabei möglichst nicht nennenswert überschritten - lässt sich in extremen Fällen aber nicht unbedingt vermeiden.',
-                        "suggested_amount_table" => 'Für <span class="text-red-500 font-bold">:volume</span> Liter Wasser benötigst du:',
+                        "suggested_amount_table" => 'Zur Herstellung von <span class="text-red-500 font-bold">:volume</span> Litern:',
                     ],
+                    "dilution" => "Dein Wasser sollte verdünnt werden, um die Empfohlenen Grenzwerte nicht zu überschreiten. Mische hierfür :dilution deines Wassers mit :water destilliertem Wasser.",
                 ],
                 "share_link" => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
             ],
