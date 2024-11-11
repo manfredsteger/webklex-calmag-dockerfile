@@ -165,12 +165,12 @@ class CalMagCalculator {
                 if(!isset($elements[$component])) {
                     $elements[$component] = 0;
                 }
-                $elements[$component] += $value / 10;
+                $elements[$component] += $value / 1000;
             }
             $count++;
         }
         $result['additive'] = [
-            "ml" => $count/10,
+            "ml" => $count/1000,
             "name" => $this->additive,
             "concentration" => $additive['concentration'],
         ];
