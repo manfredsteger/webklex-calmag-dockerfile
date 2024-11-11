@@ -30,7 +30,7 @@ return [
         "MgSO4" => "Bittersalz",
         "C6H6MgO7" => "Magnesiumhydrogencitrat",
         "C12H10Mg3O14" => "Tri-Magnesiumdicitrat",
-        "Canna Mono" => "Canna Mono Magnesium 7% MgO",
+        "Canna Mono" => "Canna Mono Magnesium",
     ],
     "content" => [
         "calculator" => [
