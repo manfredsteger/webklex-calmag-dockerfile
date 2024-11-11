@@ -449,6 +449,6 @@
     <i class="fa fa-robot text-red-500"></i>
     <i class="fa fa-heart text-red-500"></i>
     Bots are welcome:
-    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>
+    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
     <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1">curl -X POST -H "Content-Type: application/json" -d '{"fertilizer": "<?php echo $form["fertilizer"]?>","additive": "<?php echo $form["additive"]?>","elements": {"calcium": <?php echo $form["elements"]["calcium"]?>,"magnesium": <?php echo $form["elements"]["magnesium"]?>,"sulphate": <?php echo $form["elements"]["sulphate"]?>,"nitrate": <?php echo $form["elements"]["nitrate"]?>,"nitrite": <?php echo $form["elements"]["nitrite"]?>},"ratio": <?php echo $form["ratio"]?>,"region": "<?php echo __("region.default")?>"}' <?php echo $link?></div>
 </div>
