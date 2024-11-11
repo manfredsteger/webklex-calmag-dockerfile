@@ -28,22 +28,22 @@ return [
                 "MgO" => 11.0, // %
             ],
         ],
-        "concentration" => 16.0, // %
+        "concentration" => 3.0, // %
     ],
     "C12H10Mg3O14" => [
         // Trimagnesiumdicitrat
         "elements"      => [
             "magnesium" => 16.0, // %
         ],
-        "concentration" => 16.0, // %
+        "concentration" => 2.0, // %
     ],
     "Canna Mono"   => [
         // Canna Mono Magnesium 7% MgO
         "elements"      => [
             "magnesium" => [
-                "MgO" => 100.0, // %
+                "MgO" => 7.0, // %
             ],
         ],
-        "concentration" => 7.0, // %
+        "concentration" => 100.0, // %
     ],
 ];
