@@ -71,6 +71,33 @@ class Application {
             } catch (\Exception $e) {
                 // Handle the exception
             }
+        }elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $payload = $_GET["p"] ?? "";
+            if($payload !== "") {
+                $payload = base64_decode($payload);
+                $payload = json_decode($payload, true);
+                if(is_array($payload)) {
+                    $_POST = [
+                        "fertilizer" => $payload["fertilizer"] ?? "",
+                        "additive"   => $payload["additive"] ?? "",
+                        "ratio"      => $payload["ratio"] ?? 3.5,
+                        "volume"     => $payload["volume"] ?? 5.0,
+                        "region"     => $payload["region"] ?? "us",
+                        "elements"   => $payload["elements"] ?? [],
+                    ];
+                    try{
+                        $this->validate();
+                        $this->calculator->setFertilizer($this->fertilizer);
+                        $this->calculator->setAdditive($this->additive);
+                        $this->calculator->setRatio($this->ratio, 1.0);
+                        $this->calculator->setWater([
+                                                        "elements" => $this->elements,
+                                                    ]);
+                    } catch (\Exception $e) {
+                        // Handle the exception
+                    }
+                }
+            }
         }
     }
 
@@ -103,6 +130,7 @@ class Application {
         }
         $_elements = [
             ...$this->calculator->getElements(),
+            ...array_keys($this->elements),
             "sulphate",
             "nitrate",
             "nitrite",

@@ -408,6 +408,24 @@
 
                     </div>
                 <?php endforeach; ?>
+
+
+
+
+
+                <div class="w-full px-2 mt-4 opacity-50">
+                    <?php echo __("content.calculator.result.share_link")?>
+                    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
+                    <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1"><?php echo $link?>?p=<?php echo base64_encode(json_encode([
+                                                                                                                                                  "fertilizer" => $form["fertilizer"],
+                                                                                                                                                  "additive" => $form["additive"],
+                                                                                                                                                  "elements" => $form["elements"],
+                                                                                                                                                  "ratio" => $form["ratio"],
+                                                                                                                                                  "region" => $form["region"],
+                                                                                                                                                  "volume" => $form["volume"],
+                                                                                                                                              ]))?></div>
+                </div>
+
             <?php endif; ?>
         </div>
     </div>

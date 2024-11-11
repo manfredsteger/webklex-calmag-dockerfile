@@ -72,7 +72,8 @@ return [
                         "suggested_amount" => 'Die häufig empfohlene Menge an <span class="text-red-500 font-bold">Calcium (:calcium mg/L)</span> und <span class="text-red-500 font-bold">Magnesium (:magnesium mg/L)</span> wird dabei möglichst nicht nennenswert überschritten - lässt sich in extremen Fällen aber nicht unbedingt vermeiden.',
                         "suggested_amount_table" => 'Für <span class="text-red-500 font-bold">:volume</span> Liter Wasser benötigst du:',
                     ],
-                ]
+                ],
+                "share_link" => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
             ],
             "google" => [
                 "query" => "Postleitzahl+Wasserwerte",

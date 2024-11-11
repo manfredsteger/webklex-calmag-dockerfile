@@ -72,7 +72,8 @@ return [
                         "suggested_amount" => 'The commonly recommended amount of <span class="text-red-500 font-bold">calcium (:calcium mg/L)</span> and <span class="text-red-500 font-bold">magnesium (:magnesium mg/L)</span> is not significantly exceeded - but cannot necessarily be avoided in extreme cases.',
                         "suggested_amount_table" => 'For <span class="text-red-500 font-bold">:volume</span> liters of water you need:',
                     ],
-                ]
+                ],
+                "share_link" => "Share your result or save the following link to perform the same calculation again later:",
             ],
             "google" => [
                 "query" => "Postal code+water values",

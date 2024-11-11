@@ -11,6 +11,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.2.1] - 2024-11-11
+### Added
+- Added the option to share and save a calculation
+
 ## [1.2.0] - 2024-11-11
 ### Fixed
 - Additive translations fixed
