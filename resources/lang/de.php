@@ -26,6 +26,12 @@ return [
     "footer" => [
         "impress" => "Impressum & Kontakt",
     ],
+    "additive" => [
+        "MgSO4" => "Bittersalz",
+        "C6H6MgO7" => "Magnesiumhydrogencitrat",
+        "C12H10Mg3O14" => "Tri-Magnesiumdicitrat",
+        "Canna Mono" => "Canna Mono Magnesium 7% MgO",
+    ],
     "content" => [
         "calculator" => [
             "title" => "CalMag Rechner",
@@ -64,6 +70,7 @@ return [
 
                         "no_action_needed" => 'Eine Zugabe von Calcium und Magnesium ist nicht notwendig.',
                         "suggested_amount" => 'Die häufig empfohlene Menge an <span class="text-red-500 font-bold">Calcium (:calcium mg/L)</span> und <span class="text-red-500 font-bold">Magnesium (:magnesium mg/L)</span> wird dabei möglichst nicht nennenswert überschritten - lässt sich in extremen Fällen aber nicht unbedingt vermeiden.',
+                        "suggested_amount_table" => 'Für <span class="text-red-500 font-bold">:volume</span> Liter Wasser benötigst du:',
                     ],
                 ]
             ],
@@ -87,6 +94,10 @@ return [
             "ratio" => [
                 "label" => "Calcium / Magnesium - Verhältnis",
                 "description" => "Das Verhältnis von Calcium zu Magnesium sollte idealerweise bei 3.5 liegen. Dieses Verhältnis kann aber auch beliebig angepasst werden.",
+            ],
+            "volume" => [
+                "label" => "Volumen",
+                "description" => "Das Volumen gibt an, wie viel Wasser behandelt werden soll. Dieser Wert wird in Litern angegeben.",
             ],
             "region" => [
                 "label" => "Region",

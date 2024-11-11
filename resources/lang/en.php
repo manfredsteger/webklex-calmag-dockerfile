@@ -26,6 +26,12 @@ return [
     "footer" => [
         "impress" => "Impress & Contact",
     ],
+    "additive" => [
+        "MgSO4" => "Magnesiumsulfat",
+        "C6H6MgO7" => "Magnesiumhydrogencitrat",
+        "C12H10Mg3O14" => "Tri-Magnesiumdicitrat",
+        "Canna Mono" => "Canna Mono Magnesium 7% MgO",
+    ],
     "content" => [
         "calculator" => [
             "title" => "CalMag Calculator",
@@ -64,6 +70,7 @@ return [
 
                         "no_action_needed" => 'An addition of calcium and magnesium is not necessary.',
                         "suggested_amount" => 'The commonly recommended amount of <span class="text-red-500 font-bold">calcium (:calcium mg/L)</span> and <span class="text-red-500 font-bold">magnesium (:magnesium mg/L)</span> is not significantly exceeded - but cannot necessarily be avoided in extreme cases.',
+                        "suggested_amount_table" => 'For <span class="text-red-500 font-bold">:volume</span> liters of water you need:',
                     ],
                 ]
             ],
@@ -87,6 +94,10 @@ return [
             "ratio" => [
                 "label" => "Calcium to Magnesium ratio",
                 "description" => "The ratio of calcium to magnesium should ideally be 3.5. However, this ratio can also be adjusted as desired.",
+            ],
+            "volume" => [
+                "label" => "Volume",
+                "description" => "Enter the volume of your water here. The volume is used to calculate the amount of fertilizer and additive to be added.",
             ],
             "region" => [
                 "label" => "Region",
