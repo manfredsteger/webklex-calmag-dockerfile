@@ -36,7 +36,7 @@
                                 <select name="additive" id="additive" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
                                     <?php foreach ($calculator->getAdditives() as $name => $additive): ?>
                                         <option value="<?php echo $name ?>" <?php echo $name == $form["additive"] ? "selected" : "" ?>>
-                                            <?php echo $name ?> (<?php echo $additive["concentration"] ?>%)
+                                            <?php echo __("additive.$name") ?> (<?php echo $additive["concentration"] ?>%)
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -110,6 +110,19 @@
                                 </div>
                             </div>
 
+                            <div class="w-full md:w-1/2 px-2 py-2 ">
+                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                    <label for="volume" class="font-semibold text-slate-900">
+                                        <?php echo __("content.form.volume.label")?>
+                                    </label>
+                                    <br/>
+                                    <input type="number" step="0.1" name="volume" id="volume" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["volume"] ?>" />
+                                    <p class="text-xs pt-2 text-slate-400">
+                                        <?php echo __("content.form.volume.description")?>
+                                    </p>
+                                </div>
+                            </div>
+
 
                             <div class="w-full pt-4">
 
@@ -136,7 +149,7 @@
                         <?php echo __("content.calculator.result.deficiency.magnesium", [
                             "ratio" => '<span class="text-red-500 font-bold">'.round($result["deficiency"]["calcium"],2).":".round($result["deficiency"]["magnesium"],2)."</span>",
                             "fertilizer" => '<span class="text-red-500 font-bold">'.$form["fertilizer"].'</span>',
-                            "additive" => '<span class="text-red-500 font-bold">'.$form["additive"].'</span>',
+                            "additive" => '<span class="text-red-500 font-bold">'. __("additive.".$form["additive"]) .'</span>',
                         ])?>
                     <?php elseif($result["deficiency"]["magnesium"] > $result["deficiency"]["calcium"]): ?>
                         <?php echo __("content.calculator.result.deficiency.calcium", [
@@ -170,7 +183,7 @@
                             <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
                                         <span class="font-semibold text-slate-900">
                                             <?php /*echo __("content.form.additive.label")*/?>
-                                            <?php echo $results["additive"]["name"]; ?> (<?php echo $results["additive"]["concentration"]; ?>%)
+                                            <?php echo __("additive.".$results["additive"]["name"]); ?> (<?php echo $results["additive"]["concentration"]; ?>%)
                                         </span>
                                 <br/>
                                 <span class=""><?php echo number_format($results["additive"]["ml"], 2, ",", "."); ?> ml/L</span>
@@ -249,7 +262,7 @@
 
                                 <tr class="bg-green-700 text-slate-900">
                                     <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
-                                        <?php echo $results["additive"]["name"]; ?>
+                                        <?php echo __("additive.".$results["additive"]["name"]); ?>
                                         (<?php echo $results["additive"]["concentration"]; ?>%)
                                     </td>
                                     <td class="font-semibold text-right">
@@ -307,7 +320,7 @@
                                     <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_missing_with_additive", [
                                         "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
                                         "additive_concentration" =>  $results["additive"]["concentration"],
-                                        "additive_name" =>  $results["additive"]["name"],
+                                        "additive_name" =>  __("additive.".$results["additive"]["name"]),
                                         "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
                                         "fertilizer_name" =>  $results["fertilizer"]["name"],
                                     ])?>
@@ -322,7 +335,7 @@
                                     <?php echo __("content.calculator.result.deficiency.state.calcium_high_with_additive", [
                                         "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
                                         "additive_concentration" =>  $results["additive"]["concentration"],
-                                        "additive_name" =>  $results["additive"]["name"],
+                                        "additive_name" =>  __("additive.".$results["additive"]["name"]),
                                         "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
                                         "fertilizer_name" =>  $results["fertilizer"]["name"],
                                     ])?>
@@ -330,7 +343,7 @@
                                     <?php echo __("content.calculator.result.deficiency.state.calcium_high_without_additive", [
                                         "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
                                         "additive_concentration" =>  $results["additive"]["concentration"],
-                                        "additive_name" =>  $results["additive"]["name"],
+                                        "additive_name" =>  __("additive.".$results["additive"]["name"]),
                                         "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
                                         "fertilizer_name" =>  $results["fertilizer"]["name"],
                                     ])?>
@@ -340,7 +353,7 @@
                                     <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_ok_with_additive_and_fertilizer", [
                                         "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
                                         "additive_concentration" =>  $results["additive"]["concentration"],
-                                        "additive_name" =>  $results["additive"]["name"],
+                                        "additive_name" =>  __("additive.".$results["additive"]["name"]),
                                         "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
                                         "fertilizer_name" =>  $results["fertilizer"]["name"],
                                     ])?>
@@ -348,7 +361,7 @@
                                     <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_ok_with_additive_without_fertilizer", [
                                         "additive_ml" =>  number_format($results["additive"]["ml"],2, ",", ""),
                                         "additive_concentration" =>  $results["additive"]["concentration"],
-                                        "additive_name" =>  $results["additive"]["name"],
+                                        "additive_name" =>  __("additive.".$results["additive"]["name"]),
                                     ])?>
                                 <?php else: ?>
                                     <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_ok_with_fertilizer_without_additive", [
@@ -365,6 +378,32 @@
                                 "calcium" =>  number_format($results["target"]["calcium"],2, ",", ""),
                                 "magnesium" =>  number_format($results["target"]["magnesium"],2, ",", ""),
                             ])?>
+
+                            <?php if($form["volume"] > 1 && ($results["fertilizer"]["ml"] > 0 || $results["additive"]["ml"] > 0)): ?>
+                                <br />
+                                <br />
+                                <?php echo __("content.calculator.result.deficiency.state.suggested_amount_table", [
+                                    "volume" =>  number_format($form["volume"],2, ",", ""),
+                                ])?>
+
+                                <br />
+                                <table>
+                                    <?php if ($results["fertilizer"]["ml"] > 0): ?>
+                                        <tr>
+                                            <td><?php echo $results["fertilizer"]["name"] ?>:</td>
+                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["fertilizer"]["ml"] * $form["volume"], 2, ",", "") ?> ml</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php if ($results["additive"]["ml"] > 0): ?>
+                                        <tr>
+                                            <td><?php echo __("additive.".$results["additive"]["name"]) ?>:</td>
+                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["additive"]["ml"] * $form["volume"], 2, ",", "") ?> ml</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </table>
+
+                            <?php endif; ?>
+
                         </div>
 
                     </div>
