@@ -26,6 +26,10 @@ return [
     "footer" => [
         "impress" => "Impress & Contact",
     ],
+    "dilution" => [
+        "stock" => "Your water",
+        "water" => "Distilled water",
+    ],
     "additive" => [
         "MgSO4" => "Magnesiumsulfat",
         "C6H6MgO7" => "Magnesiumhydrogencitrat",
