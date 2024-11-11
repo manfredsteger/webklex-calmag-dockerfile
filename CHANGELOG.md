@@ -11,7 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
-## [1.3.1] - 2024-11-11
+## [1.3.0] - 2024-11-11
 ### Added
 - Water dilution support added
 
