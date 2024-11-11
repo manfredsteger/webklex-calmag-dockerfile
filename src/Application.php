@@ -16,21 +16,23 @@ class Application {
 
     private CalMagCalculator $calculator;
 
-    const VERSION = "1.0.0";
+    const VERSION = "1.1.0";
 
     private array $elements = [
-        "calcium"   => 61.0, // mg/L
-        "magnesium" => 4.6, // mg/L
-        "potassium" => 5.0, // mg/L
-        "iron"      => 0.2, // mg/L
-        "sulphate"  => 75.0, // mg/L
-        "nitrate"   => 2.8, // mg/L
-        "nitrite"   => 0.01, // mg/L
+        "calcium"   => 0.0, // mg/L
+        "magnesium" => 0.0, // mg/L
+        "potassium" => 0.0, // mg/L
+        "iron"      => 0.0, // mg/L
+        "sulphate"  => 0.0, // mg/L
+        "nitrate"   => 0.0, // mg/L
+        "nitrite"   => 0.0, // mg/L
     ];
 
     private string $fertilizer = "";
     private string $additive = "";
     private float $ratio = 3.5;
+
+    private float $volume = 5.0;
 
     private string $region = "us";
 
@@ -78,6 +80,7 @@ class Application {
         $additive = $_POST['additive'] ?? "";
         $region = $_POST['region'] ?? $this->region;
         $ratio = $_POST['ratio'] ?? $this->ratio;
+        $volume = $_POST['volume'] ?? $this->volume;
         $elements = $_POST['elements'] ?? $this->elements;
 
         if (!is_string($fertilizer) || !is_string($additive) || !is_array($elements)) {
@@ -91,6 +94,9 @@ class Application {
         }
         if ($ratio <= 0) {
             throw new \Exception("Invalid ratio");
+        }
+        if ($volume <= 0) {
+            throw new \Exception("Invalid volume");
         }
         if (!isset($this->regions[$region])) {
             throw new \Exception("Invalid region");
@@ -111,6 +117,7 @@ class Application {
         $this->fertilizer = $fertilizer;
         $this->additive = $additive;
         $this->ratio = $ratio;
+        $this->volume = $volume;
         $this->region = $region;
         $this->elements = [
             ...$this->elements,
@@ -151,6 +158,7 @@ class Application {
             "fertilizer" => $this->fertilizer !== "" ?$this->fertilizer: $calculator->getFertilizer(),
             "additive"   => $this->additive !== "" ?$this->additive: $calculator->getAdditive(),
             "ratio"      => $this->ratio,
+            "volume"     => $this->volume,
             "region"     => $this->region,
             "elements"   => $this->elements,
         ];
