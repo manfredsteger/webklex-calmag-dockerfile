@@ -11,6 +11,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.2.0] - 2024-11-11
+### Fixed
+- Additive translations fixed
+- Additive scale increased to guarantee a fitting ratio 
+
 ## [1.1.0] - 2024-11-11
 ### Fixed
 - Default water values removed
