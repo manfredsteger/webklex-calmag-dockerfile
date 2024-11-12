@@ -184,6 +184,18 @@ class CalMagCalculator {
             }
             $count++;
         }
+
+        if ($count > 1) {
+            if($elements['calcium']/$elements['magnesium'] < $this->ratios['calcium']) {
+                foreach ($additive['real'] as $component => $value) {
+                    if($value > 0) {
+                        $elements[$component] -= $value / 100;
+                    }
+                }
+                $count -= 1;
+            }
+        }
+
         $result['additive'] = [
             "ml" => $count/100,
             "name" => $this->additive,

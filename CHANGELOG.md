@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [1.3.1] - 2024-11-11
 ### Fixed
 - Reset target mg after setting a new ratio
+- Adjust overdose calculation
 
 ## [1.3.0] - 2024-11-11
 ### Added
