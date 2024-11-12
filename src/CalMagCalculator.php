@@ -280,6 +280,11 @@ class CalMagCalculator {
             "calcium"   => $calcium,
             "magnesium" => $magnesium,
         ];
+        foreach($this->targets as $index => $target) {
+            $this->targets[$index] = $this->validateTarget([
+                "calcium" => $target['calcium'],
+            ]);
+        }
     }
 
     public function getWater(): array {

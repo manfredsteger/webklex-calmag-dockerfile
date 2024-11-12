@@ -16,7 +16,7 @@ class Application {
 
     private CalMagCalculator $calculator;
 
-    const VERSION = "1.1.0";
+    const VERSION = "1.3.1";
 
     private array $elements = [
         "calcium"   => 0.0, // mg/L
@@ -73,6 +73,7 @@ class Application {
             }
         }elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $payload = $_GET["p"] ?? "";
+
             if($payload !== "") {
                 $payload = base64_decode($payload);
                 $payload = json_decode($payload, true);
