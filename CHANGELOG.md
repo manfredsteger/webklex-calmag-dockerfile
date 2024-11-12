@@ -16,6 +16,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Reset target mg after setting a new ratio
 - Adjust overdose calculation
 
+### Added
+- Result responses adjusted (empty results removed)
+
 ## [1.3.0] - 2024-11-11
 ### Added
 - Water dilution support added
