@@ -11,112 +11,132 @@
 */
 
 return [
-    "region" => [
+    "region"   => [
         "default" => "de",
-        "option" => [
+        "option"  => [
             "us" => "Vereinigte Staaten von Amerika",
             "de" => "Deutschland",
         ]
     ],
-    "header" => [
+    "header"   => [
         "logo" => [
             "appendix" => "Rechner"
         ]
     ],
-    "footer" => [
+    "footer"   => [
         "impress" => "Impressum & Kontakt",
     ],
     "dilution" => [
         "stock" => "Dein Wasser",
         "water" => "Osmosewasser",
+        "label" => "Verdünnungsverhältnis",
     ],
     "additive" => [
-        "MgSO4" => "Bittersalz",
-        "C6H6MgO7" => "Magnesiumhydrogencitrat",
-        "C12H10Mg3O14" => "Tri-Magnesiumdicitrat",
-        "Canna Mono" => "Canna Mono Magnesium",
+        "MgSO4"                => "Bittersalz",
+        "C6H6MgO7"             => "Magnesiumhydrogencitrat",
+        "C12H10Mg3O14"         => "Tri-Magnesiumdicitrat",
+        "Canna Mono Magnesium" => "Canna Mono Magnesium",
+        "Canna Mono Calcium"   => "Canna Mono Calcium",
+        "CaC2H3O2H2O"          => "Calciumacetat",
+        "Ca3C6H5O74H2O"        => "Calciumcitrat",
     ],
-    "content" => [
+    "content"  => [
         "calculator" => [
-            "title" => "CalMag Rechner",
+            "title"       => "CalMag Rechner",
             "description" => "Mit dem CalMag Rechner können Sie den Bedarf an Calcium und Magnesium für Ihre Pflanzen berechnen.",
-            "water" => [
+            "water"       => [
                 "label" => "Ausgangswasserwerte",
             ],
-            "state" => [
+            "state"       => [
                 "propagation" => "Anzucht & Vermehrung",
-                "vegetation" => "Wachstumsphase",
-                "flower" => "Blütephase",
+                "vegetation"  => "Wachstumsphase",
+                "flower"      => "Blütephase",
                 "late_flower" => "Späte Blütephase",
             ],
-            "missing" => ":name Defizit von :value mg/L",
-            "result" => [
-                "title" => "Ergebnisse der CalMag-Berechnung",
+            "missing"     => ":name Defizit von :value mg/L",
+            "result"      => [
+                "title"      => "Ergebnisse der CalMag-Berechnung",
                 "deficiency" => [
-                    "magnesium" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
-                    "calcium" => "Dein Wasser weist ein Calcium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer teilweise ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
-                    "state" => [
+                    "magnesium" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :magnesium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
+                    "calcium"   => "Dein Wasser weist ein Calcium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
+                    "state"     => [
                         "calcium_and_magnesium_missing" => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:calcium mg/L Calcium</span> und <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span>.',
-                        "calcium_missing" => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:calcium mg/L Calcium</span>.',
-                        "magnesium_missing" => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span>.',
-                        "calcium_and_magnesium_high" => 'Dein Wasser enthält <span class="text-red-500 font-bold">:calcium mg/L Calcium</span> und <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span> zu viel.',
-                        "calcium_high" => 'Dein Wasser enthält <span class="text-red-500 font-bold">:calcium mg/L Calcium</span> zu viel.',
-                        "magnesium_high" => 'Dein Wasser enthält <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span> zu viel.',
-                        "magnesium_and_calcium_ok" => 'Dein Wasser ist perfekt und enthält ausreichend Calcium und Magnesium.',
+                        "calcium_missing"               => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:calcium mg/L Calcium</span>.',
+                        "magnesium_missing"             => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span>.',
+                        "calcium_and_magnesium_high"    => 'Dein Wasser enthält <span class="text-red-500 font-bold">:calcium mg/L Calcium</span> und <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span> zu viel.',
+                        "calcium_high"                  => 'Dein Wasser enthält <span class="text-red-500 font-bold">:calcium mg/L Calcium</span> zu viel.',
+                        "magnesium_high"                => 'Dein Wasser enthält <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span> zu viel.',
+                        "magnesium_and_calcium_ok"      => 'Dein Wasser ist perfekt und enthält ausreichend Calcium und Magnesium.',
 
-                        "calcium_and_magnesium_missing_with_all" => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:additive_ml ml/L einer :additive_concentration% :additive_name Lösung</span> ausgleichen.',
-                        "calcium_and_magnesium_missing_with_additive" => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:additive_ml ml/L einer :additive_concentration% :additive_name Lösung</span> ausgleichen.',
-                        "calcium_and_magnesium_missing_without_additive" => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> ausgleichen.',
-                        "calcium_high_with_all" => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:additive_ml ml/L einer :additive_concentration% :additive_name Lösung</span> teilweise ausgleichen.',
-                        "calcium_high_with_additive" => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:additive_ml ml/L einer :additive_concentration% :additive_name Lösung</span> teilweise ausgleichen.',
-                        "calcium_high_without_additive" => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> teilweise ausgleichen.',
-                        "calcium_and_magnesium_ok_with_additive_and_fertilizer" => 'Dein Wasser enthält bereits genügend Calcium und Magnesium.<br />Du könntest dein Wasser mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:additive_ml ml/L einer :additive_concentration% :additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
-                        "calcium_and_magnesium_ok_with_additive_without_fertilizer" => 'Dein Wasser enthält bereits genügend Calcium und Magnesium. <br /> Du könntest dein Wasser mit <span class="text-red-500 font-bold">:additive_ml ml/L einer :additive_concentration% :additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
-                        "calcium_and_magnesium_ok_with_fertilizer_without_additive" => 'Dein Wasser enthält bereits genügend Calcium und Magnesium. <br /> Du könntest dein Wasser mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
+                        "calcium_and_magnesium_missing_with_all"                              => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span>, <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> ausgleichen.',
+                        "calcium_and_magnesium_missing_with_all_without_calcium"              => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> ausgleichen.',
+                        "calcium_and_magnesium_missing_with_all_additives"                    => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> ausgleichen.',
+                        "calcium_and_magnesium_missing_with_magnesium_additive"               => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> ausgleichen.',
+                        "calcium_and_magnesium_missing_with_calcium_additive"                 => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> ausgleichen.',
+                        "calcium_and_magnesium_missing_without_additive"                      => 'Diesen Mangel kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> ausgleichen.',
+                        "calcium_high_with_all_additives"                                     => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span>, <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> teilweise ausgleichen.',
+                        "calcium_high_with_all_without_calcium"                               => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> teilweise ausgleichen.',
+                        "calcium_high_with_all_without_magnesium"                             => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> teilweise ausgleichen.',
+                        "calcium_high_with_additive"                                          => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> teilweise ausgleichen.',
+                        "calcium_high_with_magnesium_additive"                                => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> teilweise ausgleichen.',
+                        "calcium_high_with_calcium_additive"                                  => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> teilweise ausgleichen.',
+                        "calcium_high_without_additive"                                       => 'Diesen Überschuss kannst du mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> teilweise ausgleichen.',
+                        "calcium_and_magnesium_ok_with_all_additives_and_fertilizer"          => 'Dein Wasser enthält bereits genügend Calcium und Magnesium.<br />Du könntest dein Wasser mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span>, <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
+                        "calcium_and_magnesium_ok_with_magnesium_additive_and_fertilizer"     => 'Dein Wasser enthält bereits genügend Calcium und Magnesium.<br />Du könntest dein Wasser mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
+                        "calcium_and_magnesium_ok_with_calcium_additive_and_fertilizer"       => 'Dein Wasser enthält bereits genügend Calcium und Magnesium.<br />Du könntest dein Wasser mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> und <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
+                        "calcium_and_magnesium_ok_with_magnesium_additive_without_fertilizer" => 'Dein Wasser enthält bereits genügend Calcium und Magnesium. <br /> Du könntest dein Wasser mit <span class="text-red-500 font-bold">:magnesium_additive_ml ml/L einer :magnesium_additive_concentration% :magnesium_additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
+                        "calcium_and_magnesium_ok_with_calcium_additive_without_fertilizer"   => 'Dein Wasser enthält bereits genügend Calcium und Magnesium. <br /> Du könntest dein Wasser mit <span class="text-red-500 font-bold">:calcium_additive_ml ml/L einer :calcium_additive_concentration% :calcium_additive_name Lösung</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
+                        "calcium_and_magnesium_ok_with_fertilizer_without_additive"           => 'Dein Wasser enthält bereits genügend Calcium und Magnesium. <br /> Du könntest dein Wasser mit <span class="text-red-500 font-bold">:fertilizer_ml ml/L :fertilizer_name</span> aufbereiten um etwaige Mangelerscheinungen zu beheben bzw ihnen vorzubeugen.',
 
-                        "no_action_needed" => 'Eine Zugabe von Calcium und Magnesium ist nicht notwendig.',
-                        "suggested_amount" => 'Die häufig empfohlene Menge an <span class="text-red-500 font-bold">Calcium (:calcium mg/L)</span> und <span class="text-red-500 font-bold">Magnesium (:magnesium mg/L)</span> wird dabei möglichst nicht nennenswert überschritten - lässt sich in extremen Fällen aber nicht unbedingt vermeiden.',
+                        "no_action_needed"       => 'Eine Zugabe von Calcium und Magnesium ist nicht notwendig.',
+                        "suggested_amount"       => 'Die häufig empfohlene Menge an <span class="text-red-500 font-bold">Calcium (:calcium mg/L)</span> und <span class="text-red-500 font-bold">Magnesium (:magnesium mg/L)</span> wird dabei möglichst nicht nennenswert überschritten - lässt sich in extremen Fällen aber nicht unbedingt vermeiden.',
                         "suggested_amount_table" => 'Zur Herstellung von <span class="text-red-500 font-bold">:volume</span> Litern:',
                     ],
-                    "dilution" => "Dein Wasser sollte verdünnt werden, um die Empfohlenen Grenzwerte nicht zu überschreiten. Mische hierfür :dilution deines Wassers mit :water destilliertem Wasser.",
+                    "dilution"  => "Dein Wasser sollte verdünnt werden, um die Empfohlenen Grenzwerte nicht zu überschreiten. Mische hierfür :dilution deines Wassers mit :water destilliertem Wasser.",
                 ],
                 "share_link" => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
             ],
-            "google" => [
+            "google"      => [
                 "query" => "Postleitzahl+Wasserwerte",
             ],
-            "button" => [
+            "button"      => [
                 "search_plz" => "Wasserwerte online suchen.",
-                "calculate" => "Ergebnis berechnen",
+                "calculate"  => "Ergebnis berechnen",
             ]
         ],
-        "form" => [
+        "form"       => [
             "fertilizer" => [
-                "label" => "Präparat",
+                "label"       => "Präparat",
                 "description" => "Wähle das Präparat aus, welches du verwenden möchtest. Optimalerweise sollte ein Präparat zum passenden Verhältnis gewählt werden.",
             ],
-            "additive" => [
-                "label" => "Zusatzstoff",
-                "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden soll. Es wird von einer Lösung mit der in Klammern angegebenen Konzentration ausgegangen.",
+            "additive"   => [
+                "magnesium" => [
+                    "label"       => "Magnesium-Zusatzstoff",
+                    "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden soll. Es wird von einer Lösung mit der in Klammern angegebenen Konzentration ausgegangen.",
+                ],
+                "calcium"   => [
+                    "label"       => "Calcium-Zusatzstoff",
+                    "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden soll. Es wird von einer Lösung mit der in Klammern angegebenen Konzentration ausgegangen.",
+                ],
             ],
-            "ratio" => [
-                "label" => "Calcium / Magnesium - Verhältnis",
+            "ratio"      => [
+                "label"       => "Calcium / Magnesium - Verhältnis",
                 "description" => "Das Verhältnis von Calcium zu Magnesium sollte idealerweise bei 3.5 liegen. Dieses Verhältnis kann aber auch beliebig angepasst werden.",
             ],
-            "volume" => [
-                "label" => "Volumen",
+            "volume"     => [
+                "label"       => "Volumen",
                 "description" => "Das Volumen gibt an, wie viel Wasser behandelt werden soll. Dieser Wert wird in Litern angegeben.",
             ],
-            "region" => [
-                "label" => "Region",
+            "region"     => [
+                "label"       => "Region",
                 "description" => "Wähle hier deine Region aus. Die Region hat keinen Einfluss auf die Berechnung, sondern dient lediglich zur Anzeige der richtigen Links.",
             ],
-            "elements" => [
-                "title" => "Deine Wasserwerte",
+            "elements"   => [
+                "title"       => "Deine Wasserwerte",
                 "description" => "Trage hier die Werte deines Leitungswassers ein. Diese Werte können in der Regel auf der Wasserrechnung oder dem Wasserbericht gefunden werden. Sollten die Werte nicht bekannt sein, können diese auch über die Google Suche ermittelt werden. Klicke dafür einfach auf den nachfolgenden Link und suche nach deiner Postleitzahl und den Wasserwerten:",
             ],
-            "element" => [
-                "calcium" => [
+            "element"    => [
+                "calcium"   => [
                     "label" => "Calcium",
                 ],
                 "magnesium" => [
@@ -125,22 +145,22 @@ return [
                 "potassium" => [
                     "label" => "Kalium",
                 ],
-                "iron" => [
+                "iron"      => [
                     "label" => "Eisen",
                 ],
-                "sulphate" => [
+                "sulphate"  => [
                     "label" => "Sulfat",
                 ],
-                "nitrate" => [
+                "nitrate"   => [
                     "label" => "Nitrat",
                 ],
-                "nitrite" => [
+                "nitrite"   => [
                     "label" => "Nitrit",
                 ],
-                "sulfur" => [
+                "sulfur"    => [
                     "label" => "Schwefel",
                 ],
-                "nitrogen" => [
+                "nitrogen"  => [
                     "label" => "Stickstoff",
                 ],
             ],

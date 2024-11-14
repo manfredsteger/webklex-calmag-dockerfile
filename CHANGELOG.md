@@ -11,6 +11,16 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.4.0] - 2024-11-14
+### Added
+- Substance density support added
+- Support mmol/l as well as mg/l as initial water value units
+- Calcium Additive support added
+
+### Fixed
+- Rearranged the display order
+- Fixed the water dilution display
+
 ## [1.3.1] - 2024-11-12
 ### Fixed
 - Reset target mg after setting a new ratio

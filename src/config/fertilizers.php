@@ -20,18 +20,21 @@ return [
                 "MgO" => 1.7, // % MgO 1.7% -> 1.7 * 0.6032 = 1.02544
             ],
         ],
+        "density"       => 1.1, // g/cm³
     ],
     "Canna - CalMag Agent"                          => [
         "elements" => [
             "calcium"   => 5.6, // %
             "magnesium" => 1.7, // %
-        ]
+        ],
+        "density"       => 1.0, // g/cm³
     ],
     "Terra Aquatica - Calcium-Magnesium Supplement" => [
         "elements" => [
             "calcium"   => 4, // %
             "magnesium" => 1, // %
-        ]
+        ],
+        "density"       => 1.0, // g/cm³
     ],
     "ATA - CalMag"                                  => [
         "elements" => [
@@ -44,6 +47,7 @@ return [
             "nitrogen"  => 5.8, // %
             "iron"      => 0.03, // %
         ],
+        "density"       => 1.0, // g/cm³
     ],
     "Plagron - CalMag Pro"                          => [
         "elements" => [
@@ -55,6 +59,7 @@ return [
             ],
             "nitrogen"  => 5.1, // %
         ],
+        "density"       => 1.0, // g/cm³
     ],
     "Mills - CalMag"                                => [
         "elements" => [
@@ -62,5 +67,6 @@ return [
             "magnesium" => 2.5, // %
             "nitrogen"  => 8.3, // %
         ],
+        "density"       => 1.0, // g/cm³
     ],
 ];

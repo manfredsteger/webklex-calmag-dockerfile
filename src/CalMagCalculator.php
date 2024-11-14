@@ -33,11 +33,14 @@ class CalMagCalculator {
     protected array $fertilizers = [];
 
     protected string $fertilizer = "";
-    protected string $additive = "";
+    protected array $additive = [
+        "calcium"   => "",
+        "magnesium" => "",
+    ];
 
     public function __construct(array  $water,
                                 string $fertilizer = "",
-                                string $additive = "",
+                                array $additive = [],
                                 float  $ratio = 3.5,
     ) {
         if(!isset($water["elements"]["calcium"]) || !isset($water["elements"]["magnesium"])) {
@@ -58,9 +61,20 @@ class CalMagCalculator {
         foreach ($this->fertilizers as $index => $fertilizer) {
             $elements = $this->summarizeElements($fertilizer["elements"]);
             $this->fertilizers[$index]["ratio"] = $elements['calcium'] / $elements['magnesium'];
+            foreach($this->fertilizers[$index]["elements"] as $component => $value) {
+                if(is_array($value)) {
+                    foreach ($value as $sub_element => $sub_value) {
+                        $this->fertilizers[$index][$component][$sub_element] = $sub_value * ($fertilizer["density"] ?? 1.0);
+                    }
+                }else{
+                    $this->fertilizers[$index][$component] = $value * ($fertilizer["density"] ?? 1.0);
+                }
+            }
         }
-        foreach ($this->additives as $index => $additive) {
-            $this->additives[$index] = $this->calculateRealAdditiveConcentrations($additive);
+        foreach ($this->additives as $element => $additives) {
+            foreach($additives as $index => $additive) {
+                $this->additives[$element][$index] = $this->calculateRealAdditiveConcentrations($additive);
+            }
         }
         foreach($this->defaultTargets() as $index => $target) {
             $this->targets[$index] = $this->validateTarget($target);
@@ -87,7 +101,7 @@ class CalMagCalculator {
     protected function calculateRealAdditiveConcentrations(array $additive): array {
         $additive['real'] = [];
         foreach($this->summarizeElements($additive['elements']) as $component => $value) {
-            $additive['real'][$component] = ($value * 10) * ($additive['concentration'] / 100);
+            $additive['real'][$component] = (($value * 10) * ($additive['concentration'] / 100)) * ($additive["density"] ?? 1.0);
         }
         return $additive;
     }
@@ -140,7 +154,6 @@ class CalMagCalculator {
     public function calculateFertilizer(array $target): array {
         $result = [];
         $fertilizer = $this->fertilizers[$this->fertilizer];
-        $additive = $this->additives[$this->additive];
         $elements = $this->summarizeElements($this->water["elements"]);
         $dilution = 1.0;
 
@@ -174,33 +187,62 @@ class CalMagCalculator {
             "name" => $this->fertilizer,
         ];
 
-        $count = 0;
-        while($elements['calcium']/$elements['magnesium'] > $this->ratios['calcium']) {
-            foreach ($additive['real'] as $component => $value) {
-                if(!isset($elements[$component])) {
-                    $elements[$component] = 0;
-                }
-                $elements[$component] += $value / 100;
-            }
-            $count++;
-        }
+        foreach($this->additive as $element => $name) {
+            $additive = $this->additives[$element][$name];
 
-        if ($count > 1) {
-            if($elements['calcium']/$elements['magnesium'] < $this->ratios['calcium']) {
+            $additive_nanoliter = 0;
+            while($elements['calcium']/$elements['magnesium'] > $this->ratios['calcium']) {
+                if(!isset($additive['real']["magnesium"]) || $additive['real']["magnesium"] <= 0) {
+                    break;
+                }
                 foreach ($additive['real'] as $component => $value) {
-                    if($value > 0) {
-                        $elements[$component] -= $value / 100;
+                    if(!isset($elements[$component])) {
+                        $elements[$component] = 0;
                     }
+                    $elements[$component] += $value / 100;
                 }
-                $count -= 1;
+                $additive_nanoliter++;
             }
+            while($elements['calcium']/$elements['magnesium'] < $this->ratios['calcium']) {
+                if(!isset($additive['real']["calcium"]) || $additive['real']["calcium"] <= 0) {
+                    break;
+                }
+                foreach ($additive['real'] as $component => $value) {
+                    if(!isset($elements[$component])) {
+                        $elements[$component] = 0;
+                    }
+                    $elements[$component] += $value / 100;
+                }
+                $additive_nanoliter++;
+            }
+
+            if ($additive_nanoliter > 10) {
+                if($elements['calcium']/$elements['magnesium'] < $this->ratios['calcium']) {
+                    foreach ($additive['real'] as $component => $value) {
+                        if($value > 0) {
+                            $elements[$component] -= $value / 100;
+                        }
+                    }
+                    $additive_nanoliter -= 1;
+                }
+            }elseif($additive_nanoliter < 10 && $additive_nanoliter > 0) {
+                do {
+                    foreach ($additive['real'] as $component => $value) {
+                        if($value > 0) {
+                            $elements[$component] -= $value / 100;
+                        }
+                    }
+                    $additive_nanoliter -= 1;
+                } while($additive_nanoliter > 0);
+            }
+
+            $result['additive'][$element] = [
+                "ml" => $additive_nanoliter / 100,
+                "name" => $name,
+                "concentration" => $additive['concentration'],
+            ];
         }
 
-        $result['additive'] = [
-            "ml" => $count/100,
-            "name" => $this->additive,
-            "concentration" => $additive['concentration'],
-        ];
         $result["target"] = $target;
 
         $result['missing'] = [
@@ -243,19 +285,20 @@ class CalMagCalculator {
         $this->fertilizer = $fertilizer;
     }
 
-    public function setAdditive(string $additive): void {
-        if($additive === "") {
-            $additive = array_key_first($this->additives);
-        }
-        if(!isset($this->additives[$additive])) {
-            throw new \InvalidArgumentException("Additive not found");
+    public function setAdditive(array $additive): void {
+        foreach($additive as $element => $value) {
+            if($value === "") {
+                $value = array_key_first($this->additives[$element] ?? []);
+            }
+            if(!isset($this->additives[$element][$value])) {
+                throw new \InvalidArgumentException("Additive not found");
+            }
         }
         $this->additive = $additive;
     }
 
     public function setWater(array $water): void {
         $fertilizer = $this->fertilizers[$this->fertilizer];
-        $additive = $this->additives[$this->additive];
 
         if(isset($water["elements"]["sulphate"])) {
             $water["elements"]["sulfur"] = $water["elements"]["sulphate"] * 0.334;
@@ -265,6 +308,12 @@ class CalMagCalculator {
         }
         if (isset($water["elements"]["nitrite"])) {
             $water["elements"]["nitrogen"] = ($water["elements"]["nitrogen"] ?? 0) + ($water["elements"]["nitrite"] * 0.304);
+        }
+        if(!isset($water["elements"]["calcium"]) || $water["elements"]["calcium"] <= 0) {
+            $water["elements"]["calcium"] = 0.001;
+        }
+        if(!isset($water["elements"]["magnesium"]) || $water["elements"]["magnesium"] <= 0) {
+            $water["elements"]["magnesium"] = 0.001;
         }
 
         $this->water = [
@@ -279,11 +328,15 @@ class CalMagCalculator {
             $this->water["elements"][$component] = $water["elements"][$component];
         }
 
-        foreach($additive["real"] as $component => $value) {
-            if(!isset($water["elements"][$component])) {
-                $this->water["elements"][$component] = 0;
+
+        foreach($this->additive as $element => $name) {
+            $additive = $this->additives[$element][$name];
+            foreach($additive["real"] as $component => $value) {
+                if(!isset($water["elements"][$component])) {
+                    $this->water["elements"][$component] = 0;
+                }
+                $this->water["elements"][$component] = $water["elements"][$component];
             }
-            $this->water["elements"][$component] = $water["elements"][$component];
         }
     }
 
@@ -316,8 +369,8 @@ class CalMagCalculator {
         return $result;
     }
 
-    public function getAdditiveComponents(float $ml): array {
-        $additive = $this->additives[$this->additive];
+    public function getAdditiveComponents(string $element, float $ml): array {
+        $additive = $this->additives[$element][$this->additive[$element]];
         $result = [];
 
         foreach($additive['real'] as $component => $value) {
@@ -327,7 +380,7 @@ class CalMagCalculator {
         return $result;
     }
 
-    public function getAdditive(): string {
+    public function getAdditive(): array {
         return $this->additive;
     }
 
@@ -357,10 +410,13 @@ class CalMagCalculator {
                 $elements[] = $element;
             }
         }
-        foreach($this->additives as $additive) {
-            foreach($additive["elements"] as $element => $value) {
-                $elements[] = $element;
+        foreach($this->additives as $element => $additives) {
+            foreach($additives as $additive) {
+                foreach($additive["elements"] as $element => $value) {
+                    $elements[] = $element;
+                }
             }
+
         }
         return array_unique($elements);
     }

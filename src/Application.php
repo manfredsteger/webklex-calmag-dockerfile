@@ -16,7 +16,7 @@ class Application {
 
     private CalMagCalculator $calculator;
 
-    const VERSION = "1.3.1";
+    const VERSION = "1.4.0";
 
     private array $elements = [
         "calcium"   => 0.0, // mg/L
@@ -28,8 +28,21 @@ class Application {
         "nitrite"   => 0.0, // mg/L
     ];
 
+    protected array $element_units = [
+        "calcium"   => "mg",
+        "magnesium" => "mg",
+        "potassium" => "mg",
+        "iron"      => "mg",
+        "sulphate"  => "mg",
+        "nitrate"   => "mg",
+        "nitrite"   => "mg",
+    ];
+
     private string $fertilizer = "";
-    private string $additive = "";
+    private array $additive = [
+        "magnesium" => "",
+        "calcium"   => "",
+    ];
     private float $ratio = 3.5;
 
     private float $volume = 5.0;
@@ -80,11 +93,12 @@ class Application {
                 if(is_array($payload)) {
                     $_POST = [
                         "fertilizer" => $payload["fertilizer"] ?? "",
-                        "additive"   => $payload["additive"] ?? "",
+                        "additive"   => $payload["additive"] ?? [],
                         "ratio"      => $payload["ratio"] ?? 3.5,
                         "volume"     => $payload["volume"] ?? 5.0,
                         "region"     => $payload["region"] ?? "us",
                         "elements"   => $payload["elements"] ?? [],
+                        "element_units"   => $payload["element_units"] ?? [],
                     ];
                     try{
                         $this->validate();
@@ -105,20 +119,24 @@ class Application {
     private function validate(): void {
         // Validate the input
         $fertilizer = $_POST['fertilizer'] ?? "";
-        $additive = $_POST['additive'] ?? "";
+        $additive = $_POST['additive'] ?? [];
         $region = $_POST['region'] ?? $this->region;
         $ratio = $_POST['ratio'] ?? $this->ratio;
         $volume = $_POST['volume'] ?? $this->volume;
         $elements = $_POST['elements'] ?? $this->elements;
+        $element_units = $_POST['element_units'] ?? $this->element_units;
 
-        if (!is_string($fertilizer) || !is_string($additive) || !is_array($elements)) {
+        if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements)) {
             throw new \Exception("Invalid input");
         }
         if (!isset($this->calculator->getFertilizers()[$fertilizer])) {
             throw new \Exception("Invalid fertilizer");
         }
-        if (!isset($this->calculator->getAdditives()[$additive])) {
-            throw new \Exception("Invalid additive");
+        $_additives = $this->calculator->getAdditives();
+        foreach($additive as $elm => $value) {
+            if (!isset($_additives[$elm]) || !isset($_additives[$elm][$value])) {
+                throw new \Exception("Invalid additive");
+            }
         }
         if ($ratio <= 0) {
             throw new \Exception("Invalid ratio");
@@ -148,10 +166,42 @@ class Application {
         $this->ratio = $ratio;
         $this->volume = $volume;
         $this->region = $region;
-        $this->elements = [
+        $elements = [
             ...$this->elements,
             ...$elements,
         ];
+        $element_units = [
+            ...$this->element_units,
+            ...$element_units,
+        ];
+        // convert the elements to mg/L from the given units
+        foreach($elements as $element => $value) {
+            $unit = $element_units[$element] ?? "mg";
+            $elements[$element] = match($unit) {
+                "mmol" => match($element) {
+                    "calcium"   => $value * 40.08,
+                    "magnesium" => $value * 24.31,
+                    "potassium" => $value * 39.10,
+                    "iron"      => $value * 55.85,
+                    "sulphate"  => $value * 96.06,
+                    "nitrate"   => $value * 62.00,
+                    "nitrite"   => $value * 46.01,
+                    "phosphorus" => $value * 30.97,
+                    "nitrogen"  => $value * 14.01,
+                    "sulfur"    => $value * 32.06,
+                    "sodium"    => $value * 22.99,
+                    "chloride"  => $value * 35.45,
+                    "manganese" => $value * 54.94,
+                    "boron"     => $value * 10.81,
+                    "zinc"      => $value * 65.38,
+                    "copper"    => $value * 63.55,
+                    "molybdenum" => $value * 95.94,
+                    default     => $value,
+                },
+                default => $value,
+            };
+        }
+        $this->elements = $elements;
         $this->validated = true;
     }
 
@@ -185,11 +235,12 @@ class Application {
 
         $form = [
             "fertilizer" => $this->fertilizer !== "" ?$this->fertilizer: $calculator->getFertilizer(),
-            "additive"   => $this->additive !== "" ?$this->additive: $calculator->getAdditive(),
+            "additive"   => count($this->additive) > 0 ? $this->additive: $calculator->getAdditive(),
             "ratio"      => $this->ratio,
             "volume"     => $this->volume,
             "region"     => $this->region,
             "elements"   => $this->elements,
+            "element_units"   => $this->element_units,
         ];
 
         include __DIR__ . '/../resources/views/calculator_result.phtml';
