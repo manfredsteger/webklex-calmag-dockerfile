@@ -42,6 +42,16 @@ return [
         ],
     ],
     "magnesium" => [
+        "Canna Mono Magnesium"   => [
+            // Canna Mono Magnesium 7% MgO
+            "elements"      => [
+                "magnesium" => [
+                    "MgO" => 7.0, // %
+                ],
+            ],
+            "concentration" => 100.0, // %
+            "density"       => 1.23, // g/cm³
+        ],
         "MgSO4"        => [
             // Magnesiumsulfat
             "elements"      => [
