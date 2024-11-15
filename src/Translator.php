@@ -49,7 +49,7 @@ class Translator {
         }
         $translations = include __DIR__ . '/../resources/lang/' . $this->locale . '.php';
         //dot notation
-        $this->translations = $this->array_dot($translations);
+        $this->translations = array_dot($translations);
     }
 
     public function get(string $key, array $params = []): string {
@@ -62,18 +62,6 @@ class Translator {
             $translation = str_replace(':' . $key, $value, $translation);
         }
         return $translation;
-    }
-
-    private function array_dot(mixed $translations, $key = ""): array {
-        $result = [];
-        foreach ($translations as $k => $v) {
-            if(is_array($v)) {
-                $result = array_merge($result, $this->array_dot($v, $key . $k . "."));
-            }else{
-                $result[$key . $k] = $v;
-            }
-        }
-        return $result;
     }
 
 }

@@ -11,6 +11,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.5.0] - 2024-11-15
+### Fixed
+- Element display / prevent line breaks
+- Unused elements removed
+- Default additive concentration set to 10%
+- Auto language selection fixed
+- Canna Mono products set as default
+
+### Added
+- Additive concentration support added
+- Helper autoloading improved
+
 ## [1.4.0] - 2024-11-14
 ### Added
 - Substance density support added

@@ -18,6 +18,10 @@
     "autoload": {
         "psr-4": {
             "Webklex\\CalMag\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helper/array.php",
+            "src/Helper/translation.php"
+        ]
     }
 }

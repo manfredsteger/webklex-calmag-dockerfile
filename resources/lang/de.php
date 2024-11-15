@@ -112,16 +112,20 @@ return [
             "additive"   => [
                 "magnesium" => [
                     "label"       => "Magnesium-Zusatzstoff",
-                    "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden soll. Es wird von einer Lösung mit der in Klammern angegebenen Konzentration ausgegangen.",
+                    "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden kann um den Magnesiumgehalt zu erhöhen, sollte das gewählte Präparat nicht ausreichen.",
                 ],
                 "calcium"   => [
                     "label"       => "Calcium-Zusatzstoff",
-                    "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden soll. Es wird von einer Lösung mit der in Klammern angegebenen Konzentration ausgegangen.",
+                    "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden kann um den Calciumgehalt zu erhöhen, sollte das gewählte Präparat nicht ausreichen.",
                 ],
+            ],
+            "additive_concentration" => [
+                "label"       => "Konzentration in %",
+                "description" => "Die Konzentration gibt an, wie viel des Zusatzstoffes tatsächlich in der Lösung enthalten ist. Dieser Wert wird in Prozent angegeben.",
             ],
             "ratio"      => [
                 "label"       => "Calcium / Magnesium - Verhältnis",
-                "description" => "Das Verhältnis von Calcium zu Magnesium sollte idealerweise bei 3.5 liegen. Dieses Verhältnis kann aber auch beliebig angepasst werden.",
+                "description" => "Das Verhältnis von Calcium zu Magnesium liegt oft bei 3.5. Dieses Verhältnis kann beliebig angepasst werden.",
             ],
             "volume"     => [
                 "label"       => "Volumen",

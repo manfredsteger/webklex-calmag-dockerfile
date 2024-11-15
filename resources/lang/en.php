@@ -112,12 +112,16 @@ return [
             "additive" => [
                 "magnesium" => [
                     "label"       => "Magnesium additive",
-                    "description" => "Select an additive to be added to your water. It is assumed that the additive is a solution with the concentration given in parentheses.",
+                    "description" => "Select an additive to be added to your water to increase the magnesium content, if the fertilizer does not contain enough magnesium.",
                 ],
                 "calcium"   => [
                     "label"       => "Calcium-Zusatzstoff",
-                    "description" => "Select an additive to be added to your water. It is assumed that the additive is a solution with the concentration given in parentheses.",
+                    "description" => "Select an additive to be added to your water to increase the calcium content, if the fertilizer does not contain enough calcium.",
                 ],
+            ],
+            "additive_concentration" => [
+                "label" => "Concentration in %",
+                "description" => "Enter the concentration of the additive here. The concentration is used to calculate the amount of additive to be added.",
             ],
             "ratio" => [
                 "label" => "Calcium / Magnesium ratio",

@@ -15,5 +15,4 @@ use Webklex\CalMag\Application;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = new Application();
-$app->load();
-$app->render();
+$app->route();

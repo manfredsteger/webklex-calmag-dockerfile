@@ -8,56 +8,8 @@
             <!--Form-->
             <div class="w-full py-2">
                 <form method="POST" target="_self" action="#results" class="w-full flex flex-wrap">
-                    <div class="w-full md:w-1/2 flex flex-wrap justify-center items-center">
 
-                        <div class="w-full flex flex-wrap self-start">
-                            <div class="w-full text-left px-2 py-2 ">
-                                <h6 class="w-full text-red-500 font-semibold">
-                                    <?php echo __("content.form.elements.title")?>
-                                </h6>
-                                <p class="text-xs pt-2 text-slate-400">
-                                    <?php echo __("content.form.elements.description")?>
-                                    <a href="https://google.com?q=<?php echo urlencode( __("content.calculator.google.query")) ?>"
-                                       target="_blank"
-                                       class="text-red-500 ">
-                                        <?php echo __("content.calculator.button.search_plz")?>
-                                    </a>
-                                </p>
-                            </div>
-
-                            <?php foreach (array_unique([...$calculator->getElements(), "sulphate", "nitrate", "nitrite"]) as $element): ?>
-                                <div class="w-1/2 md:w-1/2 px-2 py-2">
-                                    <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
-                                        <label for="elements_<?php echo $element ?>" class="font-semibold text-slate-900">
-                                            <?php echo __("content.form.element.$element.label")?>
-                                        </label>
-                                        <br/>
-                                        <div class="w-full flex flex-row">
-                                            <input type="number"
-                                                   step="0.001"
-                                                   min="0"
-                                                   name="elements[<?php echo $element ?>]"
-                                                   id="elements_<?php echo $element ?>"
-                                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                                                   value="<?php echo $form["elements"][$element] ?? 0.0 ?>" />
-                                                <select name="element_units[<?php echo $element ?>]"
-                                                        id="element_unit_<?php echo $element ?>"
-                                                        class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none">
-                                                    <?php foreach (["mg", "mmol"] as $unit): ?>
-                                                        <option value="<?php echo $unit ?>" <?php echo $unit == ($form["element_units"][$element] ?? "mg") ? "selected" : "" ?>>
-                                                            <?php echo $unit ?>/L
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-
-                        </div>
-
-                    </div>
-                    <div class="w-full md:w-1/2 md:mt-8 flex flex-wrap justify-start items-start self-start">
+                    <div class="w-full md:w-1/2 mt-1 flex flex-wrap justify-start items-start self-start">
                         <div class="w-full px-2 py-2">
                             <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
                                 <label for="fertilizer" class="font-semibold text-slate-900">
@@ -83,51 +35,40 @@
                                         <?php echo __("content.form.additive.$element.label")?>
                                     </label>
                                     <br/>
-                                    <select name="additive[<?php echo $element ?>]" id="additive_<?php echo $element ?>" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                    <select name="additive[<?php echo $element ?>]" id="additive_<?php echo $element ?>"
+                                            onchange="(function(){
+                                                let elm = document.getElementById('additive_<?php echo $element ?>');
+                                                document.getElementById('additive_concentration_<?php echo $element ?>').value = elm.options[elm.selectedIndex].getAttribute('data-concentration');
+                                            })()"
+                                            class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
                                         <?php foreach ($additives as $name => $additive): ?>
-                                            <option value="<?php echo $name ?>" <?php echo $name == $form["additive"][$element] ? "selected" : "" ?>>
-                                                <?php echo __("additive.$name") ?> (<?php echo $additive["concentration"] ?>%)
+                                            <option value="<?php echo $name ?>" <?php echo $name == $form["additive"][$element] ? "selected" : "" ?> data-concentration="<?php echo $additive["concentration"] ?>">
+                                                <?php echo __("additive.$name") ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <p class="text-xs pt-2 text-slate-400">
+                                    <p class="text-xs pt-2 text-slate-400 pb-2">
                                         <?php echo __("content.form.additive.$element.description")?>
+                                    </p>
+
+                                    <label for="volume" class="font-semibold text-slate-900">
+                                        <?php echo __("content.form.additive_concentration.label")?>
+                                    </label>
+                                    <br/>
+                                    <input type="number"
+                                           step="0.01"
+                                           min="0"
+                                           max="100"
+                                           name="additive_concentration[<?php echo $element?>]"
+                                           id="additive_concentration_<?php echo $element ?>"
+                                           class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
+                                           value="<?php echo $form["additive_concentration"][$element] ?? $additives[array_key_first($additives)]["concentration"] ?>" />
+                                    <p class="text-xs pt-2 text-slate-400">
+                                        <?php echo __("content.form.additive_concentration.description")?>
                                     </p>
                                 </div>
                             </div>
                         <?php endforeach; ?>
-
-                        <div class="w-full md:w-1/2 px-2 py-2 ">
-                            <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
-                                <label for="ratio" class="font-semibold text-slate-900">
-                                    <?php echo __("content.form.ratio.label")?>
-                                </label>
-                                <br/>
-                                <input type="number"
-                                       step="0.01"
-                                       min="0"
-                                       name="ratio" id="ratio" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["ratio"] ?>" />
-                                <p class="text-xs pt-2 text-slate-400">
-                                    <?php echo __("content.form.ratio.description")?>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="w-full md:w-1/2 px-2 py-2 ">
-                            <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
-                                <label for="volume" class="font-semibold text-slate-900">
-                                    <?php echo __("content.form.volume.label")?>
-                                </label>
-                                <br/>
-                                <input type="number"
-                                       step="0.1"
-                                       min="0"
-                                       name="volume" id="volume" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["volume"] ?>" />
-                                <p class="text-xs pt-2 text-slate-400">
-                                    <?php echo __("content.form.volume.description")?>
-                                </p>
-                            </div>
-                        </div>
 
                         <!--<div class="w-full md:w-1/3 px-2 py-2">
                             <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
@@ -148,14 +89,94 @@
                             </div>
                         </div>-->
                     </div>
+                    <div class="w-full md:w-1/2 flex flex-wrap justify-center items-center">
+
+                        <div class="w-full flex flex-wrap self-start">
+                            <div class="w-full text-left px-2 py-2 ">
+                                <h6 class="w-full text-red-500 font-semibold">
+                                    <?php echo __("content.form.elements.title")?>
+                                </h6>
+                                <p class="text-xs pt-2 text-slate-400">
+                                    <?php echo __("content.form.elements.description")?>
+                                    <a href="https://google.com?q=<?php echo urlencode( __("content.calculator.google.query")) ?>"
+                                       target="_blank"
+                                       class="text-red-500 ">
+                                        <?php echo __("content.calculator.button.search_plz")?>
+                                    </a>
+                                </p>
+                            </div>
+
+                            <?php foreach ($available_elements as $element => $label): ?>
+                                <div class="w-1/2 md:w-1/2 px-2 py-2">
+                                    <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                        <label for="elements_<?php echo $element ?>" class="font-semibold text-slate-900">
+                                            <?php echo __($label)?>
+                                        </label>
+                                        <br/>
+                                        <div class="w-full flex flex-row">
+                                            <input type="number"
+                                                   step="0.001"
+                                                   min="0"
+                                                   name="elements[<?php echo $element ?>]"
+                                                   id="elements_<?php echo $element ?>"
+                                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
+                                                   value="<?php echo $form["elements"][$element] ?? 0.0 ?>" />
+                                                <select name="element_units[<?php echo $element ?>]"
+                                                        id="element_unit_<?php echo $element ?>"
+                                                        class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none">
+                                                    <?php foreach (["mg", "mmol"] as $unit): ?>
+                                                        <option value="<?php echo $unit ?>" <?php echo $unit == ($form["element_units"][$element] ?? "mg") ? "selected" : "" ?>>
+                                                            <?php echo $unit ?>/L
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                            <div class="w-full md:w-1/2 px-2 py-2 ">
+                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                    <label for="ratio" class="font-semibold text-slate-900">
+                                        <?php echo __("content.form.ratio.label")?>
+                                    </label>
+                                    <br/>
+                                    <input type="number"
+                                           step="0.01"
+                                           min="0"
+                                           name="ratio" id="ratio" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["ratio"] ?>" />
+                                    <p class="text-xs pt-2 text-slate-400">
+                                        <?php echo __("content.form.ratio.description")?>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="w-full md:w-1/2 px-2 py-2 ">
+                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                    <label for="volume" class="font-semibold text-slate-900">
+                                        <?php echo __("content.form.volume.label")?>
+                                    </label>
+                                    <br/>
+                                    <input type="number"
+                                           step="0.1"
+                                           min="0"
+                                           name="volume" id="volume" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["volume"] ?>" />
+                                    <p class="text-xs pt-2 text-slate-400">
+                                        <?php echo __("content.form.volume.description")?>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
 
 
-                    <div class="w-full pt-4">
+                        <div class="w-full pt-4 md:pt-0">
+                            <button type="submit"
+                                    class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                <?php echo __("content.calculator.button.calculate")?>
+                            </button>
+                        </div>
 
-                        <button type="submit"
-                                class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                            <?php echo __("content.calculator.button.calculate")?>
-                        </button>
                     </div>
                 </form>
             </div>
@@ -200,23 +221,21 @@
                                            ] as $element => $value): ?>
                                 <div class="w-full md:w-1/2 px-2 py-2">
                                     <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
-                                                <span class="font-semibold text-slate-900">
-                                                    <?php echo __("content.form.element.$element.label")?>
-                                                </span>
-                                        <br/>
-                                        <span class="">
-                                            <?php echo number_format($water["elements"][$element], 2, ",", "."); ?>
+                                        <div class="font-semibold text-slate-900">
+                                            <?php echo __("content.form.element.$element.label")?>
+                                        </div>
+                                        <div class="">
+                                            <?php echo number_format($water["elements"][$element], 2, ",", "."); ?> mg
                                             /
                                             <?php echo number_format($value, 2, ",", "."); ?>
                                             mg
-                                        </span>
+                                        </div>
 
                                         <?php if (isset($results["missing"][$element])): ?>
                                             <?php $missing = number_format($results["missing"][$element], 2, ",", "."); ?>
-                                            <span class="text-red-500 text-xs" title="<?php echo __('content.calculator.missing', ["value" => $missing,"name" => __("content.form.element.$element.label")] )?>">
-                                                (
-                                                <?php echo $results["missing"][$element] > 0 ? "+" : "" ?><?php echo $missing ?> mg)
-                                            </span>
+                                            <div class="text-red-500 text-xs" title="<?php echo __('content.calculator.missing', ["value" => $missing,"name" => __("content.form.element.$element.label")] )?>">
+                                                <?php echo $results["missing"][$element] > 0 ? "+" : "" ?><?php echo $missing ?> mg
+                                            </div>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -285,7 +304,7 @@
 
 
                                 <?php if($results["water"] > 0): ?>
-                                    <tr class="bg-sky-700 text-slate-900">
+                                    <tr class="bg-sky-500 text-slate-900">
                                         <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left"><?php echo __("dilution.label") ?>:</td>
                                         <td class="font-semibold text-right">
                                             <?php echo number_format($results["dilution"]/$results["water"], 2, ",", "") ?>:1
@@ -303,7 +322,7 @@
                                     <?php endforeach; ?>
                                 <?php endif; ?>
 
-                                <tr class="bg-green-700 text-slate-900">
+                                <tr class="bg-green-600 text-slate-900">
                                     <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
                                         <?php echo $results["fertilizer"]["name"]; ?></td>
                                     <td class="font-semibold text-right">
@@ -610,6 +629,7 @@
                     <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1"><?php echo $link?>?p=<?php echo base64_encode(json_encode([
                                                                                                                                                   "fertilizer" => $form["fertilizer"],
                                                                                                                                                   "additive" => $form["additive"],
+                                                                                                                                                  "additive_concentration" => $form["additive_concentration"],
                                                                                                                                                   "elements" => $form["elements"],
                                                                                                                                                   "element_units" => $form["element_units"],
                                                                                                                                                   "ratio" => $form["ratio"],
@@ -631,6 +651,7 @@
     <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1 overflow-x-auto">curl -X POST -H "Content-Type: application/json" -d '<?php echo json_encode([
             "fertilizer" => $form["fertilizer"],
             "additive" => $form["additive"],
+            "additive_concentration" => $form["additive_concentration"],
             "elements" => $form["elements"],
             "element_units" => $form["element_units"],
             "ratio" => $form["ratio"],
