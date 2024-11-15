@@ -153,6 +153,12 @@ return [
                 "iron" => [
                     "label" => "Iron",
                 ],
+                "manganese"   => [
+                    "label" => "Manganese",
+                ],
+                "zinc"   => [
+                    "label" => "Zink",
+                ],
                 "sulphate" => [
                     "label" => "Sulfate",
                 ],

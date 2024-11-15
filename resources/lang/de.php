@@ -159,6 +159,12 @@ return [
                 "nitrate"   => [
                     "label" => "Nitrat",
                 ],
+                "manganese"   => [
+                    "label" => "Manganese",
+                ],
+                "zinc"   => [
+                    "label" => "Zink",
+                ],
                 "nitrite"   => [
                     "label" => "Nitrit",
                 ],
