@@ -9,7 +9,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
-- NaN
+- CaCO3 Additive added
+- Xpert Cal-Mag Amino added
 
 ## [1.5.0] - 2024-11-15
 ### Fixed

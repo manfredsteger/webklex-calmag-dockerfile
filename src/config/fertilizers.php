@@ -69,4 +69,18 @@ return [
         ],
         "density"       => 1.0, // g/cm³
     ],
+    "Xpert Cal-Mag Amino"                           => [
+        "elements" => [
+            "nitrogen" => [ // Gesamtstickstoff (N) - 4%
+                "NO3" => 3.8, // Nitratstickstoff (NO3) - 3.8%
+                "NH4" => 0.2, // Ammoniumstickstoff (NH4) -0.2%
+            ],
+            "calcium"   => 3.4, // Kalzium (Ca) - 3.4%,
+            "magnesium" => 1.1, // Magnesium (Mg) - 1.1%,
+            "iron"      => 0.1, // Chelatiertes Eisen (Fe) - 0.1%,
+            "manganese" => 0.05, // Chelatiertes Mangan (Mn) - 0.05%,
+            "zinc"      => 0.05, // Chelatiertes Zink (Zn) - 0.05%,
+        ],
+        "density"       => 1.0, // g/cm³
+    ],
 ];

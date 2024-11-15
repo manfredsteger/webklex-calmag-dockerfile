@@ -39,6 +39,7 @@ return [
         "Canna Mono Calcium"   => "Canna Mono Calcium",
         "CaC2H3O2H2O" => "Calciumacetat",
         "Ca3C6H5O74H2O" => "Calciumcitrat",
+        "CACO3" => "Calciumcarbonat",
     ],
     "content" => [
         "calculator" => [

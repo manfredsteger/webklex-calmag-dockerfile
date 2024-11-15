@@ -40,6 +40,13 @@ return [
             "concentration" => 1.5, // %
             "density"       => 1.0, // g/cm³
         ],
+        "CACO3"                 => [
+            // Calciumcarbonat
+            "elements"      => [
+                "calcium" => 40.04, // %
+            ],
+            "concentration" => 10.0, // %
+        ],
     ],
     "magnesium" => [
         "Canna Mono Magnesium"   => [
