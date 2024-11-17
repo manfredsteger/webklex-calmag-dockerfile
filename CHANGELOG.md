@@ -9,6 +9,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
+- NaN
+
+## [1.5.1] - 2024-11-17
+### Fixed
+- Google reference replaced by duckduckgo
+- Display water mixture if volume is set to > 0
+- Dilution calculation fixed
+
+### Added
 - CaCO3 Additive added
 - Xpert Cal-Mag Amino added
 
