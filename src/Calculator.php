@@ -144,16 +144,17 @@ class Calculator {
         $dilution = 1.0;
 
 
-        foreach ($target as $component => $value) {
+        foreach ($target as $component => $target_value) {
             if (!isset($elements[$component])) {
                 $elements[$component] = 0;
             }
-            if ($elements[$component] > $value) {
-                $stock = $value / $elements[$component];
+            if ($elements[$component] > $target_value) {
+                $stock = $target_value / $elements[$component];
+
                 foreach ($elements as $element => $element_value) {
                     $elements[$element] = $element_value * $stock;
                 }
-                $dilution = $stock;
+                $dilution = $dilution * $stock;
             }
         }
 
