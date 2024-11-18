@@ -11,6 +11,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.6.0] - 2024-11-18
+### Added
+- Support calculation without fertilizers
+
 ## [1.5.2] - 2024-11-18
 ### Fixed
 - Shared links fixed

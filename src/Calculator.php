@@ -139,7 +139,9 @@ class Calculator {
 
     public function calculateFertilizer(array $target): array {
         $result = [];
-        $fertilizer = $this->fertilizers[$this->fertilizer];
+        $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
+            "elements" => [],
+        ];
         $elements = $this->summarizeElements($this->water["elements"]);
         $dilution = 1.0;
 
@@ -159,19 +161,22 @@ class Calculator {
         }
 
         $fertilizer_nanoliter = 0;
-        while (
-            ($elements['calcium'] < $target['calcium']) &&
-            ($elements['calcium'] - $target['calcium'] < 0) &&
-            ($elements['magnesium'] < $target['magnesium']) &&
-            ($elements['magnesium'] - $target['magnesium'] < 0)
-        ) {
-            foreach ($this->summarizeElements($fertilizer["elements"]) as $component => $value) {
-                if (!isset($elements[$component])) {
-                    $elements[$component] = 0;
+        $fertilizer_elements = $this->summarizeElements($fertilizer["elements"]);
+        if($fertilizer_elements['calcium'] > 0 && $fertilizer_elements['magnesium'] > 0) {
+            while (
+                ($elements['calcium'] < $target['calcium']) &&
+                ($elements['calcium'] - $target['calcium'] < 0) &&
+                ($elements['magnesium'] < $target['magnesium']) &&
+                ($elements['magnesium'] - $target['magnesium'] < 0)
+            ) {
+                foreach ($fertilizer_elements as $component => $value) {
+                    if (!isset($elements[$component])) {
+                        $elements[$component] = 0;
+                    }
+                    $elements[$component] += ($value * 10) / 100; // mg/ml
                 }
-                $elements[$component] += ($value * 10) / 100; // mg/ml
+                $fertilizer_nanoliter++;
             }
-            $fertilizer_nanoliter++;
         }
 
         $result['fertilizer'] = [
@@ -183,7 +188,12 @@ class Calculator {
             $additive = $this->additives[$element][$name];
 
             $additive_nanoliter = 0;
-            while ($elements['calcium'] / $elements['magnesium'] > $this->ratios['calcium']) {
+            while ($elements['calcium'] / $elements['magnesium'] > $this->ratios['calcium'] || (
+                    ($elements['calcium'] < $target['calcium']) &&
+                    ($elements['calcium'] - $target['calcium'] < 0) &&
+                    ($elements['magnesium'] < $target['magnesium']) &&
+                    ($elements['magnesium'] - $target['magnesium'] < 0)
+                )) {
                 if (!isset($additive['real']["magnesium"]) || $additive['real']["magnesium"] <= 0) {
                     break;
                 }
@@ -195,7 +205,12 @@ class Calculator {
                 }
                 $additive_nanoliter++;
             }
-            while ($elements['calcium'] / $elements['magnesium'] < $this->ratios['calcium']) {
+            while ($elements['calcium'] / $elements['magnesium'] < $this->ratios['calcium'] || (
+                    ($elements['calcium'] < $target['calcium']) &&
+                    ($elements['calcium'] - $target['calcium'] < 0) &&
+                    ($elements['magnesium'] < $target['magnesium']) &&
+                    ($elements['magnesium'] - $target['magnesium'] < 0)
+                )) {
                 if (!isset($additive['real']["calcium"]) || $additive['real']["calcium"] <= 0) {
                     break;
                 }
@@ -227,9 +242,12 @@ class Calculator {
                     $additive_nanoliter -= 1;
                 } while ($additive_nanoliter > 0);
             }
+            // How many mg of additive are dissolved based on the additive concentration
+            $additive_grams = ($additive_nanoliter / 100) * ($additive['concentration']/100);
 
             $result['additive'][$element] = [
                 "ml"            => $additive_nanoliter / 100,
+                "mg"            => $additive_grams * 1000,
                 "name"          => $name,
                 "concentration" => $additive['concentration'],
             ];
@@ -268,10 +286,7 @@ class Calculator {
     }
 
     public function setFertilizer(string $fertilizer): void {
-        if ($fertilizer === "") {
-            $fertilizer = array_key_first($this->fertilizers);
-        }
-        if (!isset($this->fertilizers[$fertilizer])) {
+        if (!isset($this->fertilizers[$fertilizer]) && $fertilizer !== "") {
             throw new \InvalidArgumentException("Fertilizer not found");
         }
         $this->fertilizer = $fertilizer;
@@ -355,7 +370,9 @@ class Calculator {
     }
 
     public function getFertilizerComponents(float $ml): array {
-        $fertilizer = $this->fertilizers[$this->fertilizer];
+        $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
+            "elements" => [],
+        ];
         $result = [];
 
         $elements = $this->summarizeElements($fertilizer["elements"]);

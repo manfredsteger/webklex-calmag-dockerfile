@@ -192,7 +192,7 @@ class Controller {
         if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements) || !is_array($additive_concentration)) {
             throw new Exception("Invalid input");
         }
-        if (!isset($this->calculator->getFertilizers()[$fertilizer])) {
+        if (!isset($this->calculator->getFertilizers()[$fertilizer]) && $fertilizer !== "") {
             throw new Exception("Invalid fertilizer");
         }
         $_additives = $this->calculator->getAdditives();

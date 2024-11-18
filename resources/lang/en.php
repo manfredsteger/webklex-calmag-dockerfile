@@ -94,6 +94,8 @@ return [
                         "suggested_amount_table" => 'For <span class="text-red-500 font-bold">:volume</span> liters of water you need:',
                     ],
                     "dilution" => "Your water should be diluted to avoid exceeding the recommended limits. Mix :dilution of your water with :water distilled water.",
+                    "none" => "Your water contains enough calcium and magnesium.",
+                    "magnesium_without_fertilizer" => "Your water has a magnesium deficiency of :ratio. This can be compensated by using :magnesium_additive and :calcium_additive. A possible dosage can be found in the phase-dependent results below.",
                 ],
                 "share_link" => "Share your result or save the following link to perform the same calculation again later:",
             ],
@@ -109,6 +111,9 @@ return [
             "fertilizer" => [
                 "label" => "Fertilizer",
                 "description" => "Select a fertilizer to be added to your water. It is assumed that the fertilizer is a solution with the concentration given in parentheses.",
+                "option" => [
+                    "none" => "No fertilizer used",
+                ]
             ],
             "additive" => [
                 "magnesium" => [

@@ -94,6 +94,8 @@ return [
                         "suggested_amount_table" => 'Zur Herstellung von <span class="text-red-500 font-bold">:volume</span> Litern:',
                     ],
                     "dilution"  => "Dein Wasser sollte verdünnt werden, um die Empfohlenen Grenzwerte nicht zu überschreiten. Mische hierfür :dilution deines Wassers mit :water destilliertem Wasser.",
+                    "none"      => "Dein Wasser enthält ausreichend Calcium und Magnesium.",
+                    "magnesium_without_fertilizer" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :magnesium_additive und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
                 ],
                 "share_link" => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
             ],
@@ -109,6 +111,9 @@ return [
             "fertilizer" => [
                 "label"       => "Präparat",
                 "description" => "Wähle das Präparat aus, welches du verwenden möchtest. Optimalerweise sollte ein Präparat zum passenden Verhältnis gewählt werden.",
+                "option" => [
+                    "none" => "Kein Präparat verwenden",
+                ]
             ],
             "additive"   => [
                 "magnesium" => [
