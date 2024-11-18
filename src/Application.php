@@ -22,7 +22,7 @@ class Application {
     /**
      * @var string VERSION The current version of the application
      */
-    const VERSION = "1.5.1";
+    const VERSION = "1.5.2";
 
     /**
      * @var Controller $controller The controller instance
@@ -62,14 +62,14 @@ class Application {
                 $payload = json_decode($payload, true);
                 if (is_array($payload)) {
                     $this->controller->result([
-                                                  "fertilizer"    => $_payload["fertilizer"] ?? "",
-                                                  "additive"      => $_payload["additive"] ?? [],
-                                                  "ratio"         => $_payload["ratio"] ?? 3.5,
-                                                  "volume"        => $_payload["volume"] ?? 5.0,
-                                                  "region"        => $_payload["region"] ?? "us",
-                                                  "elements"      => $_payload["elements"] ?? [],
-                                                  "element_units" => $_payload["element_units"] ?? [],
-                                                  "additive_concentration" => $_payload["additive_concentration"] ?? [],
+                                                  "fertilizer"    => $payload["fertilizer"] ?? "",
+                                                  "additive"      => $payload["additive"] ?? [],
+                                                  "ratio"         => $payload["ratio"] ?? 3.5,
+                                                  "volume"        => $payload["volume"] ?? 5.0,
+                                                  "region"        => $payload["region"] ?? "us",
+                                                  "elements"      => $payload["elements"] ?? [],
+                                                  "element_units" => $payload["element_units"] ?? [],
+                                                  "additive_concentration" => $payload["additive_concentration"] ?? [],
                                               ]);
                     return;
                 }

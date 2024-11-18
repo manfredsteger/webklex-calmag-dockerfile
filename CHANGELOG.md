@@ -11,6 +11,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.5.2] - 2024-11-18
+### Fixed
+- Shared links fixed
+
 ## [1.5.1] - 2024-11-17
 ### Fixed
 - Google reference replaced by duckduckgo
