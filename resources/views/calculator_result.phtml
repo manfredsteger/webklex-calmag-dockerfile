@@ -49,6 +49,9 @@
                                                 <?php echo __("additive.$name") ?>
                                             </option>
                                         <?php endforeach; ?>
+                                        <option value="" <?php echo $form["additive"][$element] === "" ? "selected" : "" ?> data-concentration="100">
+                                            <?php echo __("content.form.additive.none") ?>
+                                        </option>
                                     </select>
                                     <p class="text-xs pt-2 text-slate-400 pb-2">
                                         <?php echo __("content.form.additive.$element.description")?>
@@ -212,7 +215,7 @@
                             "magnesium_additive" => '<span class="text-red-500 font-bold">'. __("additive.".$form["additive"]["magnesium"]) .'</span>',
                             "calcium_additive" => '<span class="text-red-500 font-bold">'. __("additive.".$form["additive"]["calcium"]) .'</span>',
                         ])?>
-                    <?php else: ?>
+                    <?php elseif($result["deficiency"]["calcium"] == $form["ratio"]): ?>
                         <?php echo __("content.calculator.result.deficiency.none")?>
                     <?php endif; ?>
                 </div>
@@ -267,25 +270,29 @@
                                 </div>
                             <?php endif; ?>
 
-                            <div class="w-full px-2 py-2">
-                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
-                                            <span class="font-semibold text-slate-900">
-                                                <?php echo __("additive.".$results["additive"]["magnesium"]["name"]); ?> (<?php echo $results["additive"]["magnesium"]["concentration"]; ?>%)
-                                            </span>
-                                    <br/>
-                                    <span class=""><?php echo number_format($results["additive"]["magnesium"]["ml"], 2, ",", "."); ?> ml/L</span>
+                            <?php if($results["additive"]["magnesium"]["ml"] > 0): ?>
+                                <div class="w-full px-2 py-2">
+                                    <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                                <span class="font-semibold text-slate-900">
+                                                    <?php echo __("additive.".$results["additive"]["magnesium"]["name"]); ?> (<?php echo $results["additive"]["magnesium"]["concentration"]; ?>%)
+                                                </span>
+                                        <br/>
+                                        <span class=""><?php echo number_format($results["additive"]["magnesium"]["ml"], 2, ",", "."); ?> ml/L</span>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
 
-                            <div class="w-full px-2 py-2">
-                                <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
-                                            <span class="font-semibold text-slate-900">
-                                                <?php echo __("additive.".$results["additive"]["calcium"]["name"]); ?> (<?php echo $results["additive"]["calcium"]["concentration"]; ?>%)
-                                            </span>
-                                    <br/>
-                                    <span class=""><?php echo number_format($results["additive"]["calcium"]["ml"], 2, ",", "."); ?> ml/L</span>
+                            <?php if($results["additive"]["calcium"]["ml"] > 0): ?>
+                                <div class="w-full px-2 py-2">
+                                    <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
+                                                <span class="font-semibold text-slate-900">
+                                                    <?php echo __("additive.".$results["additive"]["calcium"]["name"]); ?> (<?php echo $results["additive"]["calcium"]["concentration"]; ?>%)
+                                                </span>
+                                        <br/>
+                                        <span class=""><?php echo number_format($results["additive"]["calcium"]["ml"], 2, ",", "."); ?> ml/L</span>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="w-full md:w-1/3 px-3 py-2">
@@ -358,48 +365,96 @@
                                     </tr>
                                 <?php endif; ?>
 
-                                <tr class="bg-green-700 text-slate-900">
-                                    <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
-                                        <?php echo __("additive.".$results["additive"]["magnesium"]["name"]); ?>
-                                        (<?php echo $results["additive"]["magnesium"]["concentration"]; ?>%)
-                                    </td>
-                                    <td class="font-semibold text-right">
-                                        (<?php echo number_format($results["additive"]["magnesium"]["ml"], 2, ",", "."); ?> ml/L)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <?php foreach ($results["elements"] as $element => $value): ?>
-                                        <td class="text-left">
-                                            <?php if (isset($magnesium_additive[$element])): ?>
-                                                <?php echo number_format($magnesium_additive[$element], 2, ",", "."); ?> mg/L
-                                            <?php else: ?>
-                                                -
-                                            <?php endif; ?>
+                                <?php if($results["additive"]["magnesium"]["ml"] > 0): ?>
+                                    <tr class="bg-green-700 text-slate-900">
+                                        <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
+                                            <?php echo __("additive.".$results["additive"]["magnesium"]["name"]); ?>
+                                            (<?php echo $results["additive"]["magnesium"]["concentration"]; ?>%)
                                         </td>
-                                    <?php endforeach; ?>
-                                </tr>
+                                        <td class="font-semibold text-right">
+                                            (<?php echo number_format($results["additive"]["magnesium"]["ml"], 2, ",", "."); ?> ml/L<!--
+                                            =
+                                            <?php echo number_format($results["additive"]["magnesium"]["mg"], 2, ",", "."); ?> mg/L
+                                            --->)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <?php foreach ($results["elements"] as $element => $value): ?>
+                                            <td class="text-left">
+                                                <?php if (isset($magnesium_additive[$element])): ?>
+                                                    <?php echo number_format($magnesium_additive[$element], 2, ",", "."); ?> mg/L
+                                                <?php else: ?>
+                                                    -
+                                                <?php endif; ?>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                <?php endif; ?>
 
-                                <tr class="bg-green-700 text-slate-900">
-                                    <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
-                                        <?php echo __("additive.".$results["additive"]["calcium"]["name"]); ?>
-                                        (<?php echo $results["additive"]["calcium"]["concentration"]; ?>%)
-                                    </td>
-                                    <td class="font-semibold text-right">
-                                        (<?php echo number_format($results["additive"]["calcium"]["ml"], 2, ",", "."); ?> ml/L)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <?php foreach ($results["elements"] as $element => $value): ?>
-                                        <td class="text-left">
-                                            <?php if (isset($calcium_additive[$element])): ?>
-                                                <?php echo number_format($calcium_additive[$element], 2, ",", "."); ?> mg/L
-                                            <?php else: ?>
-                                                -
-                                            <?php endif; ?>
+                                <?php if($results["additive"]["calcium"]["ml"] > 0): ?>
+                                    <tr class="bg-green-700 text-slate-900">
+                                        <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
+                                            <?php echo __("additive.".$results["additive"]["calcium"]["name"]); ?>
+                                            (<?php echo $results["additive"]["calcium"]["concentration"]; ?>%)
                                         </td>
-                                    <?php endforeach; ?>
-                                </tr>
+                                        <td class="font-semibold text-right" colspan="<?php echo $colspan -1; ?>">
+                                            (<?php echo number_format($results["additive"]["calcium"]["ml"], 2, ",", "."); ?> ml/L<!--
+                                            =
+                                            <?php echo number_format($results["additive"]["calcium"]["mg"], 2, ",", "."); ?> mg/L
+                                            --->)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <?php foreach ($results["elements"] as $element => $value): ?>
+                                            <td class="text-left">
+                                                <?php if (isset($calcium_additive[$element])): ?>
+                                                    <?php echo number_format($calcium_additive[$element], 2, ",", "."); ?> mg/L
+                                                <?php else: ?>
+                                                    -
+                                                <?php endif; ?>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                <?php endif; ?>
                             </table>
+
+                            <?php if ($form["show_suggestions"]): ?>
+                                <h6 class="text-red-500 text-2xl font-normal">
+                                    <?php echo __("content.calculator.result.suggested_additive")?>
+                                </h6>
+
+                                <table class="table w-full">
+                                    <tr>
+                                        <?php foreach ($results["elements"] as $element => $value): ?>
+                                            <td class="text-left font-semibold"><?php echo __("content.form.element.$element.label")?></td>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                    <?php foreach($results['suggested_additive'] as $element => $suggested_additive): ?>
+                                        <tr class="bg-green-700 text-slate-900">
+                                            <td colspan="<?php echo $colspan -1; ?>" class="font-semibold text-left">
+                                                <?php echo __("additive.".$suggested_additive["additive"]); ?>
+                                                (<?php echo number_format($suggested_additive["concentration"],2, ",", "."); ?>%)
+                                            </td>
+                                            <td class="font-semibold text-right">
+                                                (<?php echo number_format($suggested_additive["ml"], 2, ",", "."); ?> ml/L)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <?php foreach ($results["elements"] as $_element => $value): ?>
+                                                <td class="text-left">
+                                                    <?php if (isset($suggested_additive["real"][$_element])): ?>
+                                                        <?php echo number_format($suggested_additive["real"][$_element] * $suggested_additive["ml"], 2, ",", "."); ?> mg/L
+                                                    <?php else: ?>
+                                                        -
+                                                    <?php endif; ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>
+                            <?php endif; ?>
+
+
                         </div>
 
                         <div class="flex flex-wrap w-full md:w-1/3 pb-2">
@@ -484,7 +539,7 @@
                                             "calcium_additive_concentration" =>  $results["additive"]["calcium"]["concentration"],
                                             "calcium_additive_name" =>  __("additive.".$results["additive"]["calcium"]["name"]),
                                         ])?>
-                                    <?php else: ?>
+                                    <?php elseif($results["fertilizer"]["ml"] > 0): ?>
                                         <?php echo __("content.calculator.result.deficiency.state.calcium_and_magnesium_missing_without_additive", [
                                             "fertilizer_ml" =>  number_format($results["fertilizer"]["ml"],2, ",", ""),
                                             "fertilizer_name" =>  $results["fertilizer"]["name"],
@@ -680,3 +735,14 @@
             "region" => __("region.default"),
                                                                                                                                                  ]); ?>' <?php echo $link?></div>
 </div>
+
+<script type="application/javascript">
+    (function(){
+        // Clear the URL when the form has changed
+        document.querySelectorAll("form select, form input").forEach(function(element){
+            element.addEventListener("change", function(){
+                window.history.pushState({}, "", "/");
+            });
+        });
+    })();
+</script>

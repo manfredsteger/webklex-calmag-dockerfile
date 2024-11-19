@@ -11,6 +11,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [1.7.0] - 2024-11-19
+### Added
+- Clear the URL if the form has changed
+- Support calculation without additives
+- Dilution logic extended
+
 ## [1.6.0] - 2024-11-18
 ### Added
 - Support calculation without fertilizers

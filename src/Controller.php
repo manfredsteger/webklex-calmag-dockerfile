@@ -81,8 +81,11 @@ class Controller {
     public function index(): void {
         $this->render(function() {
             $form = [
-                "fertilizer"             => $this->fertilizer,
-                "additive"               => $this->additive,
+                "fertilizer"             => array_key_first($this->calculator->getFertilizers()),
+                "additive"               => [
+                    "magnesium" => array_key_first($this->calculator->getAdditives()["magnesium"]),
+                    "calcium"   => array_key_first($this->calculator->getAdditives()["calcium"]),
+                ],
                 "ratio"                  => $this->ratio,
                 "volume"                 => $this->volume,
                 "region"                 => $this->region,
@@ -197,7 +200,7 @@ class Controller {
         }
         $_additives = $this->calculator->getAdditives();
         foreach ($additive as $elm => $value) {
-            if (!isset($_additives[$elm]) || !isset($_additives[$elm][$value])) {
+            if (!isset($_additives[$elm]) || (!isset($_additives[$elm][$value]) && $value !== "")) {
                 throw new Exception("Invalid additive");
             }
         }

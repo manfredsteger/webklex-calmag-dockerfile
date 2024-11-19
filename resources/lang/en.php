@@ -124,6 +124,7 @@ return [
                     "label"       => "Calcium-Zusatzstoff",
                     "description" => "Select an additive to be added to your water to increase the calcium content, if the fertilizer does not contain enough calcium.",
                 ],
+                "none" => "No additive used",
             ],
             "additive_concentration" => [
                 "label" => "Concentration in %",

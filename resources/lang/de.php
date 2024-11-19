@@ -124,6 +124,7 @@ return [
                     "label"       => "Calcium-Zusatzstoff",
                     "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden kann um den Calciumgehalt zu erhöhen, sollte das gewählte Präparat nicht ausreichen.",
                 ],
+                "none"      => "Keinen Zusatzstoff verwenden",
             ],
             "additive_concentration" => [
                 "label"       => "Konzentration in %",

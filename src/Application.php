@@ -22,7 +22,7 @@ class Application {
     /**
      * @var string VERSION The current version of the application
      */
-    const VERSION = "1.6.0";
+    const VERSION = "1.7.0";
 
     /**
      * @var Controller $controller The controller instance
