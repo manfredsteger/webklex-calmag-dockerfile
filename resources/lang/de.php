@@ -185,6 +185,9 @@ return [
                 "nitrogen"  => [
                     "label" => "Stickstoff",
                 ],
+                "humic_acids" => [
+                    "label" => "Huminsäuren",
+                ],
             ],
         ]
     ]

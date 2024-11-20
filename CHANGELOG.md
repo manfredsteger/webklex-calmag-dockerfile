@@ -9,7 +9,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
+- NaN
+
+## [1.8.0] - 2024-11-20
+### Added
 - Additional additives added
+- Fertilizer information extended
 
 ## [1.7.0] - 2024-11-19
 ### Added

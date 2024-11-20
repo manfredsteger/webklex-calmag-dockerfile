@@ -50,7 +50,19 @@ class Calculator {
             throw new \InvalidArgumentException("Water needs to have calcium and magnesium values");
         }
         $this->additives = Config::get("additives", []);
-        $this->fertilizers = Config::get("fertilizers", []);
+
+        foreach (Config::get("fertilizers", []) as $brand_key => $brand) {
+            foreach ($brand["products"] as $product_key => $product) {
+                if(!isset($product["elements"]["calcium"]) && !isset($product["elements"]["magnesium"])) {
+                    continue;
+                }
+                $this->fertilizers[$brand["brand_name"] . " - " . $product["name"]] = [
+                    ...$product,
+                    "brand" => $brand["brand_name"],
+                ];
+            }
+        }
+
         $this->setRatio($ratio, 1.0);
         $this->setFertilizer($fertilizer);
         $this->setAdditive($additive);

@@ -185,6 +185,9 @@ return [
                 "nitrogen" => [
                     "label" => "Nitrogen",
                 ],
+                "humic_acids" => [
+                    "label" => "Humic acids",
+                ],
             ],
         ]
     ]
