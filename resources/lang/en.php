@@ -39,7 +39,11 @@ return [
         "Canna Mono Calcium"   => "Canna Mono Calcium",
         "CaC2H3O2H2O" => "Calciumacetat",
         "Ca3C6H5O74H2O" => "Calciumcitrat",
-        "CACO3" => "Calciumcarbonat",
+        "CaCO3" => "Calciumcarbonat",
+        "MgCO3" => "Magnesiumcarbonat",
+        "Action_Gartenkalk" => "Garden lime (Action)",
+        "MgO" => "Magnesiumoxid",
+        "CaO" => "Calciumoxid",
     ],
     "content" => [
         "calculator" => [
@@ -57,6 +61,7 @@ return [
             "missing" => ":name deficiency of :value mg/L",
             "result" => [
                 "title" => "CalMag calculation results",
+                "suggested_additive" => "Alternative fertilizer replacement",
                 "deficiency" => [
                     "magnesium" => "Your water has a magnesium deficiency of :ratio. This can be compensated by using :fertilizer and :magnesium_additive. A possible dosage can be found in the phase-dependent results below.",
                     "calcium" => "Your water has a calcium deficiency of :ratio. This can be partially compensated by using :fertilizer and :calcium_additive. A possible dosage can be found in the phase-dependent results below.",

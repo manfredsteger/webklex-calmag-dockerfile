@@ -117,7 +117,10 @@ class Calculator {
     }
 
     protected function summarizeElements(array $elements): array {
-        $result = [];
+        $result = [
+            "calcium"   => 0,
+            "magnesium" => 0,
+        ];
         foreach ($elements as $component => $value) {
             if (!isset($result[$component])) {
                 $result[$component] = 0;
@@ -200,7 +203,7 @@ class Calculator {
                     ($elements['magnesium'] < $target['magnesium']) &&
                     ($elements['magnesium'] - $target['magnesium'] < 0)
                 )) {
-                if (!isset($additive['real']["magnesium"]) || $additive['real']["magnesium"] <= 0) {
+                if (!isset($additive['real']["magnesium"]) || $additive['real']["magnesium"] <= ($additive['real']["calcium"] ?? 0)) {
                     break;
                 }
                 foreach ($additive['real'] as $component => $value) {
@@ -217,7 +220,7 @@ class Calculator {
                     ($elements['magnesium'] < $target['magnesium']) &&
                     ($elements['magnesium'] - $target['magnesium'] < 0)
                 )) {
-                if (!isset($additive['real']["calcium"]) || $additive['real']["calcium"] <= 0) {
+                if (!isset($additive['real']["calcium"]) || $additive['real']["calcium"] <= ($additive['real']["magnesium"] ?? 0)) {
                     break;
                 }
                 foreach ($additive['real'] as $component => $value) {
@@ -428,7 +431,9 @@ class Calculator {
     }
 
     public function setWater(array $water): void {
-        $fertilizer = $this->fertilizers[$this->fertilizer];
+        $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
+            "elements" => [],
+        ];
 
         if (isset($water["elements"]["sulphate"])) {
             $water["elements"]["sulfur"] = $water["elements"]["sulphate"] * 0.334;
@@ -468,7 +473,7 @@ class Calculator {
                 if (!isset($water["elements"][$component])) {
                     $this->water["elements"][$component] = 0;
                 }
-                $this->water["elements"][$component] = $water["elements"][$component];
+                $this->water["elements"][$component] = $water["elements"][$component] ?? 0.0;
             }
         }
     }

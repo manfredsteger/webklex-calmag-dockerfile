@@ -124,6 +124,7 @@ class Controller {
                 "region"                 => $this->region,
                 "elements"               => $this->elements,
                 "element_units"          => $this->element_units,
+                "show_suggestions"       => (bool)($_GET["show_suggestions"] ?? false),
                 "additive_concentration" => $this->additive_concentration,
             ];
             return [

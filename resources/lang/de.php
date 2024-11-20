@@ -39,7 +39,11 @@ return [
         "Canna Mono Calcium"   => "Canna Mono Calcium",
         "CaC2H3O2H2O"          => "Calciumacetat",
         "Ca3C6H5O74H2O"        => "Calciumcitrat",
-        "CACO3"                => "Calciumcarbonat",
+        "CaCO3"                => "Calciumcarbonat",
+        "MgCO3"                => "Magnesiumcarbonat",
+        "Action_Gartenkalk"  => "Gartenkalk (Green Boots - Action)",
+        "MgO"                  => "Magnesiumoxid",
+        "CaO"                  => "Calciumoxid",
     ],
     "content"  => [
         "calculator" => [
@@ -57,6 +61,7 @@ return [
             "missing"     => ":name Defizit von :value mg/L",
             "result"      => [
                 "title"      => "Ergebnisse der CalMag-Berechnung",
+                "suggested_additive" => "Alternativer Präparatersatz",
                 "deficiency" => [
                     "magnesium" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :magnesium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
                     "calcium"   => "Dein Wasser weist ein Calcium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",

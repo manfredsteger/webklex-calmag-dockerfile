@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
-- NaN
+- Additional additives added
 
 ## [1.7.0] - 2024-11-19
 ### Added
