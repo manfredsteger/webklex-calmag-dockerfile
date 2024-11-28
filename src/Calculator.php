@@ -417,43 +417,45 @@ class Calculator {
 
                 $dilution = min($ca_factor, $mg_factor);
 
-                $result["dilution"] = $dilution;
-                $result["water"] = 1.0 - $dilution;
+                if($dilution <= 1.0) {
+                    $result["dilution"] = $dilution;
+                    $result["water"] = 1.0 - $dilution;
 
-                $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
-                    "elements" => [],
-                ];
-                $elements = $this->summarizeElements($this->water["elements"]);
+                    $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
+                        "elements" => [],
+                    ];
+                    $elements = $this->summarizeElements($this->water["elements"]);
 
-                foreach ($elements as $element => $element_value) {
-                    $elements[$element] = $element_value * $dilution;
-                }
-
-                $fertilizer_nanoliter = 0;
-                $fertilizer_elements = $this->summarizeElements($fertilizer["elements"]);
-                if ($fertilizer_elements['calcium'] > 0 && $fertilizer_elements['magnesium'] > 0) {
-                    while (
-                        ($elements['calcium'] < $target["elements"]['calcium']) &&
-                        ($elements['calcium'] - $target["elements"]['calcium'] < 0) &&
-                        ($elements['magnesium'] < $target["elements"]['magnesium']) &&
-                        ($elements['magnesium'] - $target["elements"]['magnesium'] < 0)
-                    ) {
-                        foreach ($fertilizer_elements as $component => $value) {
-                            if (!isset($elements[$component])) {
-                                $elements[$component] = 0;
-                            }
-                            $elements[$component] += ($value * 10) / 100; // mg/ml
-                        }
-                        $fertilizer_nanoliter++;
+                    foreach ($elements as $element => $element_value) {
+                        $elements[$element] = $element_value * $dilution;
                     }
-                }
-                $result["ratio"] = $elements['calcium'] / $elements['magnesium'];
-                $result["elements"] = $elements;
 
-                $result['fertilizer'] = [
-                    "ml"   => $fertilizer_nanoliter / 100,
-                    "name" => $this->fertilizer,
-                ];
+                    $fertilizer_nanoliter = 0;
+                    $fertilizer_elements = $this->summarizeElements($fertilizer["elements"]);
+                    if ($fertilizer_elements['calcium'] > 0 && $fertilizer_elements['magnesium'] > 0) {
+                        while (
+                            ($elements['calcium'] < $target["elements"]['calcium']) &&
+                            ($elements['calcium'] - $target["elements"]['calcium'] < 0) &&
+                            ($elements['magnesium'] < $target["elements"]['magnesium']) &&
+                            ($elements['magnesium'] - $target["elements"]['magnesium'] < 0)
+                        ) {
+                            foreach ($fertilizer_elements as $component => $value) {
+                                if (!isset($elements[$component])) {
+                                    $elements[$component] = 0;
+                                }
+                                $elements[$component] += ($value * 10) / 100; // mg/ml
+                            }
+                            $fertilizer_nanoliter++;
+                        }
+                    }
+                    $result["ratio"] = $elements['calcium'] / $elements['magnesium'];
+                    $result["elements"] = $elements;
+
+                    $result['fertilizer'] = [
+                        "ml"   => $fertilizer_nanoliter / 100,
+                        "name" => $this->fertilizer,
+                    ];
+                }
             }
         }
 
