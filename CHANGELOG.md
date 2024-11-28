@@ -11,6 +11,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [2.0.0] - 2024-11-28
+### Added
+- CalMag builder added
+- Schedules added
+
 ## [1.8.0] - 2024-11-20
 ### Added
 - Additional additives added

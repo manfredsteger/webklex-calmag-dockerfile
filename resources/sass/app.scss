@@ -89,6 +89,8 @@ input[type=checkbox] {
     td, th {
         padding-left: 8px;
         padding-right: 8px;
+        /* prevent text from wrapping */
+        white-space: nowrap;
     }
 }
 

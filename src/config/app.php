@@ -22,17 +22,32 @@ return [
         "magnesium" => "content.form.element.magnesium.label",
     ],
     "targets" => [
+        GrowState::Propagation->value => [
+            "elements" => [
+                "calcium" => 60, // mg/L
+            ],
+            "weeks" => 1,
+        ],
         GrowState::Vegetation->value => [
-            //"magnesium" => 26.67, // mg/L
-            "calcium" => 80, // mg/L
+            "elements" => [
+                //"magnesium" => 26.67, // mg/L
+                "calcium" => 80, // mg/L
+            ],
+            "weeks" => 3,
         ],
         GrowState::Flower->value     => [
-            //"magnesium" => 33.33, // mg/L
-            "calcium" => 100, // mg/L
+            "elements" => [
+                //"magnesium" => 33.33, // mg/L
+                "calcium" => 100, // mg/L
+            ],
+            "weeks" => 4,
         ],
         GrowState::LateFlower->value => [
-            //"magnesium" => 43.33, // mg/L
-            "calcium" => 120, // mg/L
+            "elements" => [
+                //"magnesium" => 43.33, // mg/L
+                "calcium" => 130, // mg/L
+            ],
+            "weeks" => 4,
         ],
     ],
 ];

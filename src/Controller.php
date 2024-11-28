@@ -34,6 +34,7 @@ class Controller {
     ];
     private array $additive_concentration;
     private float $ratio = 3.5;
+    private float $density = 1.0;
 
     private float $volume = 5.0;
 
@@ -137,6 +138,31 @@ class Controller {
         });
     }
 
+    public function builder(array $payload): void {
+        try {
+            $this->validate($payload);
+        } catch (Exception $e) {
+            $this->validated = false;
+        }
+
+        $this->render(function() {
+            $form = [
+                "additive"               => count($this->additive) > 0 ? $this->additive : $this->calculator->getAdditive(),
+                "ratio"                  => $this->ratio,
+                "density"                  => $this->density,
+                "elements"               => $this->elements,
+                "element_units"          => $this->element_units,
+                "show_suggestions"       => true,
+            ];
+            return [
+                "form"               => $form,
+                "result"             => $this->validated ? $this->calculator->calculate() : null,
+                "available_elements" => $this->available_elements,
+                "calculator"         => $this->calculator,
+            ];
+        }, "builder");
+    }
+
     /**
      * Render the API response
      * @param array $payload The input payload
@@ -166,14 +192,15 @@ class Controller {
     /**
      * Render the view
      * @param callable $callback The callback function
+     * @param string $view The view to be rendered
      * @return void
      */
-    private function render(callable $callback): void {
+    private function render(callable $callback, string $view = "calculator"): void {
         include __DIR__ . '/../resources/views/header.phtml';
 
         extract($callback());
 
-        include __DIR__ . '/../resources/views/calculator_result.phtml';
+        include __DIR__ . '/../resources/views/'.$view.'.phtml';
 
         include __DIR__ . '/../resources/views/footer.phtml';
     }
@@ -188,6 +215,7 @@ class Controller {
         $additive = $payload['additive'] ?? [];
         $region = $payload['region'] ?? $this->region;
         $ratio = $payload['ratio'] ?? $this->ratio;
+        $density = $payload['density'] ?? $this->density;
         $volume = $payload['volume'] ?? $this->volume;
         $elements = $payload['elements'] ?? $this->elements;
         $element_units = $payload['element_units'] ?? $this->element_units;
@@ -207,6 +235,9 @@ class Controller {
         }
         if ($ratio <= 0) {
             throw new Exception("Invalid ratio");
+        }
+        if ($density <= 0) {
+            throw new Exception("Invalid density");
         }
         if ($volume <= 0) {
             throw new Exception("Invalid volume");
@@ -237,6 +268,7 @@ class Controller {
         $this->fertilizer = $fertilizer;
         $this->additive = $additive;
         $this->ratio = $ratio;
+        $this->density = $density;
         $this->volume = $volume;
         $this->region = $region;
         $this->additive_concentration = $additive_concentration;

@@ -110,6 +110,23 @@ return [
             "button" => [
                 "search_plz" => "Search water values online.",
                 "calculate" => "Calculate result",
+            ],
+            "table" => [
+                "phase" => "Phase",
+                "week" => "Week",
+                "ratio" => "Calcium / Magnesium ratio",
+                "target" => "Target value",
+                "missing" => "Deficiency",
+                "elements" => "Deficiency after adjustment",
+                "volume" => "For :volume liters of water you need:",
+
+                "before" => "Initial values",
+                "adjustment" => "Adjustment",
+                "mg_additive" => "Magnesium additive",
+                "ca_additive" => "Calcium additive",
+                "fertilizer" => "Fertilizer",
+                "deficiency" => "Deficiency",
+                "final" => "Total",
             ]
         ],
         "form" => [
@@ -138,6 +155,10 @@ return [
             "ratio" => [
                 "label" => "Calcium / Magnesium ratio",
                 "description" => "The ratio of calcium to magnesium should ideally be 3.5. However, this ratio can also be adjusted as desired.",
+            ],
+            "density" => [
+                "label" => "Density",
+                "description" => "Enter the density of your fertilizer here. The density is used to calculate the amount of fertilizer to be added.",
             ],
             "volume" => [
                 "label" => "Volume",

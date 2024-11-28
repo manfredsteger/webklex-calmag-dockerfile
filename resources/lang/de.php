@@ -53,7 +53,7 @@ return [
                 "label" => "Ausgangswasserwerte",
             ],
             "state"       => [
-                "propagation" => "Anzucht & Vermehrung",
+                "propagation" => "Anzucht",
                 "vegetation"  => "Wachstumsphase",
                 "flower"      => "Blütephase",
                 "late_flower" => "Späte Blütephase",
@@ -110,6 +110,23 @@ return [
             "button"      => [
                 "search_plz" => "Wasserwerte online suchen.",
                 "calculate"  => "Ergebnis berechnen",
+            ],
+            "table" => [
+                "phase" => "Phase",
+                "week" => "Woche",
+                "ratio" => "Calcium/Magnesium Verhältnis",
+                "target" => "Inhaltsstoff-Zielwerte",
+                "missing" => "Fehlende Inhaltsstoffe",
+                "elements" => "Inhaltsstoffe nach Anpassung",
+                "volume" => "Zur Herstellung von :volume Litern:",
+
+                "before" => "Ausgangsinhaltsstoffe",
+                "adjustment" => "Anpassung & Korrektur",
+                "mg_additive" => "Magnesium Zusatz",
+                "ca_additive" => "Calcium Zusatz",
+                "fertilizer" => "Präparat",
+                "deficiency" => "Defizit/Zugabe",
+                "final" => "Gesamt",
             ]
         ],
         "form"       => [
@@ -133,11 +150,15 @@ return [
             ],
             "additive_concentration" => [
                 "label"       => "Konzentration in %",
-                "description" => "Die Konzentration gibt an, wie viel des Zusatzstoffes tatsächlich in der Lösung enthalten ist. Dieser Wert wird in Prozent angegeben.",
+                "description" => "Die Konzentration gibt an, wie viel des Zusatzstoffes (z.B. Bittersalz, oder Canna Mono) in der eigens hergestellten Lösung enthalten ist. Dieser Wert wird in Prozent angegeben. Z.B. 10% Bittersalz bedeutet, dass 10g Bittersalz in 90ml Wasser gelöst wurden.",
             ],
             "ratio"      => [
                 "label"       => "Calcium / Magnesium - Verhältnis",
                 "description" => "Das Verhältnis von Calcium zu Magnesium liegt oft bei 3.5. Dieses Verhältnis kann beliebig angepasst werden.",
+            ],
+            "density" => [
+                "label" => "Dichte",
+                "description" => "Die Dichte gibt an, wie schwer ein Stoff ist. Dieser Wert wird in g/cm³ angegeben.",
             ],
             "volume"     => [
                 "label"       => "Volumen",
