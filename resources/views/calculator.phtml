@@ -59,7 +59,7 @@
                                                 data-target="additive_concentration_wrapper_<?php echo $element ?>"
                                                 class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none additive_unit_selector">
                                             <?php foreach (["ml", "mg"] as $unit): ?>
-                                                <option value="<?php echo $unit ?>" <?php echo $unit == ($form["additive_units"][$element] ?? "mg") ? "selected" : "" ?>>
+                                                <option value="<?php echo $unit ?>" <?php echo $unit == ($form["additive_units"][$element] ?? "ml") ? "selected" : "" ?>>
                                                     <?php echo $unit ?>/L
                                                 </option>
                                             <?php endforeach; ?>
