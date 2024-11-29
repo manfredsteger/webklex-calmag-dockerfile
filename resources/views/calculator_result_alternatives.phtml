@@ -1,0 +1,185 @@
+
+<?php $fertilizers = \Webklex\CalMag\Config::get("fertilizers", []); ?>
+<?php $additives = \Webklex\CalMag\Config::get("additives", []); ?>
+
+<div class="w-full pr-4 py-2 mt-8 text-center" id="results">
+    <h6 class="text-red-500 text-4xl font-normal">
+        <?php echo __("content.calculator.result.alternatives.title")?>
+    </h6>
+</div>
+
+<div class="w-full flex flex-wrap justify-start items-start self-start">
+    <div class="w-full md:w-1/3  mt-4">
+        <div class="w-full px-4 mb-4 h-40 lg:h-28 text-left" id="result-table">
+            <h6 class="text-xl text-red-500 text-left">
+                <?php echo __("content.calculator.result.alternatives.fertilizer.title")?>
+            </h6>
+            <p>
+                <?php echo __("content.calculator.result.alternatives.fertilizer.description")?>
+            </p>
+        </div>
+        <?php foreach ($fertilizers as $brand_key => $brand): ?>
+            <?php foreach ($brand["products"] as $product_key => $product): ?>
+                <?php
+                $is_calmag = isset($product["elements"]["calcium"]) && isset($product["elements"]["magnesium"]);
+                if(!$is_calmag) continue;
+                $brand_link = $brand["link"][__("region.default")];
+                $product_link = $product["link"][__("region.default")];
+                ?>
+                <div class="w-full px-4 mb-4 text-left" id="result-table">
+                    <h6 class="text-xl text-red-500 text-left">
+                        <?php echo $brand["brand_name"]." - ".$product["name"]?>
+                    </h6>
+                    <table>
+                        <tr>
+                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.brand.name")?>:</td>
+                            <td><?php echo $brand["brand_name"]?></td>
+                        </tr>
+                        <tr>
+                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.brand.url")?>:</td>
+                            <td>
+                                <a href="<?php echo $brand_link?>" target="_blank" class="text-red-500">
+                                    <?php echo $brand_link?>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.product.name")?>:</td>
+                            <td><?php echo $product["name"]?></td>
+                        </tr>
+                        <tr>
+                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.product.url")?>:</td>
+                            <td>
+                                <a href="<?php echo $product_link?>" target="_blank" class="text-red-500">
+                                    <?php echo $product_link?>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.product.density")?>:</td>
+                            <td>~<?php echo $product["density"]?> g/ml</td>
+                        </tr>
+                        <tr>
+                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.product.ph")?>:</td>
+                            <td>~<?php echo $product["ph"]?></td>
+                        </tr>
+                    </table>
+                    <h6 class="text-normal text-red-500 text-left">
+                        <?php echo __("content.calculator.result.alternatives.fertilizer.elements")?>:
+                    </h6>
+                    <table>
+                        <?php foreach ($product["elements"] as $element => $values): ?>
+                            <tr>
+                                <td>
+                                    <?php echo __("content.form.element.$element.label")?>:
+                                </td>
+                                <td>
+                                    <?php if(is_array($values)): ?>
+                                        <?php foreach ($values as $key => $value): ?>
+                                            <div class="w-full"><?php echo $key?>: <?php echo $value?> %</div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <?php echo $values?> %
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+
+                    <?php $base_url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
+                    <a href="<?php echo $base_url?>?p=<?php echo base64_encode(json_encode([
+                                                                                           "fertilizer" => $brand["brand_name"]." - ".$product["name"],
+                                                                                           "additive" => $form["additive"],
+                                                                                           "additive_concentration" => $form["additive_concentration"],
+                                                                                           "additive_units" => $form["additive_units"],
+                                                                                           "elements" => $form["elements"],
+                                                                                           "element_units" => $form["element_units"],
+                                                                                           "ratio" => $form["ratio"],
+                                                                                           "region" => $form["region"],
+                                                                                           "volume" => $form["volume"],
+                                                                                       ]))?>" class="text-red-500">
+                        <?php echo __("content.calculator.result.alternatives.fertilizer.try_link")?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
+    <?php foreach ($additives as $_element => $_additives): ?>
+    <div class="w-full md:w-1/3 mt-4">
+        <div class="w-full px-4 mb-4 h-40 lg:h-28 text-left" id="result-table">
+            <h6 class="text-xl text-red-500 text-left">
+                <?php echo __("content.calculator.result.alternatives.additive.$_element.title")?>
+            </h6>
+            <p>
+                <?php echo __("content.calculator.result.alternatives.additive.$_element.description")?>
+            </p>
+        </div>
+        <?php foreach ($_additives as $name => $additive): ?>
+            <?php
+            if(!isset($additive["elements"][$_element])) continue;
+            ?>
+            <div class="w-full px-4 mb-4 text-left" id="result-table">
+                <h6 class="text-xl text-red-500 text-left">
+                    <?php echo __("additive.".$name)?>
+                </h6>
+                <table>
+                    <tr>
+                        <td><?php echo __("content.calculator.result.alternatives.additive.name")?>:</td>
+                        <td><?php echo $name?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo __("content.calculator.result.alternatives.additive.density")?>:</td>
+                        <td><?php echo $additive["density"] ?? "1"?> g/ml</td>
+                    </tr>
+                </table>
+                <h6 class="text-normal text-red-500 text-left">
+                    <?php echo __("content.calculator.result.alternatives.additive.elements")?>:
+                </h6>
+                <table>
+                <?php foreach ($additive["elements"] as $element => $values): ?>
+                    <tr>
+                        <td>
+                            <?php echo __("content.form.element.$element.label")?>:
+                        </td>
+                        <td>
+                            <?php if(is_array($values)): ?>
+                                <?php foreach ($values as $key => $value): ?>
+                                    <div class="w-full"><?php echo $key?>: <?php echo $value?> %</div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <?php echo $values?> %
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </table>
+
+                <?php $base_url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
+                <a href="<?php echo $base_url?>?p=<?php echo base64_encode(json_encode([
+                                                                                           "fertilizer" => $form["fertilizer"],
+                                                                                           "additive" => [
+                                                                                                   "calcium" => $_element === "calcium" ? $name : $form["additive"]["calcium"],
+                                                                                                    "magnesium" => $_element === "magnesium" ? $name : $form["additive"]["magnesium"],
+                                                                                           ],
+                                                                                           "additive_concentration" => [
+                                                                                                    "calcium" => $_element === "calcium" ? $additive["concentration"] : $form["additive_concentration"]["calcium"],
+                                                                                                    "magnesium" => $_element === "magnesium" ? $additive["concentration"] : $form["additive_concentration"]["magnesium"],
+                                                                                           ],
+                                                                                           "additive_units" => $form["additive_units"],
+                                                                                           "elements" => $form["elements"],
+                                                                                           "element_units" => $form["element_units"],
+                                                                                           "ratio" => $form["ratio"],
+                                                                                           "region" => $form["region"],
+                                                                                           "volume" => $form["volume"],
+                                                                                       ]))?>" class="text-red-500">
+                    <?php echo __("content.calculator.result.alternatives.fertilizer.try_link")?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endforeach; ?>
+</div>
+
+<div class="px-2 lg:px-6 pt-2 pb-8 text-center">
+
+</div>

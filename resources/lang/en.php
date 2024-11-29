@@ -103,6 +103,40 @@ return [
                     "magnesium_without_fertilizer" => "Your water has a magnesium deficiency of :ratio. This can be compensated by using :magnesium_additive and :calcium_additive. A possible dosage can be found in the phase-dependent results below.",
                 ],
                 "share_link" => "Share your result or save the following link to perform the same calculation again later:",
+                "alternatives" => [
+                    "title" => "Alternative products",
+                    "description" => "The following products can be used as an alternative to the selected fertilizer.",
+                    "fertilizer" => [
+                        "title" => "Main fertilizer",
+                        "description" => "The main fertilizer should usually be the fertilizer that is used the most and contains both calcium and magnesium.",
+                        "brand" => [
+                            "name" => "Brand",
+                            "url" => "Brand URL",
+                        ],
+                        "product" => [
+                            "name" => "Product",
+                            "url" => "Product URL",
+                            "density" => "Density",
+                            "ph" => "pH",
+                        ],
+                        "elements" => "Ingredients",
+                        "try_link" => "Try calculation with this fertilizer",
+                    ],
+                    "additive" => [
+                        "calcium" => [
+                            "title" => "Calcium additive",
+                            "description" => "The calcium additive should usually be a preparation that contains only calcium.",
+                        ],
+                        "magnesium" => [
+                            "title" => "Magnesium additive",
+                            "description" => "The magnesium additive should usually be a preparation that contains only magnesium.",
+                        ],
+                        "name" => "Name",
+                        "density" => "Density",
+                        "elements" => "Ingredients",
+                        "try_link" => "Try calculation with this additive",
+                    ]
+                ],
             ],
             "google" => [
                 "query" => "Postal code+water values",

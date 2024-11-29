@@ -103,6 +103,40 @@ return [
                     "magnesium_without_fertilizer" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :magnesium_additive und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
                 ],
                 "share_link" => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
+                "alternatives" => [
+                    "title" => "Alternativer Präparatersatz",
+                    "description" => "Sollte das gewählte Präparat nicht verfügbar sein, können folgende Alternativen verwendet werden:",
+                    "fertilizer" => [
+                        "title" => "Hauptpräparat",
+                        "description" => "Das Hauptpräparat sollte in der Regel das Präparat sein, welches am meisten verwendet wird und sowohl Calcium als auch Magnesium enthält.",
+                        "brand" => [
+                            "name" => "Hersteller",
+                            "url" => "Hersteller-URL",
+                        ],
+                        "product" => [
+                            "name" => "Produkt",
+                            "url" => "Produkt-URL",
+                            "density" => "Dichte",
+                            "ph" => "pH-Wert",
+                        ],
+                        "elements" => "Inhaltsstoffe",
+                        "try_link" => "Berechnung mit diesem Präparat versuchen",
+                    ],
+                    "additive" => [
+                        "calcium" => [
+                            "title" => "Calcium-Zusatz",
+                            "description" => "Der Calcium-Zusatz sollte in der Regel ein Präparat sein, welches nur Calcium enthält.",
+                        ],
+                        "magnesium" => [
+                            "title" => "Magnesium-Zusatz",
+                            "description" => "Der Magnesium-Zusatz sollte in der Regel ein Präparat sein, welches nur Magnesium enthält.",
+                        ],
+                        "name" => "Bezeichnung",
+                        "density" => "Dichte",
+                        "elements" => "Inhaltsstoffe",
+                        "try_link" => "Berechnung mit diesem Zusatzstoff versuchen",
+                    ]
+                ]
             ],
             "google"      => [
                 "query" => "Postleitzahl+Wasserwerte",

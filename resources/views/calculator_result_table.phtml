@@ -1,0 +1,314 @@
+
+<table class="w-full table">
+    <tr>
+        <td class="font-normal text-left"></td>
+        <?php $week = 0; ?>
+        <?php foreach ($table["targets"] as $state => $target): ?>
+            <td colspan="<?php echo $target["weeks"]; ?>"  class="<?php echo $colors[$week += $target["weeks"]];?>"><?php echo __("content.calculator.state.$state")?></td>
+        <?php endforeach; ?>
+    </tr>
+    <tr>
+        <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.week")?></td>
+        <?php $week = 1; ?>
+        <?php foreach ($table["targets"] as $state => $target): ?>
+            <?php for ($i = 1; $i <= $target["weeks"]; $i++): ?>
+                <td class="<?php echo $colors[$week];?>"><?php echo $week++ ?></td>
+            <?php endfor; ?>
+        <?php endforeach; ?>
+    </tr>
+    <?php if ($table["fertilizer"]["name"] !== ""): ?>
+        <tr>
+            <td class="pr-2 font-semibold text-right text-green-200"><?php echo $table["fertilizer"]["name"]?></td>
+            <?php foreach ($table["fertilizer"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-green-200"><?php echo $value ? pretty_number($value, "ml", 2, ",", ".")."/L" : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+
+    <?php
+    $has_ca_additive = false;
+    $has_mg_additive = false;
+    foreach ($table["ca_additive"]["rows"] as $week => $value) {
+        if (($value["ml"] ?? 0) > 0) {
+            $has_ca_additive = true;
+            break;
+        }
+    }
+    foreach ($table["mg_additive"]["rows"] as $week => $value) {
+        if (($value["ml"] ?? 0) > 0) {
+            $has_mg_additive = true;
+            break;
+        }
+    }
+    ?>
+    <?php if ($table["ca_additive"]["name"] !== "" && $has_ca_additive): ?>
+        <tr>
+            <td class="pr-2 font-semibold text-right text-red-200">
+                <?php echo __("additive.".$table["ca_additive"]["name"])?>
+                <?php if($table["ca_additive"]["concentration"] < 100): ?>
+                    (<?php echo $table["ca_additive"]["concentration"]?>%)
+                <?php endif; ?>
+            </td>
+            <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
+                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
+                    <?php else: ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
+                    <?php endif; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+    <?php if ($table["mg_additive"]["name"] !== "" && $has_mg_additive): ?>
+        <tr>
+            <td class="pr-2 font-semibold text-right text-sky-200">
+                <?php echo __("additive.".$table["mg_additive"]["name"])?>
+                <?php if($table["mg_additive"]["concentration"] < 100): ?>
+                    (<?php echo $table["mg_additive"]["concentration"]?>%)
+                <?php endif; ?>
+            </td>
+            <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-sky-200">
+                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
+                    <?php else: ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
+                    <?php endif; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+
+    <?php
+    $has_osmose = false;
+    foreach ($table["water"] as $week => $value) {
+        if ($value["water"] > 0) {
+            $has_osmose = true;
+            break;
+        }
+    }
+    ?>
+
+    <?php if ($has_osmose): ?>
+        <tr>
+            <td class="pr-2 font-normal text-right"><?php echo __("dilution.stock") ?></td>
+            <?php foreach ($table["water"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?>"><?php echo $value["dilution"] ? pretty_number($value["dilution"]*1000, "ml", 2, ",", ".")."/L" : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+        <tr>
+            <td class="pr-2 font-normal text-right"><?php echo __("dilution.water") ?></td>
+            <?php foreach ($table["water"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?>"><?php echo $value["water"] ? pretty_number($value["water"]*1000, "ml", 2, ",", ".")."/L" : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+
+
+    <tr>
+        <td class="pr-2 pt-4 font-semibold text-right"><?php echo __("content.calculator.table.volume", ["volume" => $form["volume"]])?></td>
+    </tr>
+
+    <?php if ($table["fertilizer"]["name"] !== ""): ?>
+        <tr>
+            <td class="pr-2 text-right font-semibold text-green-200"><?php echo $table["fertilizer"]["name"]?></td>
+            <?php foreach ($table["fertilizer"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-green-200"><?php echo $value ? pretty_number($value * $form["volume"], "ml", 2, ",", ".") : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+    <?php if ($table["ca_additive"]["name"] !== "" && $has_ca_additive): ?>
+        <tr>
+            <td class="pr-2 text-right font-semibold text-red-200">
+                <?php echo __("additive.".$table["ca_additive"]["name"])?>
+                <?php if($table["ca_additive"]["concentration"] < 100): ?>
+                    (<?php echo $table["ca_additive"]["concentration"]?>%)
+                <?php endif; ?>
+            </td>
+            <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
+                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".")."/L" : "-" ?>
+                    <?php else: ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".")."/L" : "-" ?>
+                    <?php endif; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+    <?php if ($table["mg_additive"]["name"] !== "" && $has_mg_additive): ?>
+        <tr>
+            <td class="pr-2 font-semibold text-right text-sky-200">
+                <?php echo __("additive.".$table["mg_additive"]["name"])?>
+                <?php if($table["mg_additive"]["concentration"] < 100): ?>
+                    (<?php echo $table["mg_additive"]["concentration"]?>%)
+                <?php endif; ?>
+            </td>
+            <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> text-sky-200 font-semibold">
+                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".")."/L" : "-" ?>
+                    <?php else: ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".")."/L" : "-" ?>
+                    <?php endif; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+    <?php if ($has_osmose): ?>
+        <tr>
+            <td class="pr-2 font-normal text-right"><?php echo __("dilution.stock") ?></td>
+            <?php foreach ($table["water"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?>"><?php echo $value["dilution"] ? pretty_number($value["dilution"]*1000 * $form["volume"], "ml", 2, ",", ".") : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+        <tr>
+            <td class="pr-2 font-normal text-right"><?php echo __("dilution.water") ?></td>
+            <?php foreach ($table["water"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?>"><?php echo $value["water"] ? pretty_number($value["water"]*1000 * $form["volume"], "ml", 2, ",", ".") : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endif; ?>
+
+    <tr>
+        <td class="pr-2 pt-6 font-semibold" colspan="<?php echo count($table["water"]) +1 ?>">
+            <div class="w-full flex flex-wrap justify-center text-center items-center">
+                <div class="px-3 py-1 bg-slate-700 text-slate-200 rounded clickable result-detail-table-trigger">
+                    <?php echo __("content.calculator.button.table_show_details")?>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="result-detail-table">
+        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.before")?></td>
+    </tr>
+    <?php foreach ($table["target"][1]["elements"] as $element => $_value): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+            <?php foreach ($table["elements"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($water["elements"][$element] * $table["water"][$week]["dilution"], "mg", 2, ",", ".") ?>/L</td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+
+    <tr class="result-detail-table">
+        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.target")?></td>
+    </tr>
+    <?php foreach ($table["target"][1]["elements"] as $element => $_value): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+            <?php foreach ($table["target"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($value["elements"][$element], "mg", 2, ",", ".") ?>/L</td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+
+    <tr class="result-detail-table">
+        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.missing")?></td>
+    </tr>
+    <?php foreach ($table["missing"][1] as $element => $_value): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+            <?php foreach ($table["missing"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($value[$element], "mg", 2) ?>/L</td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+
+    <tr class="result-detail-table">
+        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.adjustment")?></td>
+    </tr>
+    <?php if ($table["fertilizer"]["name"] !== ""): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 text-right font-semibold text-green-200"><?php echo $table["fertilizer"]["name"]?></td>
+            <?php foreach ($table["fertilizer"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-green-200"><?php echo $value ? pretty_number($value, "ml", 2, ",", ".") : "-" ?></td>
+            <?php endforeach; ?>
+        </tr>
+        <?php foreach ($table["elements"][1] as $element => $_value): ?>
+            <tr class="result-detail-table">
+                <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+                <?php foreach ($table["elements"] as $week => $value): ?>
+                    <?php $fertilizer = $calculator->getFertilizerComponents($table["fertilizer"]["rows"][$week]); ?>
+                    <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($fertilizer[$element], "mg", 2, ",", ".") ?>/L</td>
+                <?php endforeach; ?>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <?php if ($table["ca_additive"]["name"] !== "" && $has_ca_additive): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 text-right font-semibold text-red-200">
+                <?php echo __("additive.".$table["ca_additive"]["name"])?>
+                <?php if($table["ca_additive"]["concentration"] < 100): ?>
+                    (<?php echo $table["ca_additive"]["concentration"]?>%)
+                <?php endif; ?>
+            </td>
+            <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
+                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
+                    <?php else: ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
+                    <?php endif; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+        <?php foreach ($table["missing"][1] as $element => $_value): ?>
+            <tr class="result-detail-table">
+                <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+                <?php foreach ($table["elements"] as $week => $value): ?>
+                    <?php $_additive = $calculator->getAdditiveComponents("calcium", $table["ca_additive"]["rows"][$week]["ml"]); ?>
+                    <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($_additive[$element], "mg", 2, ",", ".") ?>/L</td>
+                <?php endforeach; ?>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <?php if ($table["mg_additive"]["name"] !== "" && $has_mg_additive): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 font-semibold text-right text-sky-200">
+                <?php echo __("additive.".$table["mg_additive"]["name"])?>
+                <?php if($table["mg_additive"]["concentration"] < 100): ?>
+                    (<?php echo $table["mg_additive"]["concentration"]?>%)
+                <?php endif; ?>
+            </td>
+            <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> text-sky-200 font-semibold">
+                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
+                    <?php else: ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
+                    <?php endif; ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+        <?php foreach ($table["missing"][1] as $element => $_value): ?>
+            <tr class="result-detail-table">
+                <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+                <?php foreach ($table["elements"] as $week => $value): ?>
+                    <?php $_additive = $calculator->getAdditiveComponents("magnesium", $table["mg_additive"]["rows"][$week]["ml"]); ?>
+                    <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($_additive[$element], "mg", 2, ",", ".") ?>/L</td>
+                <?php endforeach; ?>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <tr class="result-detail-table">
+        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.elements")?></td>
+    </tr>
+    <?php foreach ($table["elements"][1] as $element => $_value): ?>
+        <tr class="result-detail-table">
+            <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+            <?php foreach ($table["elements"] as $week => $value): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($value[$element], "mg", 2, ",", ".") ?>/L</td>
+            <?php endforeach; ?>
+        </tr>
+    <?php endforeach; ?>
+    <tr class="result-detail-table">
+        <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.ratio")?></td>
+        <?php foreach ($table["ratio"] as $week => $value): ?>
+            <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo number_format($value, 2, ",", ".") ?>:1</td>
+        <?php endforeach; ?>
+    </tr>
+</table>

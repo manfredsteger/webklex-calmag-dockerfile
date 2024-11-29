@@ -11,6 +11,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
+## [2.2.0] - 2024-11-30
+### Added
+- Alternative calculations added
+
 ## [2.1.0] - 2024-11-29
 ### Fixed
 - Only dilute possible dilutions
