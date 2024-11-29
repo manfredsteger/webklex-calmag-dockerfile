@@ -8,7 +8,9 @@ yarn-debug.log*
 yarn-error.log*
 /.pnp
 .pnp.js
-
+phpunit.xml
 .vscode/*
 /vendor/
 /node_modules/
+/build/
+.phpunit.result.cache

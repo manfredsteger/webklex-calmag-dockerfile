@@ -173,12 +173,17 @@ class Controller {
             $this->validate($payload);
         } catch (Exception $e) {
             $this->validated = false;
+            $message = $e->getMessage();
         }
 
-        header('Content-Type: application/json');
+        try{
+            header('Content-Type: application/json');
+        } catch (Exception $e) {
+            // Handle the exception
+        }
         if (!$this->validated) {
             echo json_encode([
-                                 "error" => "Invalid input",
+                                 "error" => $message ?? "Invalid input",
                              ]);
             http_response_code(400);
             return;

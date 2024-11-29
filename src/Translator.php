@@ -37,7 +37,7 @@ class Translator {
     public function load(): void {
         $locale = substr(array_map(function($locale) {
             return explode("-", explode(",", $locale)[0])[0];
-        }, array_filter(explode(";", $_SERVER['HTTP_ACCEPT_LANGUAGE']), function($locale) {
+        }, array_filter(explode(";", $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? ""), function($locale) {
             return str_contains($locale, ",");
         }))[0] ?? "en", 0, 2);
 

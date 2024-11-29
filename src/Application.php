@@ -60,6 +60,9 @@ class Application {
             // Check for potential json request and call the api if this is the case
             if ($_SERVER["HTTP_ACCEPT"] === "application/json" || $_SERVER["CONTENT_TYPE"] === "application/json") {
                 $payload = json_decode(file_get_contents('php://input'), true);
+                if(!is_array($payload)){
+                    $payload = [];
+                }
                 $this->controller->api($payload);
                 return;
 

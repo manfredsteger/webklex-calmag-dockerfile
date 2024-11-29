@@ -26,7 +26,7 @@ enum GrowState: string {
         ];
     }
 
-    public function getLabels(): array {
+    public static function getLabels(): array {
         return [
             self::Propagation->value,
             self::Vegetation->value,

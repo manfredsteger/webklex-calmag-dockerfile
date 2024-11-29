@@ -28,7 +28,7 @@ return [
                         "MgO" => 1.7, // % MgO 1.7% -> 1.7 * 0.6032 = 1.02544
                     ],
                 ],
-                "density"  => 1.1, // g/cm³
+                "density"  => 1.087, // g/cm³
                 "ph"       => 7.0, // pH-Wert
                 "schedule" => false,
                 "link"     => [

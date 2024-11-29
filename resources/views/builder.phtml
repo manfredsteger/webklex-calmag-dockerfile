@@ -480,49 +480,6 @@
 
                             </div>
                             <div class="w-full  px-3 py-1 text-left">
-                            <?php if($form["volume"] > 0): ?>
-                                <?php echo __("content.calculator.result.deficiency.state.suggested_amount_table", [
-                                    "volume" =>  number_format($form["volume"],2, ",", ""),
-                                ])?>
-                                <table>
-                                    <?php if ($results["fertilizer"]["ml"] > 0): ?>
-                                        <tr>
-                                            <td><?php echo $results["fertilizer"]["name"] ?>:</td>
-                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["fertilizer"]["ml"] * $form["volume"], 2, ",", "") ?> ml</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                    <?php if ($results["additive"]["magnesium"]["ml"] > 0): ?>
-                                        <tr>
-                                            <td><?php echo __("additive.".$results["additive"]["magnesium"]["name"]) ?> (<?php echo $results["additive"]["magnesium"]["concentration"] ?>%):</td>
-                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["additive"]["magnesium"]["ml"] * $form["volume"], 2, ",", "") ?> ml</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                    <?php if ($results["additive"]["calcium"]["ml"] > 0): ?>
-                                        <tr>
-                                            <td><?php echo __("additive.".$results["additive"]["calcium"]["name"]) ?> (<?php echo $results["additive"]["calcium"]["concentration"] ?>%):</td>
-                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["additive"]["calcium"]["ml"] * $form["volume"], 2, ",", "") ?> ml</td>
-                                        </tr>
-                                    <?php endif; ?>
-
-                                    <?php if($results["water"] > 0): ?>
-                                        <tr>
-                                            <td><?php echo __("dilution.stock") ?>:</td>
-                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["dilution"]*1000 * $form["volume"], 2, ",", "") ?> ml</td>
-                                        </tr>
-                                        <tr>
-                                            <td><?php echo __("dilution.water") ?>:</td>
-                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["water"]*1000 * $form["volume"], 2, ",", "") ?> ml</td>
-                                        </tr>
-                                        <br />
-                                    <?php else: ?>
-                                        <tr>
-                                            <td><?php echo __("dilution.stock") ?>:</td>
-                                            <td class="pl-2 text-red-500 font-bold"><?php echo number_format(1000 * $form["volume"], 2, ",", "") ?> ml</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </table>
-
-                            <?php endif; ?>
 
                         </div>
                         </div>
@@ -534,14 +491,11 @@
                     <?php echo __("content.calculator.result.share_link")?>
                     <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
                     <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1"><?php echo $link?>?builder=1&p=<?php echo base64_encode(json_encode([
-                                                                                                                                                  "fertilizer" => $form["fertilizer"],
                                                                                                                                                   "additive" => $form["additive"],
-                                                                                                                                                  "additive_concentration" => $form["additive_concentration"],
+                                                                                                                                                  "additive_concentration" => $form["additive_concentration"] ?? [],
                                                                                                                                                   "elements" => $form["elements"],
                                                                                                                                                   "element_units" => $form["element_units"],
                                                                                                                                                   "ratio" => $form["ratio"],
-                                                                                                                                                  "region" => $form["region"],
-                                                                                                                                                  "volume" => $form["volume"],
                                                                                                                                               ]))?></div>
                 </div>
 
@@ -556,13 +510,11 @@
     Bots are welcome:
     <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
     <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1 overflow-x-auto">curl -X POST -H "Content-Type: application/json" -d '<?php echo json_encode([
-            "fertilizer" => $form["fertilizer"],
             "additive" => $form["additive"],
-            "additive_concentration" => $form["additive_concentration"],
+            "additive_concentration" => $form["additive_concentration"] ?? [],
             "elements" => $form["elements"],
             "element_units" => $form["element_units"],
             "ratio" => $form["ratio"],
-            "region" => __("region.default"),
                                                                                                                                                  ]); ?>' <?php echo $link?></div>
 </div>
 

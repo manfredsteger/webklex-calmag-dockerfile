@@ -79,10 +79,10 @@ class Calculator {
             foreach ($this->fertilizers[$index]["elements"] as $component => $value) {
                 if (is_array($value)) {
                     foreach ($value as $sub_element => $sub_value) {
-                        $this->fertilizers[$index][$component][$sub_element] = $sub_value * ($fertilizer["density"] ?? 1.0);
+                        $this->fertilizers[$index]["elements"][$component][$sub_element] = $sub_value * ($fertilizer["density"] ?? 1.0);
                     }
                 } else {
-                    $this->fertilizers[$index][$component] = $value * ($fertilizer["density"] ?? 1.0);
+                    $this->fertilizers[$index]["elements"][$component] = $value * ($fertilizer["density"] ?? 1.0);
                 }
             }
         }
@@ -98,8 +98,14 @@ class Calculator {
 
     protected function calculateRealAdditiveConcentrations(array $additive): array {
         $additive['real'] = [];
-        foreach ($this->summarizeElements($additive['elements'] ?? []) as $component => $value) {
+        if(!isset($additive["elements"])) {
+            $additive["elements"] = [];
+        }
+        foreach ($this->summarizeElements($additive['elements']) as $component => $value) {
             $additive['real'][$component] = (($value * 10) * ($additive['concentration'] / 100)) * ($additive["density"] ?? 1.0);
+            if(!isset($additive["elements"][$component])) {
+                $additive["elements"][$component] = 0;
+            }
         }
         return $additive;
     }
@@ -122,7 +128,7 @@ class Calculator {
     public function calculate(): array {
         $deficiency = $this->getDeficiencyRatio();
         $results = $this->getAppliedFertilizer();
-        $table = $this->generateResultTable($results);
+        $table = $this->generateResultTable();
         return [
             "deficiency" => $deficiency,
             "results"    => $results,
@@ -130,7 +136,7 @@ class Calculator {
         ];
     }
 
-    public function generateResultTable(array $results): array {
+    public function generateResultTable(): array {
         $start_elements = $this->targets[GrowState::Propagation->value]["elements"] ?? [
             "calcium" => 40,
         ];
@@ -166,8 +172,8 @@ class Calculator {
         }
 
 
-        $ca_additive = $this->additives["calcium"][$this->additive["calcium"]] ?? [];
-        $mg_additive = $this->additives["magnesium"][$this->additive["magnesium"]] ?? [];
+        $ca_additive = $this->additives["calcium"][$this->additive["calcium"] ?? ""] ?? [];
+        $mg_additive = $this->additives["magnesium"][$this->additive["magnesium"] ?? ""] ?? [];
 
         $table = [
             "targets"    => $this->targets,
@@ -176,12 +182,12 @@ class Calculator {
                 "rows" => [],
             ],
             "ca_additive" => [
-                "name" => $this->additive["calcium"],
+                "name" => $this->additive["calcium"] ?? "",
                 "concentration" => $ca_additive["concentration"] ?? 0,
                 "rows" => [],
             ],
             "mg_additive" => [
-                "name" => $this->additive["magnesium"],
+                "name" => $this->additive["magnesium"] ?? "",
                 "concentration" => $mg_additive["concentration"] ?? 0,
                 "rows" => [],
             ],
@@ -215,6 +221,10 @@ class Calculator {
         return $table;
     }
 
+    /**
+     * Get the applied fertilizer results for all targets
+     * @return array
+     */
     public function getAppliedFertilizer(): array {
         $result = [];
         foreach ($this->targets as $state => $target) {
@@ -223,7 +233,12 @@ class Calculator {
         return $result;
     }
 
-    protected function summarizeElements(array $elements): array {
+    /**
+     * Summarize a given element array
+     * @param array $elements
+     * @return array
+     */
+    public function summarizeElements(array $elements): array {
         $result = [
             "calcium"   => 0,
             "magnesium" => 0,
@@ -247,6 +262,11 @@ class Calculator {
         return $result;
     }
 
+    /**
+     * Calculate the fertilizer needed to reach the target
+     * @param array $target The target elements
+     * @return array
+     */
     public function calculateFertilizer(array $target): array {
         $result = [];
         $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
@@ -301,7 +321,16 @@ class Calculator {
         }
 
         foreach ($this->additive as $element => $name) {
-            $additive = $this->additives[$element][$name];
+            $additive = $this->additives[$element][$name] ?? null;
+            if($additive === null) {
+                $result['additive'][$element] = [
+                    "ml"            => 0,
+                    "mg"            => 0,
+                    "name"          => $name,
+                    "concentration" => 100,
+                ];
+                continue;
+            }
 
             $additive_nanoliter = 0;
             while ($elements['calcium'] / $elements['magnesium'] > $this->ratios['calcium'] || (
@@ -462,14 +491,23 @@ class Calculator {
         return $result;
     }
 
-    private function getSuggestedAdditives(array $missing): array {
+    /**
+     * Get the suggested additives
+     * @param array $missing [element => missing]
+     *
+     * @return array
+     */
+    public function getSuggestedAdditives(array $missing): array {
         $suggested_additive = [];
         foreach ($this->additives as $element => $additives) {
             $_missing = $missing[$element] ?? 0;
             if ($_missing <= 0) {
                 continue;
             }
-            $_additive = $this->additives[$element][$this->additive[$element]];
+            $_additive = $this->additives[$element][$this->additive[$element] ?? ""] ?? null;
+            if ($_additive === null) {
+                continue;
+            }
             $_elements = $this->calculateRealAdditiveConcentrations([
                                                                         "elements"      => $_additive['elements'],
                                                                         "concentration" => 100,
@@ -499,6 +537,10 @@ class Calculator {
         return $suggested_additive;
     }
 
+    /**
+     * Get the deficiency ratios
+     * @return array|float[]
+     */
     public function getDeficiencyRatio(): array {
         if ($this->water["elements"]['calcium'] > $this->water["elements"]['magnesium']) {
             return [
@@ -517,6 +559,11 @@ class Calculator {
         ];
     }
 
+    /**
+     * Set the fertilizer
+     * @param string $fertilizer The fertilizer name
+     * @return void
+     */
     public function setFertilizer(string $fertilizer): void {
         if (!isset($this->fertilizers[$fertilizer]) && $fertilizer !== "") {
             throw new \InvalidArgumentException("Fertilizer not found");
@@ -524,6 +571,13 @@ class Calculator {
         $this->fertilizer = $fertilizer;
     }
 
+    /**
+     * Set the additive
+     * @param array $additives [element => additive]
+     * @param array $concentrations [element => concentration]
+     *
+     * @return void
+     */
     public function setAdditive(array $additives, array $concentrations = []): void {
         foreach ($additives as $element => $additive) {
             if (!isset($this->additives[$element][$additive]) && $additive !== "") {
@@ -539,6 +593,11 @@ class Calculator {
         }
     }
 
+    /**
+     * Set the water values
+     * @param array $water The water values
+     * @return void
+     */
     public function setWater(array $water): void {
         $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
             "elements" => [],
@@ -565,11 +624,15 @@ class Calculator {
             "elements" => [],
         ];
 
-        foreach ($fertilizer["elements"] as $component => $value) {
-            if (!isset($water["elements"][$component])) {
-                $this->water["elements"][$component] = 0;
+        if(count($fertilizer["elements"]) > 0) {
+            foreach ($fertilizer["elements"] as $component => $value) {
+                if (!isset($water["elements"][$component])) {
+                    $this->water["elements"][$component] = 0;
+                }
+                $this->water["elements"][$component] = $water["elements"][$component] ?? 0.0;
             }
-            $this->water["elements"][$component] = $water["elements"][$component];
+        }else{
+            $this->water["elements"] = $water["elements"];
         }
 
 
@@ -587,6 +650,13 @@ class Calculator {
         }
     }
 
+    /**
+     * Set the calcium and magnesium ratio
+     * @param float $calcium The calcium ratio
+     * @param float $magnesium The magnesium ratio
+     *
+     * @return void
+     */
     public function setRatio(float $calcium, float $magnesium): void {
         $this->ratios = [
             "calcium"   => $calcium,
@@ -597,10 +667,20 @@ class Calculator {
         }
     }
 
+    /**
+     * Get the currently loaded water values
+     * @return array
+     */
     public function getWater(): array {
         return $this->water;
     }
 
+    /**
+     * Get the components for the currently selected fertilizer
+     * @param float $ml The amount of fertilizer in ml
+     *
+     * @return array
+     */
     public function getFertilizerComponents(float $ml): array {
         $fertilizer = $this->fertilizers[$this->fertilizer] ?? [
             "elements" => [],
@@ -616,9 +696,19 @@ class Calculator {
         return $result;
     }
 
+    /**
+     * Get the additive components for a specific element
+     * @param string $element The element to get the additive components for
+     * @param float $ml The amount of additive in ml
+     *
+     * @return array
+     */
     public function getAdditiveComponents(string $element, float $ml): array {
-        $additive = $this->additives[$element][$this->additive[$element]];
+        $additive = $this->additives[$element][$this->additive[$element] ?? ""] ?? null;
         $result = [];
+        if($additive === null) {
+            return $result;
+        }
 
         foreach ($additive['real'] as $component => $value) {
             $result[$component] = $value * $ml;
@@ -627,22 +717,56 @@ class Calculator {
         return $result;
     }
 
+    /**
+     * Get the currently selected additive
+     * @return array|string[]
+     */
     public function getAdditive(): array {
         return $this->additive;
     }
 
+    /**
+     * Get the currently selected fertilizer
+     * @return string
+     */
     public function getFertilizer(): string {
         return $this->fertilizer;
     }
 
+    /**
+     * Set the target values for a specific state
+     * @param GrowState $state The state to set the target for
+     * @param array $target The target values for the given state
+     *
+     * @return void
+     */
     public function setTarget(GrowState $state, array $target): void {
         $this->targets[$state->value] = $this->validateTarget($target);
     }
 
+    /**
+     * Get all loaded and available targets
+     *
+     * @return array
+     */
+    public function getTargets(): array {
+        return $this->targets;
+    }
+
+    /**
+     * Get all loaded and available fertilizers
+     *
+     * @return array
+     */
     public function getFertilizers(): array {
         return $this->fertilizers;
     }
 
+    /**
+     * Get all loaded and available additives
+     *
+     * @return array
+     */
     public function getAdditives(): array {
         $additives = [];
         foreach ($this->additives as $element => $additive_group) {
@@ -656,6 +780,11 @@ class Calculator {
         return $additives;
     }
 
+    /**
+     * Get all elements that are present in the water, fertilizers and additives
+     *
+     * @return array
+     */
     public function getElements(): array {
         $elements = [];
         foreach ($this->water["elements"] as $element => $value) {
@@ -674,6 +803,18 @@ class Calculator {
             }
 
         }
-        return array_unique($elements);
+        $elements = array_unique($elements);
+        sort($elements);
+        return $elements;
+    }
+
+    /**
+     * Get the ratio for a specific element
+     * @param $element string The element to get the ratio for
+     *
+     * @return float
+     */
+    public function getRatio(string $element): float {
+        return $this->ratios[$element];
     }
 }
