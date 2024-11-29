@@ -52,7 +52,7 @@ return [
                     "calcium"   => 5.6, // %
                     "magnesium" => 1.7, // %
                 ],
-                "density"  => 1.0, // g/cm³
+                "density"  => 1.258, // g/cm³
                 "ph"       => 7.0, // pH-Wert
                 "schedule" => false,
                 "link"     => [

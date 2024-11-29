@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [UNRELEASED]
 ### Fixed
 - Only dilute possible dilutions
+- Fertilizer densities adjusted
 
 ### Added
 - NaN
