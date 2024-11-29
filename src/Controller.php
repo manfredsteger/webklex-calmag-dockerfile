@@ -185,7 +185,11 @@ class Controller {
             echo json_encode([
                                  "error" => $message ?? "Invalid input",
                              ]);
-            http_response_code(400);
+            try{
+                http_response_code(400);
+            } catch (Exception $e) {
+                // Handle the exception
+            }
             return;
         }
         echo json_encode([
