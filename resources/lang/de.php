@@ -110,6 +110,8 @@ return [
             "button"      => [
                 "search_plz" => "Wasserwerte online suchen.",
                 "calculate"  => "Ergebnis berechnen",
+                "table_show_details" => "Inhaltsstoffdetails anzeigen",
+                "table_hide_details" => "Inhaltsstoffdetails verbergen",
             ],
             "table" => [
                 "phase" => "Phase",

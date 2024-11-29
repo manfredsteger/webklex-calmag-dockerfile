@@ -21,6 +21,7 @@ return [
             ],
             "concentration" => 100.0, // %
             "density"       => 1.283, // g/cm³
+            "unit"          => "ml",
         ],
         // Ca(C₂H₃O₂)₂ · H₂O = Calciumacetat (Calciumacetat-hydrat)
         "CaC2H3O2H2O"        => [
@@ -76,6 +77,7 @@ return [
             ],
             "concentration" => 100.0, // %
             "density"       => 1.23, // g/cm³
+            "unit"          => "ml",
         ],
         "MgSO4"                => [
             // Magnesiumsulfat

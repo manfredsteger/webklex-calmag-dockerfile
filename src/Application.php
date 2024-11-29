@@ -22,7 +22,7 @@ class Application {
     /**
      * @var string VERSION The current version of the application
      */
-    const VERSION = "2.0.0";
+    const VERSION = "2.1.0";
 
     /**
      * @var Controller $controller The controller instance
@@ -86,6 +86,7 @@ class Application {
                                           "elements"      => $payload["elements"] ?? [],
                                           "element_units" => $payload["element_units"] ?? [],
                                           "additive_concentration" => $payload["additive_concentration"] ?? [],
+                                          "additive_units" => $payload["additive_units"] ?? [],
                                       ]);
             return;
         }

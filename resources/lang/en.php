@@ -110,6 +110,8 @@ return [
             "button" => [
                 "search_plz" => "Search water values online.",
                 "calculate" => "Calculate result",
+                "table_show_details" => "Show details",
+                "table_hide_details" => "Hide details",
             ],
             "table" => [
                 "phase" => "Phase",

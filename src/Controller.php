@@ -33,6 +33,7 @@ class Controller {
         "calcium"   => "",
     ];
     private array $additive_concentration;
+    private array $additive_units;
     private float $ratio = 3.5;
     private float $density = 1.0;
 
@@ -73,6 +74,10 @@ class Controller {
             "magnesium" => $additives["magnesium"][array_key_first($additives["magnesium"])]["concentration"],
             "calcium"   => $additives["calcium"][array_key_first($additives["calcium"])]["concentration"],
         ];
+        $this->additive_units = [
+            "magnesium" => $additives["magnesium"][array_key_first($additives["magnesium"])]["unit"] ?? "mg",
+            "calcium"   => $additives["calcium"][array_key_first($additives["calcium"])]["unit"] ?? "mg",
+        ];
     }
 
     /**
@@ -93,6 +98,7 @@ class Controller {
                 "elements"               => $this->elements,
                 "element_units"          => $this->element_units,
                 "additive_concentration" => $this->additive_concentration,
+                "additive_units" => $this->additive_units,
             ];
             return [
                 "form"               => $form,
@@ -127,6 +133,7 @@ class Controller {
                 "element_units"          => $this->element_units,
                 "show_suggestions"       => (bool)($_GET["show_suggestions"] ?? false),
                 "additive_concentration" => $this->additive_concentration,
+                "additive_units" => $this->additive_units,
             ];
             return [
                 "form"               => $form,
@@ -229,8 +236,9 @@ class Controller {
         $elements = $payload['elements'] ?? $this->elements;
         $element_units = $payload['element_units'] ?? $this->element_units;
         $additive_concentration = $payload['additive_concentration'] ?? [];
+        $additive_units = $payload['additive_units'] ?? [];
 
-        if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements) || !is_array($additive_concentration)) {
+        if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements) || !is_array($additive_concentration) || !is_array($additive_units)) {
             throw new Exception("Invalid input");
         }
         if (!isset($this->calculator->getFertilizers()[$fertilizer]) && $fertilizer !== "") {
@@ -273,6 +281,18 @@ class Controller {
             }
             $additive_concentration[$element] = (float)$concentration;
         }
+        foreach ($additive_units as $element => $unit) {
+            if (!in_array($element, $_elements)) {
+                throw new Exception("Invalid element");
+            }
+            $additive_units[$element] = match (strtolower($unit)) {
+                "ml", "mg" => $unit,
+                default => "mg",
+            };
+            if($additive_units[$element] === "mg") {
+                $additive_concentration[$element] = 100;
+            }
+        }
 
         $this->fertilizer = $fertilizer;
         $this->additive = $additive;
@@ -281,6 +301,7 @@ class Controller {
         $this->volume = $volume;
         $this->region = $region;
         $this->additive_concentration = $additive_concentration;
+        $this->additive_units = $additive_units;
 
         $this->elements = $this->convertElements([
                                                      ...$this->elements,

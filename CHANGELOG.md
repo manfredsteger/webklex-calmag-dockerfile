@@ -6,11 +6,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
+- NaN
+
+### Added
+- NaN
+
+## [2.1.0] - 2024-11-29
+### Fixed
 - Only dilute possible dilutions
 - Fertilizer densities adjusted
 
 ### Added
-- NaN
+- Additive unit support added
 
 ## [2.0.0] - 2024-11-28
 ### Added
