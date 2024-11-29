@@ -303,7 +303,7 @@
                             </td>
                             <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
                                 <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
-                                    <?php if(($form["additive_units"]["calcium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
                                         <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
                                     <?php else: ?>
                                         <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
@@ -322,7 +322,7 @@
                             </td>
                             <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
                                 <td class="<?php echo $colors[$week];?> font-semibold text-sky-200">
-                                    <?php if(($form["additive_units"]["magnesium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
                                         <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
                                     <?php else: ?>
                                         <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
@@ -380,7 +380,7 @@
                             </td>
                             <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
                                 <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
-                                    <?php if(($form["additive_units"]["calcium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
                                         <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".")."/L" : "-" ?>
                                     <?php else: ?>
                                         <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".")."/L" : "-" ?>
@@ -399,7 +399,7 @@
                             </td>
                             <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
                                 <td class="<?php echo $colors[$week];?> text-sky-200 font-semibold">
-                                    <?php if(($form["additive_units"]["magnesium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
                                         <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".")."/L" : "-" ?>
                                     <?php else: ?>
                                         <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".")."/L" : "-" ?>
@@ -499,7 +499,7 @@
                             </td>
                             <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
                                 <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
-                                    <?php if(($form["additive_units"]["calcium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
                                         <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
                                     <?php else: ?>
                                         <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
@@ -527,7 +527,7 @@
                             </td>
                             <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
                                 <td class="<?php echo $colors[$week];?> text-sky-200 font-semibold">
-                                    <?php if(($form["additive_units"]["magnesium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
                                         <?php echo $value["mg"] ? pretty_number($value["mg"], "mg", 2, ",", ".")."/L" : "-" ?>
                                     <?php else: ?>
                                         <?php echo $value["ml"] ? pretty_number($value["ml"], "ml", 2, ",", ".")."/L" : "-" ?>
@@ -628,7 +628,7 @@
                                         </span>
                                 <br/>
                                 <span class="">
-                                    <?php if(($form["additive_units"]["magnesium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
                                         <?php echo pretty_number($results["additive"]["magnesium"]["mg"], "mg", 2, ",", ".")."/L" ?>
                                     <?php else: ?>
                                         <?php echo pretty_number($results["additive"]["magnesium"]["ml"], "ml", 2, ",", ".")."/L" ?>
@@ -649,7 +649,7 @@
                                         </span>
                                 <br/>
                                 <span class="">
-                                    <?php if(($form["additive_units"]["calcium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
                                         <?php echo pretty_number($results["additive"]["calcium"]["mg"], "mg", 2, ",", ".")."/L" ?>
                                     <?php else: ?>
                                         <?php echo pretty_number($results["additive"]["calcium"]["ml"], "ml", 2, ",", ".")."/L" ?>
@@ -741,7 +741,7 @@
                                     <?php endif; ?>
                                 </td>
                                 <td class="font-semibold text-right">
-                                    <?php if(($form["additive_units"]["magnesium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
                                         <?php echo pretty_number($results["additive"]["magnesium"]["mg"], "mg", 2, ",", ".")."/L" ?>
                                     <?php else: ?>
                                         <?php echo pretty_number($results["additive"]["magnesium"]["ml"], "ml", 2, ",", ".")."/L" ?>
@@ -770,7 +770,7 @@
                                     <?php endif; ?>
                                 </td>
                                 <td class="font-semibold text-right" colspan="<?php echo $colspan -1; ?>">
-                                    <?php if(($form["additive_units"]["calcium"] ?? "mg") === "mg"): ?>
+                                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
                                         <?php echo pretty_number($results["additive"]["calcium"]["mg"], "mg", 2, ",", ".")."/L" ?>
                                     <?php else: ?>
                                         <?php echo pretty_number($results["additive"]["calcium"]["ml"], "ml", 2, ",", ".")."/L" ?>
@@ -1043,7 +1043,7 @@
                                         <?php endif; ?>:
                                     </td>
                                     <td class="pl-2 text-red-500 font-bold">
-                                        <?php if(($form["additive_units"]["magnesium"] ?? "mg") === "mg"): ?>
+                                        <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
                                             <?php echo pretty_number($results["additive"]["magnesium"]["mg"] * $form["volume"], "mg", 2, ",", ".") ?>
                                         <?php else: ?>
                                             <?php echo pretty_number($results["additive"]["magnesium"]["ml"] * $form["volume"], "ml", 2, ",", ".") ?>
@@ -1060,7 +1060,7 @@
                                         <?php endif; ?>:
                                     </td>
                                     <td class="pl-2 text-red-500 font-bold">
-                                        <?php if(($form["additive_units"]["calcium"] ?? "mg") === "mg"): ?>
+                                        <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
                                             <?php echo pretty_number($results["additive"]["calcium"]["mg"] * $form["volume"], "mg", 2, ",", ".") ?>
                                         <?php else: ?>
                                             <?php echo pretty_number($results["additive"]["calcium"]["ml"] * $form["volume"], "ml", 2, ",", ".") ?>
