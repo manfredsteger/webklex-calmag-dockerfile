@@ -148,9 +148,9 @@ return [
 
     "mills_nutrients" => [
         "brand_name" => "Mills Nutrients",
-        "links"      => [
-            "de" => "https://mills-nutrients.com/product/mills-calmag",
-            "us" => "https://mills-nutrients.com/product/mills-calmag",
+        "link"      => [
+            "de" => "https://mills-nutrients.com/",
+            "us" => "https://mills-nutrients.com/",
         ],
         "products"   => [
             "calmag" => [
@@ -163,6 +163,10 @@ return [
                 "density"  => 1.0, // g/cm³
                 "ph"       => 7.0, // pH-Wert
                 "schedule" => false,
+                "link"      => [
+                    "de" => "https://mills-nutrients.com/product/mills-calmag",
+                    "us" => "https://mills-nutrients.com/product/mills-calmag",
+                ],
             ],
         ],
     ],
