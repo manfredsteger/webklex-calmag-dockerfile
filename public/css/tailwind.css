@@ -946,6 +946,10 @@ video {
   padding-bottom: 1rem;
 }
 
+.pt-8 {
+  padding-top: 2rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1131,6 +1135,14 @@ video {
     margin-top: 1rem;
   }
 
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
   .md\:w-1\/2 {
     width: 50%;
   }
@@ -1163,6 +1175,10 @@ video {
 
   .md\:pt-0 {
     padding-top: 0px;
+  }
+
+  .md\:pt-8 {
+    padding-top: 2rem;
   }
 }
 
