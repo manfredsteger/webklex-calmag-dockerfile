@@ -2,7 +2,7 @@
 <div class="flex flex-wrap w-full pb-0 justify-start items-start self-start">
     <?php foreach ($result["results"] as $state => $results): ?>
         <div class="flex flex-wrap w-full md:w-1/4 py-2">
-            <div class="w-full pr-4 py-2 text-left">
+            <div class="w-full pl-2 pr-4 py-2 text-left">
                 <h6 class="text-red-500 text-4xl font-normal">
                     <?php echo __("content.calculator.state.$state")?>
                     <span class="text-xs" title="<?php echo __("content.form.ratio.label") ?>">(<?php echo round($results["ratio"], 2) ?>:1)</span>
