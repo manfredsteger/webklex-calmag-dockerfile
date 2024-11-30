@@ -264,4 +264,41 @@ return [
             ],
         ],
     ],
+
+    "fmax" => [
+        "brand_name" => "F-Max",
+        "link"       => [
+            "de" => "https://f-max.eu/?lang=de",
+            "us" => "https://f-max.eu/?lang=en",
+        ],
+        "products"   => [
+            "calmag" => [
+                "name"     => "CalMag",
+                "elements" => [
+                    "calcium"   => [
+                        "CaO" => 5.0, // %
+                    ],
+                    "magnesium" => [
+                        "MgO" => 1.5, // %
+                    ],
+                    "nitrogen"  => [
+                        "NO3" => 5.0, // %
+                    ],
+                    "iron"      => [
+                        "Fe" => 0.015, // %
+                    ],
+                    "boron"     => [
+                        "B" => 0.002, // %
+                    ],
+                ],
+                "density"  => 1.0, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://f-max.eu/?page_id=1640&lang=de",
+                    "us" => "https://f-max.eu/?page_id=1637&lang=en",
+                ],
+            ],
+        ],
+    ]
 ];
