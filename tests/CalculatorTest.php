@@ -77,6 +77,7 @@ class CalculatorTest extends TestCase {
 
     public function testCalculatorGetElements(): void {
         self::assertSame([
+                             'boron',
                              'calcium',
                             'humic_acids',
                             'iron',
