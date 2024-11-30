@@ -6,10 +6,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
-- NaN
+- Volume table position inside the calculation text result fixed
 
 ### Added
-- NaN
+- F-Max CalMag included
 
 ## [2.2.0] - 2024-11-30
 ### Added
