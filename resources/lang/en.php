@@ -245,6 +245,9 @@ return [
                 "humic_acids" => [
                     "label" => "Humic acids",
                 ],
+                "boron" => [
+                    "label" => "Boron",
+                ],
             ],
         ]
     ]
