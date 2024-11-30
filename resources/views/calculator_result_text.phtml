@@ -201,10 +201,81 @@
 
                 </div>
 
+
+            <div class="w-full md:hidden px-3 pt-4 pb-1 text-left">
+                <?php if($form["volume"] > 0): ?>
+                    <span class="font-semibold">
+                            <?php echo __("content.calculator.result.deficiency.state.suggested_amount_table", [
+                                "volume" =>  number_format($form["volume"],2, ",", ""),
+                            ])?>
+                        </span>
+                    <table>
+                        <?php if ($results["fertilizer"]["ml"] > 0): ?>
+                            <tr>
+                                <td><?php echo $results["fertilizer"]["name"] ?>:</td>
+                                <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["fertilizer"]["ml"] * $form["volume"], 2, ",", "") ?> ml</td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if (isset($results["additive"]["magnesium"]["ml"]) && $results["additive"]["magnesium"]["ml"] > 0): ?>
+                            <tr>
+                                <td>
+                                    <?php echo __("additive.".$results["additive"]["magnesium"]["name"]) ?>
+                                    <?php if($results["additive"]["magnesium"]["concentration"] < 100): ?>
+                                        (<?php echo $results["additive"]["magnesium"]["concentration"] ?>%)
+                                    <?php endif; ?>:
+                                </td>
+                                <td class="pl-2 text-red-500 font-bold">
+                                    <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
+                                        <?php echo pretty_number($results["additive"]["magnesium"]["mg"] * $form["volume"], "mg", 2, ",", ".") ?>
+                                    <?php else: ?>
+                                        <?php echo pretty_number($results["additive"]["magnesium"]["ml"] * $form["volume"], "ml", 2, ",", ".") ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if (isset($results["additive"]["calcium"]["ml"]) && $results["additive"]["calcium"]["ml"] > 0): ?>
+                            <tr>
+                                <td>
+                                    <?php echo __("additive.".$results["additive"]["calcium"]["name"]) ?>
+                                    <?php if($results["additive"]["calcium"]["concentration"] < 100): ?>
+                                        (<?php echo $results["additive"]["calcium"]["concentration"] ?>%)
+                                    <?php endif; ?>:
+                                </td>
+                                <td class="pl-2 text-red-500 font-bold">
+                                    <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
+                                        <?php echo pretty_number($results["additive"]["calcium"]["mg"] * $form["volume"], "mg", 2, ",", ".") ?>
+                                    <?php else: ?>
+                                        <?php echo pretty_number($results["additive"]["calcium"]["ml"] * $form["volume"], "ml", 2, ",", ".") ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+
+                        <?php if($results["water"] > 0): ?>
+                            <tr>
+                                <td><?php echo __("dilution.stock") ?>:</td>
+                                <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["dilution"]*1000 * $form["volume"], 2, ",", "") ?> ml</td>
+                            </tr>
+                            <tr>
+                                <td><?php echo __("dilution.water") ?>:</td>
+                                <td class="pl-2 text-red-500 font-bold"><?php echo number_format($results["water"]*1000 * $form["volume"], 2, ",", "") ?> ml</td>
+                            </tr>
+                            <br />
+                        <?php else: ?>
+                            <tr>
+                                <td><?php echo __("dilution.stock") ?>:</td>
+                                <td class="pl-2 text-red-500 font-bold"><?php echo number_format(1000 * $form["volume"], 2, ",", "") ?> ml</td>
+                            </tr>
+                        <?php endif; ?>
+                    </table>
+
+                <?php endif; ?>
+
+            </div>
         </div>
     <?php endforeach; ?>
 </div>
-<div class="flex flex-wrap w-full pb-4 justify-start items-start self-start">
+<div class="hidden md:flex flex-wrap w-full pb-4 justify-start items-start self-start">
     <?php foreach ($result["results"] as $state => $results): ?>
         <div class="flex flex-wrap w-full md:w-1/4">
 
