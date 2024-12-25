@@ -124,6 +124,7 @@ class Calculator {
             $elements['magnesium'] = $elements['calcium'] / $this->ratios['calcium'];
         }
         $target['elements'] = $elements;
+        $target['weeks'] = intval($target['weeks'] ?? 1);
         return $target;
     }
 
@@ -606,7 +607,10 @@ class Calculator {
         ];
 
         if (isset($water["elements"]["sulphate"])) {
-            $water["elements"]["sulfur"] = $water["elements"]["sulphate"] * 0.334;
+            $water["elements"]["sulfur"] = ($water["elements"]["sulfur"] ?? 0) + $water["elements"]["sulphate"] * 0.334;
+        }
+        if (isset($elements["chloride"])) {
+            $water["elements"]["chlorine"] = ($water["elements"]["chlorine"] ?? 0) + $elements["chloride"] * 0.5256;
         }
         if (isset($water["elements"]["nitrate"])) {
             $water["elements"]["nitrogen"] = ($water["elements"]["nitrogen"] ?? 0) + ($water["elements"]["nitrate"] * 0.226);

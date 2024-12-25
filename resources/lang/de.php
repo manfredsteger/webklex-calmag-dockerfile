@@ -44,6 +44,8 @@ return [
         "Action_Gartenkalk"  => "Gartenkalk (Green Boots - Action)",
         "MgO"                  => "Magnesiumoxid",
         "CaO"                  => "Calciumoxid",
+        "custom_calcium"               => "Calcium-Zusatzstoff",
+        "custom_magnesium"             => "Magnesium-Zusatzstoff",
     ],
     "content"  => [
         "calculator" => [
@@ -54,9 +56,9 @@ return [
             ],
             "state"       => [
                 "propagation" => "Anzucht",
-                "vegetation"  => "Wachstumsphase",
-                "flower"      => "Blütephase",
-                "late_flower" => "Späte Blütephase",
+                "vegetation"  => "Wachstum",
+                "flower"      => "Blüte",
+                "late_flower" => "Späte Blüte",
             ],
             "missing"     => ":name Defizit von :value mg/L",
             "result"      => [
@@ -146,6 +148,9 @@ return [
                 "calculate"  => "Ergebnis berechnen",
                 "table_show_details" => "Inhaltsstoffdetails anzeigen",
                 "table_hide_details" => "Inhaltsstoffdetails verbergen",
+                "regular" => "Einfacher Rechner",
+                "expert" => "Erweiterter Rechner",
+                "compare" => "Vergleichs-Rechner",
             ],
             "table" => [
                 "phase" => "Phase",
@@ -165,13 +170,24 @@ return [
                 "final" => "Gesamt",
             ]
         ],
+        "comparator" => [
+            "result" => [
+                "title" => "Ergebnisse des Vergleichs",
+            ]
+        ],
         "form"       => [
             "fertilizer" => [
                 "label"       => "Präparat",
                 "description" => "Wähle das Präparat aus, welches du verwenden möchtest. Optimalerweise sollte ein Präparat zum passenden Verhältnis gewählt werden.",
                 "option" => [
                     "none" => "Kein Präparat verwenden",
-                ]
+                ],
+                "element" => [
+                    "description" => "Angaben in %/ml wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
+                ],
+                "custom" => [
+                    "label" => "Benutzerdefiniertes Präparat",
+                ],
             ],
             "additive"   => [
                 "magnesium" => [
@@ -192,9 +208,38 @@ return [
                 "label"       => "Calcium / Magnesium - Verhältnis",
                 "description" => "Das Verhältnis von Calcium zu Magnesium liegt oft bei 3.5. Dieses Verhältnis kann beliebig angepasst werden.",
             ],
+            "target_offset"     => [
+                "label"       => "Maximale Abweichung",
+                "description" => "Der Offset gibt an, um wie viel Prozent die Werte vom Zielwert abweichen sollen. Dieser Wert wird in Prozent angegeben.",
+            ],
+            "target_weeks" => [
+                "label"       => "Wochen",
+                "description" => "Wähle hier die Wochen aus, für die die Berechnung durchgeführt werden",
+            ],
+            "target_calcium" => [
+                "label"       => "Calcium",
+                "description" => "Der Zielwert für Calcium gibt an, wie viel Calcium in deinem Wasser enthalten sein sollte. Dieser Wert wird in mg/L angegeben.",
+            ],
+            "target_magnesium" => [
+                "label"       => "Magnesium",
+                "description" => "Der Zielwert für Magnesium gibt an, wie viel Magnesium in deinem Wasser enthalten sein sollte. Dieser Wert wird in mg/L angegeben.",
+            ],
             "density" => [
                 "label" => "Dichte",
                 "description" => "Die Dichte gibt an, wie schwer ein Stoff ist. Dieser Wert wird in g/cm³ angegeben.",
+            ],
+            "ml" => [
+                "label" => "Milliliter",
+            ],
+            "state" => [
+                "label" => "Phase",
+            ],
+            "dilution" => [
+                "label" => "Verdünnung",
+            ],
+            "support_dilution" => [
+                "label" => "Verdünnung unterstützen",
+                "description" => "Wenn dein Wasser zu hohe Werte aufweist, kann es sinnvoll sein, das Wasser zu verdünnen.",
             ],
             "volume"     => [
                 "label"       => "Volumen",
@@ -211,9 +256,17 @@ return [
             "element"    => [
                 "calcium"   => [
                     "label" => "Calcium",
+                    "cao"   => [
+                        "label" => "Calciumoxid",
+                        "description" => "Angaben in % wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
+                    ],
                 ],
                 "magnesium" => [
                     "label" => "Magnesium",
+                    "mgo"   => [
+                        "label" => "Magnesiumoxid",
+                        "description" => "Angaben in % wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
+                    ],
                 ],
                 "potassium" => [
                     "label" => "Kalium",
@@ -247,6 +300,9 @@ return [
                 ],
                 "boron" => [
                     "label" => "Bor",
+                ],
+                "chloride" => [
+                    "label" => "Chlorid",
                 ],
             ],
         ]

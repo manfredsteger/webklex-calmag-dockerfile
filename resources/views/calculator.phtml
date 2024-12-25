@@ -7,22 +7,31 @@
 
             <!--Form-->
             <div class="w-full py-2">
-                <?php include __DIR__."/calculator_form.phtml"; ?>
+                <?php if(isset($_GET["expert"])): ?>
+                    <?php include __DIR__."/calculator_expert_form.phtml"; ?>
+                <?php else: ?>
+                    <?php include __DIR__."/calculator_form.phtml"; ?>
+                <?php endif; ?>
             </div>
 
+            <div class="w-full py-2">
+                <?php if(($result ?? null) !== null): ?>
+                    <?php include __DIR__."/calculator_result.phtml"; ?>
 
-    <?php if(($result ?? null) !== null): ?>
-        <?php include __DIR__."/calculator_result.phtml"; ?>
-
-        <?php include __DIR__."/calculator_result_alternatives.phtml"; ?>
-    <?php endif; ?>
+                    <?php if(!isset($_GET["expert"])): ?>
+                        <?php include __DIR__."/calculator_result_alternatives.phtml"; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+        </div>
 </div>
 
 <div class="container px-4 md:px-2 opacity-50">
     <i class="fa fa-robot text-red-500"></i>
     <i class="fa fa-heart text-red-500"></i>
     Bots are welcome:
-    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]"; ?>
+    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/"; ?>
+    <?php $link = ($_GET["expert"] ?? null) ? "'$link?expert=1'" : $link; ?>
     <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1 overflow-x-auto">curl -X POST -H "Content-Type: application/json" -d '<?php echo json_encode([
             "fertilizer" => $form["fertilizer"],
             "additive" => $form["additive"],
@@ -32,6 +41,14 @@
             "element_units" => $form["element_units"],
             "ratio" => $form["ratio"],
             "region" => __("region.default"),
+            "volume"                 => $form["volume"],
+            "support_dilution"       => $form["support_dilution"],
+            "target_offset"          => $form["target_offset"],
+            "additive_elements"      => $form["additive_elements"],
+            "fertilizer_elements"    => $form["fertilizer_elements"],
+            "target_weeks"           => $form["target_weeks"],
+            "target_calcium"         => $form["target_calcium"],
+            "target_magnesium"       => $form["target_magnesium"],
                                                                                                                                                  ]); ?>' <?php echo $link?></div>
 </div>
 
@@ -54,7 +71,6 @@
     function toggle_additive_unit_selector(selector){
         let value = selector.value;
         let target = selector.getAttribute("data-target");
-        console.log("toggle", target, value);
         let target_element = document.getElementById(target);
         if(value === "ml"){
             target_element.classList.remove("hidden");
@@ -67,7 +83,10 @@
         // Clear the URL when the form has changed
         document.querySelectorAll("form select, form input").forEach(function(element){
             element.addEventListener("change", function(){
-                window.history.pushState({}, "", "/");
+                // Remove the q parameter from the URL
+                let _url = new URL(window.location.href);
+                _url.searchParams.delete("p");
+                window.history.replaceState({}, document.title, _url);
             });
         });
         toggle_result_detail_table();

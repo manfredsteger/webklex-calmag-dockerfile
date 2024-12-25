@@ -3,7 +3,7 @@
 use Webklex\CalMag\Enums\GrowState;
 
 return [
-    "version" => "1.5.0",
+    "version" => "2.3.0",
     "elements" => [
         "calcium"   => 0.0, // mg/L
         "magnesium" => 0.0, // mg/L
@@ -20,6 +20,16 @@ return [
     'available_elements' => [
         "calcium"   => "content.form.element.calcium.label",
         "magnesium" => "content.form.element.magnesium.label",
+    ],
+    'expert_elements' => [
+        "calcium"   => "content.form.element.calcium.label",
+        "magnesium" => "content.form.element.magnesium.label",
+        "nitrogen"  => "content.form.element.nitrogen.label",
+        "nitrate"   => "content.form.element.nitrate.label",
+        "nitrite"   => "content.form.element.nitrite.label",
+        "sulfur"    => "content.form.element.sulfur.label",
+        "sulphate"  => "content.form.element.sulphate.label",
+        "chloride"  => "content.form.element.chloride.label",
     ],
     "targets" => [
         GrowState::Propagation->value => [

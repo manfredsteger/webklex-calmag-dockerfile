@@ -170,6 +170,37 @@ class CalculatorTest extends TestCase {
         }
     }
 
+    public function testCalculatorSetTargetOffset(): void {
+        $targets = $this->calculator->getTargets();
+        $offsets = [
+            100.0,
+            -100.0,
+            0.0,
+            10.0,
+            -10.0,
+            56.89,
+            -56.89,
+        ];
+        foreach($offsets as $offset) {
+            $this->calculator->setTargetOffset($offset/100.0);
+            $_targets = $this->calculator->getTargets();
+            foreach ($targets as $state => $target) {
+                self::assertArrayHasKey($state, $_targets);
+                self::assertArrayHasKey("elements", $_targets[$state]);
+                self::assertArrayHasKey("calcium", $_targets[$state]["elements"]);
+                $expected_ca = $target["elements"]["calcium"] + (($offset / 100.0) * $target["elements"]["calcium"]);
+                self::assertSame($expected_ca, $_targets[$state]["elements"]["calcium"]);
+                self::assertArrayHasKey("magnesium", $_targets[$state]["elements"]);
+                $expected_mg = $target["elements"]["magnesium"] + (($offset / 100.0) * $target["elements"]["magnesium"]);
+                self::assertSame($expected_mg, $_targets[$state]["elements"]["magnesium"]);
+            }
+
+            foreach($targets as $state => $target) {
+                $this->calculator->setTarget(GrowState::fromString($state), $target);
+            }
+        }
+    }
+
     public function testCalculatorSetTarget(): void {
         $targets = $this->calculator->getTargets();
         $this->calculator->setTarget(GrowState::Flower, [

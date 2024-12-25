@@ -22,7 +22,7 @@ class Application {
     /**
      * @var string VERSION The current version of the application
      */
-    const VERSION = "2.2.0";
+    const VERSION = "2.3.0";
 
     /**
      * @var Controller $controller The controller instance
@@ -56,11 +56,11 @@ class Application {
                     $payload = $_payload;
                 }
             }
-        }elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check for potential json request and call the api if this is the case
             if ($_SERVER["HTTP_ACCEPT"] === "application/json" || $_SERVER["CONTENT_TYPE"] === "application/json") {
                 $payload = json_decode(file_get_contents('php://input'), true);
-                if(!is_array($payload)){
+                if (!is_array($payload)) {
                     $payload = [];
                 }
                 $this->controller->api($payload);
@@ -93,7 +93,12 @@ class Application {
                                           "elements"               => $payload["elements"] ?? [],
                                           "element_units"          => $payload["element_units"] ?? [],
                                           "additive_concentration" => $payload["additive_concentration"] ?? [],
-                                          "additive_units" => $payload["additive_units"] ?? [],
+                                          "additive_units"         => $payload["additive_units"] ?? [],
+                                          "additive_elements"      => $payload["additive_elements"] ?? [],
+                                          "fertilizer_elements"    => $payload["fertilizer_elements"] ?? [],
+                                          "target_weeks"           => $payload["target_weeks"] ?? [],
+                                          "target_calcium"         => $payload["target_calcium"] ?? [],
+                                          "target_magnesium"       => $payload["target_magnesium"] ?? [],
                                       ]);
             return;
         }

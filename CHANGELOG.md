@@ -6,11 +6,22 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
+- N/A
+
+### Added
+- N/A
+
+## [2.3.0] - 2024-12-25
+### Fixed
 - Volume table position inside the calculation text result fixed
+- Typo in the calculation result fixed (unnecessary `ml/L` removed)
 
 ### Added
 - F-Max CalMag included
 - Fertilizer comparison calculator added
+- Expert mode added
+- Set a target Offset
+- Enable or disable the dilution calculation
 
 ## [2.2.0] - 2024-11-30
 ### Added

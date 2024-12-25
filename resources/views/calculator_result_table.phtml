@@ -114,7 +114,9 @@
         <tr>
             <td class="pr-2 text-right font-semibold text-green-200"><?php echo $table["fertilizer"]["name"]?></td>
             <?php foreach ($table["fertilizer"]["rows"] as $week => $value): ?>
-                <td class="<?php echo $colors[$week];?> font-semibold text-green-200"><?php echo $value ? pretty_number($value * $form["volume"], "ml", 2, ",", ".") : "-" ?></td>
+                <td class="<?php echo $colors[$week];?> font-semibold text-green-200">
+                    <?php echo $value ? pretty_number($value * $form["volume"], "ml", 2, ",", ".") : "-" ?>
+                </td>
             <?php endforeach; ?>
         </tr>
     <?php endif; ?>
@@ -129,9 +131,9 @@
             <?php foreach ($table["ca_additive"]["rows"] as $week => $value): ?>
                 <td class="<?php echo $colors[$week];?> font-semibold text-red-200">
                     <?php if(($form["additive_units"]["calcium"] ?? "ml") === "mg"): ?>
-                        <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".")."/L" : "-" ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".") : "-" ?>
                     <?php else: ?>
-                        <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".")."/L" : "-" ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".") : "-" ?>
                     <?php endif; ?>
                 </td>
             <?php endforeach; ?>
@@ -148,9 +150,9 @@
             <?php foreach ($table["mg_additive"]["rows"] as $week => $value): ?>
                 <td class="<?php echo $colors[$week];?> text-sky-200 font-semibold">
                     <?php if(($form["additive_units"]["magnesium"] ?? "ml") === "mg"): ?>
-                        <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".")."/L" : "-" ?>
+                        <?php echo $value["mg"] ? pretty_number($value["mg"] * $form["volume"], "mg", 2, ",", ".") : "-" ?>
                     <?php else: ?>
-                        <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".")."/L" : "-" ?>
+                        <?php echo $value["ml"] ? pretty_number($value["ml"] * $form["volume"], "ml", 2, ",", ".") : "-" ?>
                     <?php endif; ?>
                 </td>
             <?php endforeach; ?>

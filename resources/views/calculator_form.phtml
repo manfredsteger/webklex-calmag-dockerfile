@@ -147,7 +147,7 @@
                 </div>
             <?php endforeach; ?>
 
-            <div class="w-full md:w-1/2 px-2 py-2 ">
+            <div class="w-full md:w-1/2 px-2 pt-2 ">
                 <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
                     <label for="ratio" class="font-semibold text-slate-300">
                         <?php echo __("content.form.ratio.label")?>
@@ -163,7 +163,7 @@
                 </div>
             </div>
 
-            <div class="w-full md:w-1/2 px-2 py-2 ">
+            <div class="w-full md:w-1/2 px-2 pt-2 ">
                 <div class="w-full px-4 py-4 text-left bg-slate-700 shadow-lg rounded relative">
                     <label for="volume" class="font-semibold text-slate-300">
                         <?php echo __("content.form.volume.label")?>
@@ -179,18 +179,44 @@
                 </div>
             </div>
 
+
+            <div class="w-full px-2 pb-2 ">
+                <div class="w-full px-4 py-4 text-left  relative">
+                    <label for="support_dilution" class="font-normal text-slate-300">
+                        <input type="hidden" name="support_dilution" value="0" />
+                        <input type="checkbox"
+                               value="1"
+                               name="support_dilution" id="support_dilution"
+                               class="bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mr-2"
+                            <?php echo ($form["support_dilution"] ?? false) ? "checked" : "" ?> />
+                        <?php echo __("content.form.support_dilution.label")?>
+                    </label>
+                    <br/>
+                    <p class="text-xs pt-2 text-slate-400">
+                        <?php echo __("content.form.support_dilution.description")?>
+                    </p>
+                </div>
+            </div>
+
         </div>
 
+    </div>
 
-        <div class="w-full pt-4 md:pt-0">
+
+    <div class="w-full  items-center justify-items-center pt-4 md:pt-4">
+        <div class="w-full flex items-center justify-items-center justify-center">
             <button type="submit"
-                    class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                    class="bg-red-500 text-white hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                 <?php echo __("content.calculator.button.calculate")?>
             </button>
-            <!--<a href="?builder=1" class="bg-sky-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                                <?php /*echo __("content.calculator.button.builder")*/?>
-                            </a>-->
+            <a href="?expert=1"
+               class="bg-sky-500 text-white hover:bg-sky-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.expert")?>
+            </a>
+            <a href="?compare=1"
+               class="bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.compare")?>
+            </a>
         </div>
-
     </div>
 </form>

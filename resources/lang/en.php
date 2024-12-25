@@ -44,6 +44,8 @@ return [
         "Action_Gartenkalk" => "Garden lime (Action)",
         "MgO" => "Magnesiumoxid",
         "CaO" => "Calciumoxid",
+        "custom_calcium" => "Custom calcium additive",
+        "custom_magnesium" => "Custom magnesium additive",
     ],
     "content" => [
         "calculator" => [
@@ -146,6 +148,9 @@ return [
                 "calculate" => "Calculate result",
                 "table_show_details" => "Show details",
                 "table_hide_details" => "Hide details",
+                "regular" => "Regular Calculator",
+                "expert" => "Extended Calculator",
+                "compare" => "Comparison Fertilizer",
             ],
             "table" => [
                 "phase" => "Phase",
@@ -165,12 +170,23 @@ return [
                 "final" => "Total",
             ]
         ],
+        "comparator" => [
+            "result" => [
+                "title" => "Comparison results",
+            ]
+        ],
         "form" => [
             "fertilizer" => [
                 "label" => "Fertilizer",
                 "description" => "Select a fertilizer to be added to your water. It is assumed that the fertilizer is a solution with the concentration given in parentheses.",
                 "option" => [
                     "none" => "No fertilizer used",
+                ],
+                "element" => [
+                    "description" => "Please use %/ml as indicated on the packaging. If necessary, the density of the preparation must be taken into account.",
+                ],
+                "custom" => [
+                    "label" => "Custom fertilizer",
                 ]
             ],
             "additive" => [
@@ -179,7 +195,7 @@ return [
                     "description" => "Select an additive to be added to your water to increase the magnesium content, if the fertilizer does not contain enough magnesium.",
                 ],
                 "calcium"   => [
-                    "label"       => "Calcium-Zusatzstoff",
+                    "label"       => "Calcium additive",
                     "description" => "Select an additive to be added to your water to increase the calcium content, if the fertilizer does not contain enough calcium.",
                 ],
                 "none" => "No additive used",
@@ -192,9 +208,40 @@ return [
                 "label" => "Calcium / Magnesium ratio",
                 "description" => "The ratio of calcium to magnesium should ideally be 3.5. However, this ratio can also be adjusted as desired.",
             ],
+            "target_offset"     => [
+                // Maximale Abweichung
+                "label"       => "Maximal deviation",
+                "description" => "The offset indicates by how much percent the values should deviate from the target value. This value is given in percent.",
+            ],
+            "target_weeks" => [
+                "label"       => "Weeks",
+                "description" => "Select the number of weeks for which the target values should be calculated.",
+            ],
+            "target_calcium" => [
+                "label"       => "Calcium",
+                "description" => "The target value for calcium indicates how much calcium should be present in your water. This value is given in mg/L.",
+            ],
+            "target_magnesium" => [
+                "label"       => "Magnesium",
+                "description" => "The target value for magnesium indicates how much magnesium should be present in your water. This value is given in mg/L.",
+            ],
             "density" => [
                 "label" => "Density",
                 "description" => "Enter the density of your fertilizer here. The density is used to calculate the amount of fertilizer to be added.",
+            ],
+            "ml" => [
+                "label" => "Milliliters",
+            ],
+            "state" => [
+                "label" => "Phase",
+            ],
+            "dilution" => [
+                "label" => "Dilution",
+            ],
+            "support_dilution" => [
+                "label" => "Support dilution",
+                // Wenn dein Wasser zu hohe Werte aufweist, kann es sinnvoll sein, das Wasser zu verdünnen.
+                "description" => "If your water has too high values, it may be useful to dilute the water.",
             ],
             "volume" => [
                 "label" => "Volume",
@@ -211,9 +258,18 @@ return [
             "element" => [
                 "calcium" => [
                     "label" => "Calcium",
+                    "cao"   => [
+                        "label" => "Calcium oxide",
+                        // Angaben in % wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.
+                        "description" => "Please use %/ml as indicated on the packaging. If necessary, the density of the preparation must be taken into account.",
+                    ],
                 ],
                 "magnesium" => [
                     "label" => "Magnesium",
+                    "mgo"   => [
+                        "label" => "Magnesium oxide",
+                        "description" => "Please use %/ml as indicated on the packaging. If necessary, the density of the preparation must be taken into account.",
+                    ],
                 ],
                 "potassium" => [
                     "label" => "Potassium",
@@ -247,6 +303,9 @@ return [
                 ],
                 "boron" => [
                     "label" => "Boron",
+                ],
+                "chloride" => [
+                    "label" => "Chloride",
                 ],
             ],
         ]

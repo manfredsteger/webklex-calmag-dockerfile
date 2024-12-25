@@ -3,6 +3,7 @@
 namespace Webklex\CalMag;
 
 use Exception;
+use Webklex\CalMag\Enums\GrowState;
 
 /**
  * Class Controller
@@ -45,6 +46,12 @@ class Controller {
 
     private array $regions;
 
+    private array $additive_elements = [];
+    private array $fertilizer_elements = [];
+    private array $target_weeks = [];
+    private array $target_calcium = [];
+    private array $target_magnesium = [];
+
     private bool $validated = false;
 
     /**
@@ -58,6 +65,10 @@ class Controller {
         $region = Translator::translate("region.default");
         if (isset($this->regions[$region])) {
             $this->region = $region;
+        }
+
+        if (($_GET["expert"] ?? null)) {
+            $this->available_elements = Config::get("app.expert_elements");
         }
 
         $this->loadCalculator();
@@ -102,7 +113,7 @@ class Controller {
                 "elements"               => $this->elements,
                 "element_units"          => $this->element_units,
                 "additive_concentration" => $this->additive_concentration,
-                "additive_units" => $this->additive_units,
+                "additive_units"         => $this->additive_units,
             ];
             return [
                 "form"               => $form,
@@ -139,7 +150,12 @@ class Controller {
                 "element_units"          => $this->element_units,
                 "show_suggestions"       => (bool)($_GET["show_suggestions"] ?? false),
                 "additive_concentration" => $this->additive_concentration,
-                "additive_units" => $this->additive_units,
+                "additive_units"         => $this->additive_units,
+                "additive_elements"      => $this->additive_elements,
+                "fertilizer_elements"    => $this->fertilizer_elements,
+                "target_weeks"           => $this->target_weeks,
+                "target_calcium"         => $this->target_calcium,
+                "target_magnesium"       => $this->target_magnesium,
             ];
             return [
                 "form"               => $form,
@@ -210,12 +226,12 @@ class Controller {
 
         $this->render(function() {
             $form = [
-                "additive"               => count($this->additive) > 0 ? $this->additive : $this->calculator->getAdditive(),
-                "ratio"                  => $this->ratio,
-                "density"                  => $this->density,
-                "elements"               => $this->elements,
-                "element_units"          => $this->element_units,
-                "show_suggestions"       => true,
+                "additive"         => count($this->additive) > 0 ? $this->additive : $this->calculator->getAdditive(),
+                "ratio"            => $this->ratio,
+                "density"          => $this->density,
+                "elements"         => $this->elements,
+                "element_units"    => $this->element_units,
+                "show_suggestions" => true,
             ];
             return [
                 "form"               => $form,
@@ -239,7 +255,7 @@ class Controller {
             $message = $e->getMessage();
         }
 
-        try{
+        try {
             header('Content-Type: application/json');
         } catch (Exception $e) {
             // Handle the exception
@@ -248,7 +264,7 @@ class Controller {
             echo json_encode([
                                  "error" => $message ?? "Invalid input",
                              ]);
-            try{
+            try {
                 http_response_code(400);
             } catch (Exception $e) {
                 // Handle the exception
@@ -272,7 +288,7 @@ class Controller {
 
         extract($callback());
 
-        include __DIR__ . '/../resources/views/'.$view.'.phtml';
+        include __DIR__ . '/../resources/views/' . $view . '.phtml';
 
         include __DIR__ . '/../resources/views/footer.phtml';
     }
@@ -295,6 +311,15 @@ class Controller {
         $element_units = $payload['element_units'] ?? $this->element_units;
         $additive_concentration = $payload['additive_concentration'] ?? [];
         $additive_units = $payload['additive_units'] ?? [];
+        $additive_elements = $payload['additive_elements'] ?? [];
+        $fertilizer_elements = $payload['fertilizer_elements'] ?? [];
+        $target_weeks = $payload['target_weeks'] ?? [];
+        $target_calcium = $payload['target_calcium'] ?? [];
+        $target_magnesium = $payload['target_magnesium'] ?? [];
+
+        if (($_GET["expert"] ?? null)) {
+            $this->available_elements = Config::get("app.expert_elements");
+        }
 
         if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements) || !is_array($additive_concentration) || !is_array($additive_units)) {
             throw new Exception("Invalid input");
@@ -329,6 +354,7 @@ class Controller {
             "sulphate",
             "nitrate",
             "nitrite",
+            "chloride",
         ];
         foreach ($elements as $element => $value) {
             if (!in_array($element, $_elements)) {
@@ -336,6 +362,7 @@ class Controller {
             }
             $elements[$element] = (float)$value;
         }
+
         foreach ($additive_concentration as $element => $concentration) {
             if (!in_array($element, $_elements)) {
                 throw new Exception("Invalid element");
@@ -350,7 +377,7 @@ class Controller {
                 "ml", "mg" => $unit,
                 default => "mg",
             };
-            if($additive_units[$element] === "mg") {
+            if ($additive_units[$element] === "mg") {
                 $additive_concentration[$element] = 100;
             }
         }
@@ -375,23 +402,136 @@ class Controller {
         $this->additive_concentration = $additive_concentration;
         $this->additive_units = $additive_units;
 
-        $this->elements = $this->convertElements([
-                                                     ...$this->elements,
-                                                     ...$elements,
-                                                 ], [
-                                                     ...$this->element_units,
-                                                     ...$element_units,
-                                                 ]);
-        $this->validated = true;
+        $this->elements = $this->convertElements(array_merge($this->elements, $elements), array_merge($this->element_units, $element_units));
 
+        if (($_GET["expert"] ?? null)) {
 
-        try {
-            $this->calculator->setFertilizer($this->fertilizer);
-            $this->calculator->setAdditive($this->additive, $this->additive_concentration);
-            $this->calculator->setRatio($this->ratio, 1.0);
-            $this->calculator->setWater(["elements" => $this->elements]);
-        } catch (Exception $e) {
-            // Handle the exception
+            if(count($target_calcium) !== count($target_weeks) || count($target_calcium) !== count($target_magnesium) || count($target_calcium) === 0){
+                throw new Exception("Invalid input");
+            }
+
+            if(!is_array($additive_elements["calcium"] ?? null) || !is_array($additive_elements["magnesium"] ?? null)){
+                throw new Exception("Invalid input");
+            }
+
+            if(!is_array($additive_elements["calcium"]["calcium"] ?? null) || !is_array($additive_elements["magnesium"]["magnesium"] ?? null)){
+                throw new Exception("Invalid input");
+            }
+
+            foreach($additive_elements as $element => $_additive_elements){
+                foreach($_additive_elements as $additive => $value){
+                    if(!is_array($value)){
+                        throw new Exception("Invalid input");
+                    }
+                    if((!isset($value["CaO"]) || !is_numeric($value["CaO"])) && (!isset($value["MgO"]) || !is_numeric($value["MgO"]))){
+                        throw new Exception("Invalid input");
+                    }
+                    foreach ($value as $key => $val) {
+                        $value[$key] = (float)$val;
+                    }
+                    if(array_sum($value) === 0){
+                        throw new Exception("Invalid input");
+                    }
+                    $additive_elements[$element][$additive] = $value;
+                }
+            }
+
+            foreach(GrowState::getStates() as $state){
+                if(!isset($target_calcium[$state->value]) || !isset($target_magnesium[$state->value]) || !isset($target_weeks[$state->value])){
+                    throw new Exception("Invalid input");
+                }
+                $target_calcium[$state->value] = (float)$target_calcium[$state->value];
+                $target_magnesium[$state->value] = (float)$target_magnesium[$state->value];
+                $target_weeks[$state->value] = (float)$target_weeks[$state->value];
+                if($target_weeks[$state->value] <= 0) {
+                    $target_weeks[$state->value] = 1;
+                }
+                if($target_calcium[$state->value] <= 0 && $target_magnesium[$state->value] <= 0){
+                    throw new Exception("Invalid input");
+                }
+                if($target_calcium[$state->value] < 0) {
+                    $target_calcium[$state->value] = 0;
+                }
+                if($target_magnesium[$state->value] < 0) {
+                    $target_magnesium[$state->value] = 0;
+                }
+            }
+
+            if(!isset($fertilizer_elements["calcium"]) || !isset($fertilizer_elements["magnesium"])){
+                throw new Exception("Invalid input");
+            }
+
+            if(array_sum($fertilizer_elements["calcium"]) + array_sum($fertilizer_elements["magnesium"]) === 0.0){
+                $fertilizer_name = "";
+            }else{
+                $fertilizer_name = __("content.form.fertilizer.custom.label");
+            }
+
+            $custom_fertilizer = [
+                "name"     => $fertilizer_name,
+                "elements" => $fertilizer_elements,
+                "density"  => 1,
+            ];
+
+            $custom_additives = [
+                "calcium"   => [
+                    "name"     => __("content.form.additive.calcium.label"),
+                    "elements" => $additive_elements["calcium"],
+                    "density"  => 1,
+                ],
+                "magnesium" => [
+                    "name"     => __("content.form.additive.magnesium.label"),
+                    "elements" => $additive_elements["magnesium"],
+                    "density"  => 1,
+                ],
+            ];
+
+            $targets = [];
+            foreach ($target_weeks as $index => $week) {
+                $targets[$index] = [
+                    "weeks"    => $week,
+                    "elements" => [
+                        "calcium"   => $target_calcium[$index] ?? 0,
+                        "magnesium" => $target_magnesium[$index] ?? 0,
+                    ],
+                ];
+            }
+
+            $this->validated = true;
+
+            $this->additive_elements = $additive_elements;
+            $this->fertilizer_elements = $fertilizer_elements;
+            $this->target_weeks = $target_weeks;
+            $this->target_calcium = $target_calcium;
+            $this->target_magnesium = $target_magnesium;
+
+            if($fertilizer_name !== ""){
+                $this->calculator->addFertilizer($fertilizer_name, $custom_fertilizer);
+            }
+            $this->calculator->setFertilizer($fertilizer_name);
+            $this->calculator->addAdditive("calcium", "custom_calcium", $custom_additives["calcium"]);
+            $this->calculator->addAdditive("magnesium", "custom_magnesium", $custom_additives["magnesium"]);
+            $this->calculator->setAdditive(["calcium" => "custom_calcium", "magnesium" => "custom_magnesium"], $this->additive_concentration);
+            $this->calculator->setTargets($targets);
+
+            try {
+                $this->calculator->setRatio($this->ratio, 1.0);
+                $this->calculator->setWater(["elements" => $this->elements]);
+                $this->calculator->setTargetOffset($this->target_offset / 100);
+            } catch (Exception $e) {
+                // Handle the exception
+            }
+        } else {
+            try {
+                $this->calculator->setFertilizer($this->fertilizer);
+                $this->calculator->setAdditive($this->additive, $this->additive_concentration);
+                $this->calculator->setRatio($this->ratio, 1.0);
+                $this->calculator->setWater(["elements" => $this->elements]);
+                $this->calculator->setTargetOffset($this->target_offset / 100);
+            } catch (Exception $e) {
+                // Handle the exception
+            }
+            $this->validated = true;
         }
     }
 
@@ -402,7 +542,6 @@ class Controller {
      * @return array
      */
     private function convertElements(array $elements, array $element_units): array {
-        $elements = array_unique($elements);
         // convert the elements to mg/L from the given units
         foreach ($elements as $element => $value) {
             $unit = $element_units[$element] ?? "mg";
