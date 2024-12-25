@@ -44,11 +44,11 @@
             "volume"                 => $form["volume"],
             "support_dilution"       => $form["support_dilution"],
             "target_offset"          => $form["target_offset"],
-            "additive_elements"      => $form["additive_elements"],
-            "fertilizer_elements"    => $form["fertilizer_elements"],
-            "target_weeks"           => $form["target_weeks"],
-            "target_calcium"         => $form["target_calcium"],
-            "target_magnesium"       => $form["target_magnesium"],
+            "additive_elements"      => $form["additive_elements"] ?? [],
+            "fertilizer_elements"    => $form["fertilizer_elements"] ?? [],
+            "target_weeks"           => $form["target_weeks"] ?? [],
+            "target_calcium"         => $form["target_calcium"] ?? [],
+            "target_magnesium"       => $form["target_magnesium"] ?? [],
                                                                                                                                                  ]); ?>' <?php echo $link?></div>
 </div>
 
