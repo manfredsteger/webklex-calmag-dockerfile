@@ -38,6 +38,8 @@ class Calculator {
         "magnesium" => "",
     ];
 
+    protected bool $dilution_support = true;
+
     /**
      * Calculator constructor.
      * @param array $water
@@ -279,7 +281,7 @@ class Calculator {
             if (!isset($elements[$component])) {
                 $elements[$component] = 0;
             }
-            if ($elements[$component] > $target_value) {
+            if ($elements[$component] > $target_value && $this->dilution_support) {
                 $stock = $target_value / $elements[$component];
 
                 foreach ($elements as $element => $element_value) {
@@ -417,7 +419,7 @@ class Calculator {
         $target_reached = abs($result["elements"]["calcium"] - $result["target"]["elements"]["calcium"]) <= ($result["target"]["elements"]["calcium"] * $tolerance) &&
             abs($result["elements"]["magnesium"] - $result["target"]["elements"]["magnesium"]) <= ($result["target"]["elements"]["magnesium"] * $tolerance);
 
-        if (!$target_reached && $dilution > 0.1 && $this->fertilizer !== "") {
+        if (!$target_reached && $dilution > 0.1 && $this->fertilizer !== "" && $this->dilution_support) {
             $elements = $this->summarizeElements($this->water["elements"]);
 
             // dilute the water until the target can be reached (within 3% deviation) by adding a fertilizer or the water is completely diluted (10%)
@@ -651,6 +653,24 @@ class Calculator {
     }
 
     /**
+     * Set the target offset
+     * @param float $offset The offset
+     *
+     * @return void
+     */
+    public function setTargetOffset(float $offset): void {
+        foreach ($this->targets as $index => $target) {
+            $this->targets[$index] = [
+                ...$target,
+                "elements" => [
+                    "calcium"   => $target["elements"]["calcium"] + ($target["elements"]["calcium"] * $offset),
+                    "magnesium" => $target["elements"]["magnesium"] + ($target["elements"]["magnesium"] * $offset),
+                ],
+            ];
+        }
+    }
+
+    /**
      * Set the calcium and magnesium ratio
      * @param float $calcium The calcium ratio
      * @param float $magnesium The magnesium ratio
@@ -816,5 +836,23 @@ class Calculator {
      */
     public function getRatio(string $element): float {
         return $this->ratios[$element];
+    }
+
+    public function addFertilizer(string $name, array $fertilizer): void {
+        $this->fertilizers[$name] = $fertilizer;
+    }
+
+    public function addAdditive(string $element, string $name, array $additive): void {
+        $this->additives[$element][$name] = $additive;
+    }
+
+    public function setTargets(array $targets): void {
+        foreach ($targets as $index => $target) {
+            $this->targets[$index] = $this->validateTarget($target);
+        }
+    }
+
+    public function setDilutionSupport(bool $dilution_support): void {
+        $this->dilution_support = $dilution_support;
     }
 }

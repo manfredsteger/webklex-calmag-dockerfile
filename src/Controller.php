@@ -38,6 +38,8 @@ class Controller {
     private float $density = 1.0;
 
     private float $volume = 5.0;
+    private bool $support_dilution = true;
+    private float $target_offset = 0.0;
 
     private string $region = "us";
 
@@ -94,6 +96,8 @@ class Controller {
                 ],
                 "ratio"                  => $this->ratio,
                 "volume"                 => $this->volume,
+                "support_dilution"       => $this->support_dilution,
+                "target_offset"          => $this->target_offset,
                 "region"                 => $this->region,
                 "elements"               => $this->elements,
                 "element_units"          => $this->element_units,
@@ -128,6 +132,8 @@ class Controller {
                 "additive"               => count($this->additive) > 0 ? $this->additive : $this->calculator->getAdditive(),
                 "ratio"                  => $this->ratio,
                 "volume"                 => $this->volume,
+                "support_dilution"       => $this->support_dilution,
+                "target_offset"          => $this->target_offset,
                 "region"                 => $this->region,
                 "elements"               => $this->elements,
                 "element_units"          => $this->element_units,
@@ -283,6 +289,8 @@ class Controller {
         $ratio = $payload['ratio'] ?? $this->ratio;
         $density = $payload['density'] ?? $this->density;
         $volume = $payload['volume'] ?? $this->volume;
+        $support_dilution = $payload['support_dilution'] ?? $this->support_dilution;
+        $target_offset = $payload['target_offset'] ?? $this->target_offset;
         $elements = $payload['elements'] ?? $this->elements;
         $element_units = $payload['element_units'] ?? $this->element_units;
         $additive_concentration = $payload['additive_concentration'] ?? [];
@@ -308,6 +316,9 @@ class Controller {
         }
         if ($volume <= 0) {
             throw new Exception("Invalid volume");
+        }
+        if ($target_offset < -100.0 || $target_offset > 100.0) {
+            throw new Exception("Invalid target_offset");
         }
         if (!isset($this->regions[$region])) {
             throw new Exception("Invalid region");
@@ -344,11 +355,22 @@ class Controller {
             }
         }
 
+        if(!is_bool($support_dilution)){
+            $support_dilution = match (strtolower($support_dilution)) {
+                "true", "on", "yes", "1" => true,
+                default => false,
+            };
+        }
+
+        $this->calculator->setDilutionSupport($support_dilution);
+
         $this->fertilizer = $fertilizer;
         $this->additive = $additive;
         $this->ratio = $ratio;
         $this->density = $density;
         $this->volume = $volume;
+        $this->support_dilution = $support_dilution;
+        $this->target_offset = $target_offset;
         $this->region = $region;
         $this->additive_concentration = $additive_concentration;
         $this->additive_units = $additive_units;
