@@ -145,6 +145,56 @@ class Controller {
         });
     }
 
+    public function compare(array $payload): void {
+        $valid_elements = ["calcium", "magnesium"];
+        $_elements = $payload['elements'] ?? $this->elements;
+        $_element_units = $payload['element_units'] ?? $this->element_units;
+
+        if (!is_array($_elements)) {
+            $_elements = $this->elements;
+        }
+        if (!is_array($_element_units)) {
+            $_element_units = $this->element_units;
+        }
+
+        $elements = [];
+        $element_units = [];
+        foreach ($valid_elements as $element) {
+            if (!isset($_elements[$element])) {
+                $_elements[$element] = 0;
+            }
+            if (!isset($_element_units[$element])) {
+                $_element_units[$element] = "mg";
+            }
+            $elements[$element] = (float)$_elements[$element];
+            $element_units[$element] = match (strtolower($_element_units[$element])) {
+                "ml", "mg" => $_element_units[$element],
+                default => "mg",
+            };
+        }
+
+        $this->elements = $this->convertElements(array_merge($this->elements, $elements), array_merge($this->element_units, $element_units));
+
+        $comparator = new Comparator($this->elements, $this->ratio);
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $this->validated = true;
+        }
+
+        $this->render(function() use ($comparator) {
+            $form = [
+                "ratio"         => $this->ratio,
+                "elements"      => $this->elements,
+                "element_units" => $this->element_units,
+            ];
+            return [
+                "form"               => $form,
+                "result"             => $this->validated ? $comparator->calculate() : null,
+                "available_elements" => $this->available_elements,
+                "comparator"         => $comparator,
+            ];
+        }, "compare");
+    }
+
     public function builder(array $payload): void {
         try {
             $this->validate($payload);

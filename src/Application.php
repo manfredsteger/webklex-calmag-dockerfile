@@ -71,7 +71,12 @@ class Application {
         }
 
 
-        if(isset($_GET["builder"])){
+        if (isset($_GET["compare"])) {
+            $this->controller->compare($payload);
+            return;
+        }
+
+        if (isset($_GET["builder"])) {
             $this->controller->builder($payload);
             return;
         }

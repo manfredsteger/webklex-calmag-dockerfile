@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - F-Max CalMag included
+- Fertilizer comparison calculator added
 
 ## [2.2.0] - 2024-11-30
 ### Added
