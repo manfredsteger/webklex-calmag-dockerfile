@@ -118,7 +118,7 @@ class Calculator {
             "magnesium" => 0.001,
         ];
 
-        if (!isset($elements['calcium'])) {
+        if (!isset($elements['calcium']) || $elements['calcium'] <= 0) {
             $elements['calcium'] = $elements['magnesium'] * $this->ratios['calcium'];
         } elseif (!isset($elements['magnesium']) || $elements['magnesium'] <= 0) {
             $elements['magnesium'] = $elements['calcium'] / $this->ratios['calcium'];

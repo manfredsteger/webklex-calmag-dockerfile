@@ -457,8 +457,11 @@ class Controller {
                 }
             }
 
-            if(!isset($fertilizer_elements["calcium"]) || !isset($fertilizer_elements["magnesium"])){
-                throw new Exception("Invalid input");
+            if(!isset($fertilizer_elements["calcium"])){
+                $fertilizer_elements["calcium"] = [];
+            }
+            if(!isset($fertilizer_elements["magnesium"])){
+                $fertilizer_elements["magnesium"] = [];
             }
 
             if(array_sum($fertilizer_elements["calcium"]) + array_sum($fertilizer_elements["magnesium"]) === 0.0){
@@ -512,12 +515,13 @@ class Controller {
             $this->calculator->addAdditive("calcium", "custom_calcium", $custom_additives["calcium"]);
             $this->calculator->addAdditive("magnesium", "custom_magnesium", $custom_additives["magnesium"]);
             $this->calculator->setAdditive(["calcium" => "custom_calcium", "magnesium" => "custom_magnesium"], $this->additive_concentration);
+
+            $this->calculator->setRatio($this->ratio, 1.0);
             $this->calculator->setTargets($targets);
+            $this->calculator->setTargetOffset($this->target_offset / 100);
 
             try {
-                $this->calculator->setRatio($this->ratio, 1.0);
                 $this->calculator->setWater(["elements" => $this->elements]);
-                $this->calculator->setTargetOffset($this->target_offset / 100);
             } catch (Exception $e) {
                 // Handle the exception
             }
