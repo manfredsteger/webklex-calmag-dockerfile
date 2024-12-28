@@ -20,7 +20,8 @@
                                 <?php echo $name ?> (<?php echo round($fertilizer["ratio"], 2) ?>:1)
                             </option>
                         <?php endforeach; ?>
-                        <option value="" <?php echo $form["fertilizer"] === "" ? "selected" : "" ?>>
+                        <option value="" <?php echo $form["fertilizer"] === "" ? "selected" : "" ?>
+                                data-elements="<?php echo base64_encode(json_encode(["elements" => ["calcium" => ["CaO" => 0],"magnesium" => ["MgO" => 0]]]))?>">
                             <?php echo __("content.form.fertilizer.option.none") ?>
                         </option>
                     </select>
@@ -40,7 +41,7 @@
                            name="fertilizer_elements[calcium][calcium]"
                            id="fertilizer_elements_calcium"
                            class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none mb-2"
-                           value="<?php echo $form["fertilizer"]["elements"]["calcium"]["calcium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["calcium"] ?? 0.0 ?>" />
+                           value="<?php echo $form["fertilizer_elements"]["calcium"]["calcium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["calcium"] ?? 0.0 ?>" />
                     <br/>
                     <label for="fertilizer_elements_calcium_cao" class="font-semibold text-slate-300">
                         <?php echo __("content.form.element.calcium.cao.label")?>
@@ -52,7 +53,7 @@
                            name="fertilizer_elements[calcium][CaO]"
                            id="fertilizer_elements_calcium_cao"
                            class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                           value="<?php echo $form["fertilizer"]["elements"]["calcium"]["CaO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["CaO"] ?? 0.0 ?>" />
+                           value="<?php echo $form["fertilizer_elements"]["calcium"]["CaO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["CaO"] ?? 0.0 ?>" />
 
                     <p class="text-xs pt-2 text-slate-400">
                         <?php echo __("content.form.element.calcium.cao.description")?>
@@ -70,7 +71,7 @@
                            name="fertilizer_elements[magnesium][magnesium]"
                            id="fertilizer_elements_magnesium"
                            class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none mb-2"
-                           value="<?php echo $form["fertilizer"]["elements"]["magnesium"]["magnesium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["magnesium"] ?? 0.0 ?>" />
+                           value="<?php echo $form["fertilizer_elements"]["magnesium"]["magnesium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["magnesium"] ?? 0.0 ?>" />
                     <br/>
                     <label for="fertilizer_elements_magnesium_mgo" class="font-semibold text-slate-300">
                         <?php echo __("content.form.element.magnesium.mgo.label")?>
@@ -82,7 +83,7 @@
                            name="fertilizer_elements[magnesium][MgO]"
                            id="fertilizer_elements_magnesium_mgo"
                            class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                           value="<?php echo $form["fertilizer"]["elements"]["magnesium"]["MgO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["MgO"] ?? 0.0 ?>" />
+                           value="<?php echo $form["fertilizer_elements"]["magnesium"]["MgO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["MgO"] ?? 0.0 ?>" />
 
                     <p class="text-xs pt-2 text-slate-400">
                         <?php echo __("content.form.element.magnesium.mgo.description")?>
@@ -142,7 +143,9 @@
                                     <?php echo __("additive.$name") ?>
                                 </option>
                             <?php endforeach; ?>
-                            <option value="" <?php echo ($form["additive"][$element] ?? "") === "" ? "selected" : "" ?> data-concentration="100">
+                            <option value="" <?php echo ($form["additive"][$element] ?? "") === "" ? "selected" : "" ?>
+                                    data-elements="<?php echo base64_encode(json_encode(["elements" => ["calcium" => ["CaO" => 0],"magnesium" => ["MgO" => 0]]])) ?>"
+                                    data-concentration="100">
                                 <?php echo __("content.form.additive.none") ?>
                             </option>
                         </select>
