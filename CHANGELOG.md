@@ -6,6 +6,13 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
+- N/A
+
+### Added
+- N/A
+
+## [2.3.1] - 2024-12-28
+### Fixed
 - Custom fertilizer fixed
 - Hide unused elements from the result table
 - Unset additive and fertilizer elements if they get unselected
