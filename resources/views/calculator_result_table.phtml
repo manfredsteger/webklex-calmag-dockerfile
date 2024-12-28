@@ -300,12 +300,19 @@
         <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.elements")?></td>
     </tr>
     <?php foreach ($table["elements"][1] as $element => $_value): ?>
-        <tr class="result-detail-table">
-            <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
-            <?php foreach ($table["elements"] as $week => $value): ?>
-                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($value[$element], "mg", 2, ",", ".") ?>/L</td>
-            <?php endforeach; ?>
-        </tr>
+        <?php
+        $check = array_sum(array_map(function($week) use ($element) {
+            return $week[$element];
+        }, $table["elements"])) > 0;
+        ?>
+        <?php if ($check): ?>
+            <tr class="result-detail-table">
+                <td class="pr-2 font-normal text-right"><?php echo __("content.form.element.$element.label")?></td>
+                <?php foreach ($table["elements"] as $week => $value): ?>
+                    <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo pretty_number($value[$element], "mg", 2, ",", ".") ?>/L</td>
+                <?php endforeach; ?>
+            </tr>
+        <?php endif; ?>
     <?php endforeach; ?>
     <tr class="result-detail-table">
         <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.ratio")?></td>
