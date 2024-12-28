@@ -33,25 +33,17 @@
                     <table>
                         <tr>
                             <td><?php echo __("content.calculator.result.alternatives.fertilizer.brand.name")?>:</td>
-                            <td><?php echo $brand["brand_name"]?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.brand.url")?>:</td>
                             <td>
                                 <a href="<?php echo $brand_link?>" target="_blank" class="text-red-500">
-                                    <?php echo $brand_link?>
+                                    <?php echo $brand["brand_name"]?>
                                 </a>
                             </td>
                         </tr>
                         <tr>
                             <td><?php echo __("content.calculator.result.alternatives.fertilizer.product.name")?>:</td>
-                            <td><?php echo $product["name"]?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo __("content.calculator.result.alternatives.fertilizer.product.url")?>:</td>
                             <td>
                                 <a href="<?php echo $product_link?>" target="_blank" class="text-red-500">
-                                    <?php echo $product_link?>
+                                    <?php echo $product["name"]?>
                                 </a>
                             </td>
                         </tr>

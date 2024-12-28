@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Custom fertilizer fixed
 - Hide unused elements from the result table
 - Unset additive and fertilizer elements if they get unselected
+- Alternative Product-Link size issue fixed
 
 ### Added
 - N/A
