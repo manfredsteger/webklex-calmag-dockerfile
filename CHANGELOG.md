@@ -12,7 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Alternative Product-Link size issue fixed
 
 ### Added
-- N/A
+- Advanced Nutrients CalMag fertilizers included
 
 ## [2.3.0] - 2024-12-25
 ### Fixed

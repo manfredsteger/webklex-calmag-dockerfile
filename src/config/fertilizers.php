@@ -300,5 +300,52 @@ return [
                 ],
             ],
         ],
-    ]
+    ],
+
+    "advanced_nutrients" => [
+        "brand_name" => "Advanced Nutrients",
+        "link"       => [
+            "de" => "https://www.advancednutrients.com/de-de/",
+            "us" => "https://www.advancednutrients.com/",
+        ],
+        "products"   => [
+            "sensi_cal_mag_xtra" => [
+                "name"     => "Sensi Cal Mag Xtra®",
+                "elements" => [
+                    "calcium"   => 3.2, // %
+                    "magnesium" => 1.1, // %
+                    "nitrogen"  => [
+                        "NO3" => 4.0, // % Nitratstickstoff (NO3)
+                    ],
+                    "iron"      => 0.09, // % Chelatiertes Eisen (Fe)
+                    "managanese" => 0.05, // % Chelatiertes Mangan (Mn)
+                    "zinc"      => 0.05, // % Chelatiertes Zink (Zn)
+                ],
+                "density"  => 1.0, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://www.advancednutrients.com/de/products/sensi-cal-mag-xtra/",
+                    "us" => "https://www.advancednutrients.com/products/sensi-cal-mag-xtra/",
+                ],
+            ],
+            "og_sensi_cal_mag_xtra" => [
+                "name"     => "OG Organics™ Sensi Cal Mag Xtra®",
+                "elements" => [
+                    "calcium"   => 1.5, // %
+                    "magnesium" => 1.1, // %
+                    "sulfur"    => 1.8, // %
+                    "iron"      => 0.1, // % Chelatiertes Eisen (Fe)
+                    "zinc"      => 0.07, // % Chelatiertes Zink (Zn)
+                ],
+                "density"  => 1.0, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "us" => "https://www.advancednutrients.com/products/og-organics-sensi-cal-mag-xtra/",
+                    "de" => "https://www.advancednutrients.com/de/products/og-organics-sensi-cal-mag-xtra/",
+                ],
+            ],
+        ],
+    ],
 ];
