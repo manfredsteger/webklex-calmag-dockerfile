@@ -6,6 +6,13 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
+- N/A
+
+### Added
+- N/A
+
+## [2.4.0] - 2024-12-31
+### Fixed
 - Mobile form paddings fixed
 - Result table section separation improved
 
