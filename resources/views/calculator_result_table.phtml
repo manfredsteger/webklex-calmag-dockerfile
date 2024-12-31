@@ -107,7 +107,7 @@
 
 
     <tr>
-        <td class="pr-2 pt-4 font-semibold text-right"><?php echo __("content.calculator.table.volume", ["volume" => $form["volume"]])?></td>
+        <td class="pr-2 font-semibold text-right pt-4"><?php echo __("content.calculator.table.volume", ["volume" => $form["volume"]])?></td>
     </tr>
 
     <?php if ($table["fertilizer"]["name"] !== ""): ?>
@@ -184,7 +184,24 @@
     </tr>
 
     <tr class="result-detail-table">
-        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.before")?></td>
+        <td class="pr-2 font-semibold text-xl text-right pt-4"><?php echo __("content.calculator.table.before")?></td>
+    </tr>
+    <tr class="result-detail-table">
+        <td class="font-normal text-left"></td>
+        <?php $week = 0; ?>
+        <?php foreach ($table["targets"] as $state => $target): ?>
+            <td colspan="<?php echo $target["weeks"]; ?>"
+                class="<?php echo $colors[$week += $target["weeks"]];?> bg-opacity-50"><?php echo __("content.calculator.state.$state")?></td>
+        <?php endforeach; ?>
+    </tr>
+    <tr class="result-detail-table">
+        <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.week")?></td>
+        <?php $week = 1; ?>
+        <?php foreach ($table["targets"] as $state => $target): ?>
+            <?php for ($i = 1; $i <= $target["weeks"]; $i++): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo $week++ ?></td>
+            <?php endfor; ?>
+        <?php endforeach; ?>
     </tr>
     <?php foreach ($table["target"][1]["elements"] as $element => $_value): ?>
         <tr class="result-detail-table">
@@ -196,7 +213,7 @@
     <?php endforeach; ?>
 
     <tr class="result-detail-table">
-        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.target")?></td>
+        <td class="pr-2 font-semibold text-right pt-4"><?php echo __("content.calculator.table.target")?></td>
     </tr>
     <?php foreach ($table["target"][1]["elements"] as $element => $_value): ?>
         <tr class="result-detail-table">
@@ -208,7 +225,7 @@
     <?php endforeach; ?>
 
     <tr class="result-detail-table">
-        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.missing")?></td>
+        <td class="pr-2 font-semibold text-right pt-4"><?php echo __("content.calculator.table.missing")?></td>
     </tr>
     <?php foreach ($table["missing"][1] as $element => $_value): ?>
         <tr class="result-detail-table">
@@ -220,7 +237,24 @@
     <?php endforeach; ?>
 
     <tr class="result-detail-table">
-        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.adjustment")?></td>
+        <td class="pr-2 font-semibold text-xl text-right pt-8"><?php echo __("content.calculator.table.adjustment")?></td>
+    </tr>
+    <tr class="result-detail-table">
+        <td class="font-normal text-left"></td>
+        <?php $week = 0; ?>
+        <?php foreach ($table["targets"] as $state => $target): ?>
+            <td colspan="<?php echo $target["weeks"]; ?>"
+                class="<?php echo $colors[$week += $target["weeks"]];?> bg-opacity-50"><?php echo __("content.calculator.state.$state")?></td>
+        <?php endforeach; ?>
+    </tr>
+    <tr class="result-detail-table">
+        <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.week")?></td>
+        <?php $week = 1; ?>
+        <?php foreach ($table["targets"] as $state => $target): ?>
+            <?php for ($i = 1; $i <= $target["weeks"]; $i++): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo $week++ ?></td>
+            <?php endfor; ?>
+        <?php endforeach; ?>
     </tr>
     <?php if ($table["fertilizer"]["name"] !== ""): ?>
         <tr class="result-detail-table">
@@ -297,7 +331,7 @@
     <?php endif; ?>
 
     <tr class="result-detail-table">
-        <td class="pr-2 font-semibold text-right"><?php echo __("content.calculator.table.elements")?></td>
+        <td class="pr-2 font-semibold text-right pt-4"><?php echo __("content.calculator.table.elements")?></td>
     </tr>
     <?php foreach ($table["elements"][1] as $element => $_value): ?>
         <?php

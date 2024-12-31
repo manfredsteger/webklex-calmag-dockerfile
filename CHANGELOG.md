@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [UNRELEASED]
 ### Fixed
 - Mobile form paddings fixed
+- Result table section separation improved
 
 ### Added
 - Athena CaMg added
