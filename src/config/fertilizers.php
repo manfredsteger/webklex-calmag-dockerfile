@@ -348,4 +348,30 @@ return [
             ],
         ],
     ],
+
+    "athena" => [
+        "brand_name" => "Athena",
+        "link"       => [
+            "de" => "https://www.athenaag.com/",
+            "us" => "https://www.athenaag.com/",
+        ],
+        "products"   => [
+            "camg" => [
+                "name"     => "CaMg",
+                "elements" => [
+                    "calcium"   => 2.1, // %
+                    "magnesium" => 1.1, // %
+                    "nitrogen"  => 2.0, // %
+                    "iron"      => 0.06, // %
+                ],
+                "density"  => 1.0, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://store.athenaag.com/camg",
+                    "us" => "https://store.athenaag.com/camg",
+                ],
+            ],
+        ],
+    ],
 ];

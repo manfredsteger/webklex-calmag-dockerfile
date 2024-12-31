@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Mobile form paddings fixed
 
 ### Added
-- N/A
+- Athena CaMg added
 
 ## [2.3.1] - 2024-12-28
 ### Fixed
