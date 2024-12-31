@@ -3,10 +3,10 @@
 ?>
 <form method="POST" target="_self" action="?expert=1#results" class="w-full flex flex-wrap">
 
-    <div class="w-full md:w-1/2 mt-1 flex flex-wrap justify-start items-start self-start">
-        <div class="w-full px-2 py-2">
+    <div class="w-full md:w-1/2 md:mt-1 flex flex-wrap justify-start items-start self-start">
+        <div class="w-full pb-2 md:pt-2">
             <div class="w-full flex flex-wrap px-2 pb-2 text-left  relative">
-                <div class="w-full px-2 py-2">
+                <div class="w-full py-2">
                     <label for="fertilizer" class="font-semibold text-green-200">
                         <?php echo __("content.form.fertilizer.label")?>
                     </label>
@@ -30,7 +30,7 @@
                     </p>
                 </div>
 
-                <div class="w-full md:w-1/2 px-2 pb-2">
+                <div class="w-full md:w-1/2 pb-2">
                     <label for="fertilizer_elements_calcium" class="font-semibold text-slate-300">
                         <?php echo __("content.form.element.calcium.label")?>
                     </label>
@@ -60,7 +60,7 @@
                     </p>
                 </div>
 
-                <div class="w-full md:w-1/2 px-2 pb-2">
+                <div class="w-full md:w-1/2 pb-2">
                     <label for="fertilizer_elements_magnesium" class="font-semibold text-slate-300">
                         <?php echo __("content.form.element.magnesium.label")?>
                     </label>
@@ -93,8 +93,8 @@
             </div>
         </div>
         <?php foreach ($calculator->getAdditives() as $element => $additives): ?>
-            <div class="w-full md:w-1/2 px-2 py-2">
-                <div class="w-full px-4 py-4 text-left  relative">
+            <div class="w-full md:w-1/2 py-2">
+                <div class="w-full px-2 py-4 text-left  relative">
                     <label for="additive_<?php echo $element ?>" class="font-semibold <?php echo $element === "calcium" ? "text-red-200" : "text-sky-200" ?>">
                         <?php echo __("content.form.additive.$element.label")?>
                     </label>
