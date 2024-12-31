@@ -8,13 +8,15 @@
                     <?php echo __("content.form.fertilizer.label")?>
                 </label>
                 <br/>
+                <?php $fertilizers = $calculator->getFertilizers(); ?>
                 <select name="fertilizer" id="fertilizer" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
-                    <?php foreach ($calculator->getFertilizers() as $name => $fertilizer): ?>
-                        <option value="<?php echo $name ?>" <?php echo $name == $form["fertilizer"] ? "selected" : "" ?>>
+                    <?php foreach ($fertilizers as $name => $fertilizer): ?>
+                        <option value="<?php echo $name ?>" <?php echo $name == $form["fertilizer"] ? "selected" : "" ?>
+                                data-ratio="<?php echo round($fertilizer["ratio"], 2) ?>">
                             <?php echo $name ?> (<?php echo round($fertilizer["ratio"], 2) ?>:1)
                         </option>
                     <?php endforeach; ?>
-                    <option value="" <?php echo $form["fertilizer"] === "" ? "selected" : "" ?>>
+                    <option value="" data-ratio="3.5" <?php echo $form["fertilizer"] === "" ? "selected" : "" ?>>
                         <?php echo __("content.form.fertilizer.option.none") ?>
                     </option>
                 </select>
@@ -156,7 +158,9 @@
                     <input type="number"
                            step="0.01"
                            min="0"
-                           name="ratio" id="ratio" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["ratio"] ?>" />
+                           name="ratio" id="ratio"
+                           class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
+                           value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ration"] ?? 0.0, 2) ?>" />
                     <p class="text-xs pt-2 text-slate-400">
                         <?php echo __("content.form.ratio.description")?>
                     </p>
@@ -220,3 +224,26 @@
         </div>
     </div>
 </form>
+
+
+<script type="application/javascript">
+    function onFertilizerChanged(event){
+        let select = event.target;
+        const ratio = parseFloat(select.options[select.selectedIndex].getAttribute("data-ratio"));
+        if(ratio >= 2.9 && ratio <= 4.0){
+            document.getElementById("ratio").value = ratio;
+        }else if (ratio < 2.9){
+            document.getElementById("ratio").value = 2.9;
+        }else if (ratio > 4.0){
+            document.getElementById("ratio").value = 4.0;
+        }else{
+            document.getElementById("ratio").value = 3.5;
+        }
+    }
+
+    (function (){
+        let fertilizer = document.getElementById("fertilizer");
+        fertilizer.addEventListener("change", onFertilizerChanged);
+        //onFertilizerChanged({target: fertilizer});
+    })();
+</script>

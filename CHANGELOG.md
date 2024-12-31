@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Athena CaMg added
+- Update the ratio according to the selected agent
 
 ## [2.3.1] - 2024-12-28
 ### Fixed

@@ -99,13 +99,15 @@ class Controller {
      */
     public function index(): void {
         $this->render(function() {
+            $fertilizers = $this->calculator->getFertilizers();
+            $additives = $this->calculator->getAdditives();
             $form = [
-                "fertilizer"             => array_key_first($this->calculator->getFertilizers()),
+                "fertilizer"             => array_key_first($fertilizers),
                 "additive"               => [
-                    "magnesium" => array_key_first($this->calculator->getAdditives()["magnesium"]),
-                    "calcium"   => array_key_first($this->calculator->getAdditives()["calcium"]),
+                    "magnesium" => array_key_first($additives["magnesium"]),
+                    "calcium"   => array_key_first($additives["calcium"]),
                 ],
-                "ratio"                  => $this->ratio,
+                "ratio"                  => $fertilizers[array_key_first($fertilizers)]["ratio"],
                 "volume"                 => $this->volume,
                 "support_dilution"       => $this->support_dilution,
                 "target_offset"          => $this->target_offset,
@@ -378,7 +380,7 @@ class Controller {
                 default => "mg",
             };
             if ($additive_units[$element] === "mg") {
-                $additive_concentration[$element] = 100;
+                $additive_concentration[$element] = 100.0;
             }
         }
 
