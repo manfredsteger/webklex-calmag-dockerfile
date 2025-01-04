@@ -82,7 +82,6 @@ class CalculatorTest extends TestCase {
                              'humic_acids',
                              'iron',
                              'magnesium',
-                             'managanese',
                              'manganese',
                              'nitrate',
                              'nitrite',
