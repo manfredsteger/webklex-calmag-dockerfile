@@ -308,9 +308,6 @@ return [
                 "chloride" => [
                     "label" => "Chlorid",
                 ],
-                "managanese" => [
-                    "label" => "Mangan",
-                ],
             ],
         ]
     ]

@@ -318,7 +318,7 @@ return [
                         "NO3" => 4.0, // % Nitratstickstoff (NO3)
                     ],
                     "iron"      => 0.09, // % Chelatiertes Eisen (Fe)
-                    "managanese" => 0.05, // % Chelatiertes Mangan (Mn)
+                    "manganese" => 0.05, // % Chelatiertes Mangan (Mn)
                     "zinc"      => 0.05, // % Chelatiertes Zink (Zn)
                 ],
                 "density"  => 1.0, // g/cm³
