@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo __('region.default')?>">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>CalMag <?php echo __("header.logo.appendix")?></title>
+
+    <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/"; ?>
+    <meta property="og:title" content="<?php echo __("header.og.title")?>">
+    <meta property="og:description" content="<?php echo __("header.og.description")?>">
+    <meta property="og:url" content="<?php echo $link ?>">
+    <meta property="og:image" content="<?php echo $link ?>images/og_image.png">
+    <meta property="og:type" content="website">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/tailwind.css" rel="stylesheet">

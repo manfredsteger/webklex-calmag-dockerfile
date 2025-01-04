@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - N/A
 
 ### Added
-- N/A
+- Open Graph support added
 
 ## [2.4.0] - 2024-12-31
 ### Fixed

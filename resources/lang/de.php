@@ -21,7 +21,11 @@ return [
     "header"   => [
         "logo" => [
             "appendix" => "Rechner"
-        ]
+        ],
+        "og" => [
+            "title" => "CalMag Rechner - Optimiere dein Gießwasser",
+            "description" => "Berechne einfach das perfekte Calcium-zu-Magnesium-Verhältnis für gesündere Pflanzen und besseres Wachstum.",
+        ],
     ],
     "footer"   => [
         "impress" => "Impressum & Kontakt",
