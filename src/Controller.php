@@ -384,7 +384,7 @@ class Controller {
             }
         }
 
-        if(!is_bool($support_dilution)){
+        if (!is_bool($support_dilution)) {
             $support_dilution = match (strtolower($support_dilution)) {
                 "true", "on", "yes", "1" => true,
                 default => false,
@@ -408,67 +408,67 @@ class Controller {
 
         if (($_GET["expert"] ?? null)) {
 
-            if(count($target_calcium) !== count($target_weeks) || count($target_calcium) !== count($target_magnesium) || count($target_calcium) === 0){
+            if (count($target_calcium) !== count($target_weeks) || count($target_calcium) !== count($target_magnesium) || count($target_calcium) === 0) {
                 throw new Exception("Invalid input");
             }
 
-            if(!is_array($additive_elements["calcium"] ?? null) || !is_array($additive_elements["magnesium"] ?? null)){
+            if (!is_array($additive_elements["calcium"] ?? null) || !is_array($additive_elements["magnesium"] ?? null)) {
                 throw new Exception("Invalid input");
             }
 
-            if(!is_array($additive_elements["calcium"]["calcium"] ?? null) || !is_array($additive_elements["magnesium"]["magnesium"] ?? null)){
+            if (!is_array($additive_elements["calcium"]["calcium"] ?? null) || !is_array($additive_elements["magnesium"]["magnesium"] ?? null)) {
                 throw new Exception("Invalid input");
             }
 
-            foreach($additive_elements as $element => $_additive_elements){
-                foreach($_additive_elements as $additive => $value){
-                    if(!is_array($value)){
+            foreach ($additive_elements as $element => $_additive_elements) {
+                foreach ($_additive_elements as $additive => $value) {
+                    if (!is_array($value)) {
                         throw new Exception("Invalid input");
                     }
-                    if((!isset($value["CaO"]) || !is_numeric($value["CaO"])) && (!isset($value["MgO"]) || !is_numeric($value["MgO"]))){
+                    if ((!isset($value["CaO"]) || !is_numeric($value["CaO"])) && (!isset($value["MgO"]) || !is_numeric($value["MgO"]))) {
                         throw new Exception("Invalid input");
                     }
                     foreach ($value as $key => $val) {
                         $value[$key] = (float)$val;
                     }
-                    if(array_sum($value) === 0){
+                    if (array_sum($value) === 0) {
                         throw new Exception("Invalid input");
                     }
                     $additive_elements[$element][$additive] = $value;
                 }
             }
 
-            foreach(GrowState::getStates() as $state){
-                if(!isset($target_calcium[$state->value]) || !isset($target_magnesium[$state->value]) || !isset($target_weeks[$state->value])){
+            foreach (GrowState::getStates() as $state) {
+                if (!isset($target_calcium[$state->value]) || !isset($target_magnesium[$state->value]) || !isset($target_weeks[$state->value])) {
                     throw new Exception("Invalid input");
                 }
                 $target_calcium[$state->value] = (float)$target_calcium[$state->value];
                 $target_magnesium[$state->value] = (float)$target_magnesium[$state->value];
                 $target_weeks[$state->value] = (float)$target_weeks[$state->value];
-                if($target_weeks[$state->value] <= 0) {
+                if ($target_weeks[$state->value] <= 0) {
                     $target_weeks[$state->value] = 1;
                 }
-                if($target_calcium[$state->value] <= 0 && $target_magnesium[$state->value] <= 0){
+                if ($target_calcium[$state->value] <= 0 && $target_magnesium[$state->value] <= 0) {
                     throw new Exception("Invalid input");
                 }
-                if($target_calcium[$state->value] < 0) {
+                if ($target_calcium[$state->value] < 0) {
                     $target_calcium[$state->value] = 0;
                 }
-                if($target_magnesium[$state->value] < 0) {
+                if ($target_magnesium[$state->value] < 0) {
                     $target_magnesium[$state->value] = 0;
                 }
             }
 
-            if(!isset($fertilizer_elements["calcium"])){
+            if (!isset($fertilizer_elements["calcium"])) {
                 $fertilizer_elements["calcium"] = [];
             }
-            if(!isset($fertilizer_elements["magnesium"])){
+            if (!isset($fertilizer_elements["magnesium"])) {
                 $fertilizer_elements["magnesium"] = [];
             }
 
-            if(array_sum($fertilizer_elements["calcium"]) + array_sum($fertilizer_elements["magnesium"]) === 0.0){
+            if (array_sum($fertilizer_elements["calcium"]) + array_sum($fertilizer_elements["magnesium"]) === 0.0) {
                 $fertilizer_name = "";
-            }else{
+            } else {
                 $fertilizer_name = __("content.form.fertilizer.custom.label");
             }
 
@@ -510,7 +510,7 @@ class Controller {
             $this->target_calcium = $target_calcium;
             $this->target_magnesium = $target_magnesium;
 
-            if($fertilizer_name !== ""){
+            if ($fertilizer_name !== "") {
                 $this->calculator->addFertilizer($fertilizer_name, $custom_fertilizer);
             }
             $this->calculator->setFertilizer($fertilizer_name);

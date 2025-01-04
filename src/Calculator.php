@@ -390,6 +390,7 @@ class Calculator {
                     $additive_nanoliter -= 1;
                 } while ($additive_nanoliter > 0);
             }
+
             // How many mg of additive are dissolved based on the additive concentration
             $additive_grams = ($additive_nanoliter / 100) * ($additive['concentration'] / 100);
 
