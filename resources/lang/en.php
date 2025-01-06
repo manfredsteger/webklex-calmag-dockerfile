@@ -190,7 +190,7 @@ return [
                     "description" => "Please use %/ml as indicated on the packaging. If necessary, the density of the preparation must be taken into account.",
                 ],
                 "custom" => [
-                    "label" => "Custom fertilizer",
+                    "label" => "Fertilizer",
                 ]
             ],
             "additive" => [

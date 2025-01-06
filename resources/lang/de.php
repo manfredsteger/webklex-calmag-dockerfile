@@ -190,7 +190,7 @@ return [
                     "description" => "Angaben in %/ml wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
                 ],
                 "custom" => [
-                    "label" => "Benutzerdefiniertes Präparat",
+                    "label" => "Präparat",
                 ],
             ],
             "additive"   => [
