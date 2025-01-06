@@ -1,4 +1,22 @@
 <?php $water = $calculator->getWater(); ?>
+<?php $payload_link = base64_encode(json_encode([
+                                                                                                                             "fertilizer" => $form["fertilizer"],
+                                                                                                                             "additive" => $form["additive"],
+                                                                                                                             "additive_concentration" => $form["additive_concentration"],
+                                                                                                                             "additive_units" => $form["additive_units"],
+                                                                                                                             "elements" => $form["elements"],
+                                                                                                                             "element_units" => $form["element_units"],
+                                                                                                                             "ratio" => $form["ratio"],
+                                                                                                                             "region" => $form["region"],
+                                                                                                                             "volume" => $form["volume"],
+                                                                                                                             "support_dilution"       => $form["support_dilution"],
+                                                                                                                             "target_offset"          => $form["target_offset"],
+                                                                                                                             "additive_elements"      => $form["additive_elements"] ?? [],
+                                                                                                                             "fertilizer_elements"    => $form["fertilizer_elements"] ?? [],
+                                                                                                                             "target_weeks"           => $form["target_weeks"] ?? [],
+                                                                                                                             "target_calcium"         => $form["target_calcium"] ?? [],
+                                                                                                                             "target_magnesium"       => $form["target_magnesium"] ?? [],
+                                                                                                                         ]));?>
 
 <div class="w-full flex flex-wrap justify-center px-4 mt-1 md:mt-4">
     <div class="container">

@@ -529,6 +529,12 @@ class Controller {
             }
         } else {
             try {
+                $this->additive_elements = $additive_elements;
+                $this->fertilizer_elements = $fertilizer_elements;
+                $this->target_weeks = $target_weeks;
+                $this->target_calcium = $target_calcium;
+                $this->target_magnesium = $target_magnesium;
+
                 $this->calculator->setFertilizer($this->fertilizer);
                 $this->calculator->setAdditive($this->additive, $this->additive_concentration);
                 $this->calculator->setRatio($this->ratio, 1.0);
