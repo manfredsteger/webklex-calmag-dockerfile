@@ -9,7 +9,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - N/A
 
 ### Added
+- N/A
+
+## [2.4.1] - 2025-01-07
+### Fixed
+- Custom fertilizer translation string shortened
+
+### Added
 - Open Graph support added
+- Shared link payload to the calculator links added
 
 ## [2.4.0] - 2024-12-31
 ### Fixed
