@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - N/A
 
 ### Added
-- N/A
+- Hy-Pro Cal-Mag Agent added
 
 ## [2.4.1] - 2025-01-07
 ### Fixed

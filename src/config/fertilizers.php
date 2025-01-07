@@ -374,4 +374,31 @@ return [
             ],
         ],
     ],
+
+    "hy_pro" => [
+        "brand_name" => "Hy-Pro",
+        "link"       => [
+            "de" => "https://hy-pro.nl/de/",
+            "us" => "https://www.hy-pro.nl/",
+        ],
+        "products"   => [
+            "calmag" => [
+                "name"     => "Cal-Mag",
+                "elements" => [
+                    "nitrogen"  => [ // Gesamtstickstoff (N) - 4%
+                        "NO3" => 9.3105, // Nitratstickstoff (NO3)
+                    ],
+                    "calcium"   => 2.1978, // %
+                    "magnesium" => 0.4917, // %
+                ],
+                "density"  => 1.05, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://hy-pro.nl/de/produkt/hypro-calmag-2/",
+                    "us" => "https://hy-pro.nl/product/hypro-calmag/",
+                ],
+            ],
+        ],
+    ]
 ];
