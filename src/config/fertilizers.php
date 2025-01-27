@@ -51,6 +51,7 @@ return [
                 "elements" => [
                     "calcium"   => 5.6, // %
                     "magnesium" => 1.7, // %
+                    "nitrogen"  => 3.28, // %
                 ],
                 "density"  => 1.258, // g/cm³
                 "ph"       => 7.0, // pH-Wert
@@ -400,5 +401,29 @@ return [
                 ],
             ],
         ],
-    ]
+    ],
+
+    "organicsnutrients" => [
+        "brand_name" => "Organics Nutrients",
+        "link"       => [
+            "de" => "https://www.organicsnutrients.com/de/",
+            "us" => "https://www.organicsnutrients.com/en/",
+        ],
+        "products"   => [
+            "calmag" => [
+                "name"     => "CalMag Alga",
+                "elements" => [
+                    "calcium"   => 80.0*0.40, // %
+                    "magnesium" => 12.0*0.288, // %
+                ],
+                "density"  => 1.0, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://www.organicsnutrients.com/de/produkt/calmag-alga/",
+                    "us" => "https://www.organicsnutrients.com/en/products/calmag-alga/",
+                ],
+            ],
+        ],
+    ],
 ];
