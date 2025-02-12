@@ -6,10 +6,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
-- N/A
+- Canna CalMag missing nitrogen added
+- Phase-Target calculation fixed - default elements were always set to 3.5:1
 
 ### Added
 - Hy-Pro Cal-Mag Agent added
+- Organics Nutrients CalMag Alga added
 
 ## [2.4.1] - 2025-01-07
 ### Fixed

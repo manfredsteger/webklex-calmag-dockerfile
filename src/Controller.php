@@ -537,7 +537,18 @@ class Controller {
 
                 $this->calculator->setFertilizer($this->fertilizer);
                 $this->calculator->setAdditive($this->additive, $this->additive_concentration);
+
+                $targets = [];
+                foreach ($this->calculator->getTargets() as $index => $target) {
+                    $targets[$index] = [
+                        "weeks"    => $target["weeks"],
+                        "elements" => [
+                            "calcium"   => $target["elements"]["calcium"],
+                        ],
+                    ];
+                }
                 $this->calculator->setRatio($this->ratio, 1.0);
+                $this->calculator->setTargets($targets);
                 $this->calculator->setWater(["elements" => $this->elements]);
                 $this->calculator->setTargetOffset($this->target_offset / 100);
             } catch (Exception $e) {
