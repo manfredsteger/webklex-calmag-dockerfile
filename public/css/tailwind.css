@@ -632,6 +632,10 @@ video {
   margin-top: 2rem;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .flex {
   display: flex;
 }
@@ -652,12 +656,20 @@ video {
   height: 10rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .w-1\/2 {
   width: 50%;
 }
 
 .w-5\/12 {
   width: 41.666667%;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-7\/12 {
