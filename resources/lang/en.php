@@ -243,12 +243,12 @@ return [
                 "label" => "Dilution",
             ],
             "support_dilution" => [
-                "label" => "Support dilution",
+                "label" => "Dilution with distilled water",
                 // Wenn dein Wasser zu hohe Werte aufweist, kann es sinnvoll sein, das Wasser zu verdünnen.
                 "description" => "If your water has too high values, it may be useful to dilute the water.",
             ],
             "volume" => [
-                "label" => "Volume",
+                "label" => "Water volume in L",
                 "description" => "Enter the volume of your water here. The volume is used to calculate the amount of fertilizer and additive to be added.",
             ],
             "region" => [

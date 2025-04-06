@@ -242,11 +242,11 @@ return [
                 "label" => "Verdünnung",
             ],
             "support_dilution" => [
-                "label" => "Verdünnung unterstützen",
+                "label" => "Verdünnen mit Osmose-/ Destilliertem-Wasser",
                 "description" => "Wenn dein Wasser zu hohe Werte aufweist, kann es sinnvoll sein, das Wasser zu verdünnen.",
             ],
             "volume"     => [
-                "label"       => "Volumen",
+                "label"       => "Wasser-Volumen in L",
                 "description" => "Das Volumen gibt an, wie viel Wasser behandelt werden soll. Dieser Wert wird in Litern angegeben.",
             ],
             "region"     => [
