@@ -6,8 +6,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
+- NaN
+
+### Added
+- NaN
+
+## [3.0.0] - 2025-04-12
+### Fixed
 - Canna CalMag missing nitrogen added
 - Phase-Target calculation fixed - default elements were always set to 3.5:1
+- MgSO4 and MgSO4*7H2O clearly separated
+- Default agent changed set to canna
+- Mode switching fixed (form forgot input)
 
 ### Added
 - Hy-Pro Cal-Mag Agent added
