@@ -81,6 +81,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 If you discover any security related issues, please email github@webklex.com instead of using the issue tracker.
 
 ## Credits
+- Fumu <3
 - [Webklex][link-author]
 - [All Contributors][link-contributors]
 
