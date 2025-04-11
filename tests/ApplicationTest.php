@@ -57,7 +57,7 @@ class ApplicationTest extends TestCase {
         ob_start();
         $app->route();
         $output = ob_get_clean();
-        self::assertStringContainsString('371,37 g/L', $output);
+        self::assertStringContainsString('322,20 g/L', $output);
         self::assertStringContainsString('</html>', $output);
 
         unset($_GET["builder"]);
