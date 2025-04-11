@@ -221,7 +221,14 @@ return [
                 "label"       => "Wochen",
                 "description" => "Wähle hier die Wochen aus, für die die Berechnung durchgeführt werden",
             ],
-            "target_calcium" => [
+            "target_week"            => [
+                "label" => "Woche",
+            ],
+            "target_model"           => [
+                "label"       => "Rechenmodell",
+                "description" => "Wähle hier das Modell aus, welches du verwenden möchtest.",
+            ],
+            "target_calcium"         => [
                 "label"       => "Calcium",
                 "description" => "Der Zielwert für Calcium gibt an, wie viel Calcium in deinem Wasser enthalten sein sollte. Dieser Wert wird in mg/L angegeben.",
             ],

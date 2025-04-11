@@ -37,6 +37,7 @@ class Controller {
     private array $additive_units;
     private float $ratio = 3.5;
     private float $density = 1.0;
+    protected string $target_model = "linear";
 
     private float $volume = 5.0;
     private bool $support_dilution = true;
@@ -48,7 +49,6 @@ class Controller {
 
     private array $additive_elements = [];
     private array $fertilizer_elements = [];
-    private array $target_weeks = [];
     private array $target_calcium = [];
     private array $target_magnesium = [];
 
@@ -80,7 +80,7 @@ class Controller {
      * @return void
      */
     private function loadCalculator(): void {
-        $this->calculator = new Calculator(["elements" => $this->elements], $this->fertilizer, $this->additive, $this->ratio);
+        $this->calculator = new Calculator(["elements" => $this->elements], (string)$this->fertilizer, $this->additive, $this->ratio);
 
         $additives = $this->calculator->getAdditives();
         $this->additive_concentration = [
@@ -109,6 +109,7 @@ class Controller {
                 ],
                 "ratio"                  => $fertilizers[array_key_first($fertilizers)]["ratio"],
                 "volume"                 => $this->volume,
+                "target_model"           => $this->target_model,
                 "support_dilution"       => $this->support_dilution,
                 "target_offset"          => $this->target_offset,
                 "region"                 => $this->region,
@@ -147,6 +148,7 @@ class Controller {
                 "volume"                 => $this->volume,
                 "support_dilution"       => $this->support_dilution,
                 "target_offset"          => $this->target_offset,
+                "target_model"           => $this->target_model,
                 "region"                 => $this->region,
                 "elements"               => $this->elements,
                 "element_units"          => $this->element_units,
@@ -155,7 +157,6 @@ class Controller {
                 "additive_units"         => $this->additive_units,
                 "additive_elements"      => $this->additive_elements,
                 "fertilizer_elements"    => $this->fertilizer_elements,
-                "target_weeks"           => $this->target_weeks,
                 "target_calcium"         => $this->target_calcium,
                 "target_magnesium"       => $this->target_magnesium,
             ];
@@ -307,6 +308,7 @@ class Controller {
         $ratio = $payload['ratio'] ?? $this->ratio;
         $density = $payload['density'] ?? $this->density;
         $volume = $payload['volume'] ?? $this->volume;
+        $target_model = $payload['target_model'] ?? $this->target_model;
         $support_dilution = $payload['support_dilution'] ?? $this->support_dilution;
         $target_offset = $payload['target_offset'] ?? $this->target_offset;
         $elements = $payload['elements'] ?? $this->elements;
@@ -315,7 +317,6 @@ class Controller {
         $additive_units = $payload['additive_units'] ?? [];
         $additive_elements = $payload['additive_elements'] ?? [];
         $fertilizer_elements = $payload['fertilizer_elements'] ?? [];
-        $target_weeks = $payload['target_weeks'] ?? [];
         $target_calcium = $payload['target_calcium'] ?? [];
         $target_magnesium = $payload['target_magnesium'] ?? [];
 
@@ -328,6 +329,9 @@ class Controller {
         }
         if (!isset($this->calculator->getFertilizers()[$fertilizer]) && $fertilizer !== "") {
             throw new Exception("Invalid fertilizer");
+        }
+        if (Config::get("app.models.$target_model", false) === false) {
+            throw new Exception("Invalid target model");
         }
         $_additives = $this->calculator->getAdditives();
         foreach ($additive as $elm => $value) {
@@ -394,6 +398,7 @@ class Controller {
         $this->calculator->setDilutionSupport($support_dilution);
 
         $this->fertilizer = $fertilizer;
+        $this->target_model = $target_model;
         $this->additive = $additive;
         $this->ratio = $ratio;
         $this->density = $density;
@@ -408,7 +413,7 @@ class Controller {
 
         if (($_GET["expert"] ?? null)) {
 
-            if (count($target_calcium) !== count($target_weeks) || count($target_calcium) !== count($target_magnesium) || count($target_calcium) === 0) {
+            if (count($target_calcium) !== count($target_magnesium) || count($target_calcium) === 0) {
                 throw new Exception("Invalid input");
             }
 
@@ -438,24 +443,21 @@ class Controller {
                 }
             }
 
-            foreach (GrowState::getStates() as $state) {
-                if (!isset($target_calcium[$state->value]) || !isset($target_magnesium[$state->value]) || !isset($target_weeks[$state->value])) {
+            $modelTargets = Config::get("app.models.".$target_model, []);
+            foreach ($modelTargets as $week => $model) {
+                if (!isset($target_calcium[$week]) || !isset($target_magnesium[$week])) {
                     throw new Exception("Invalid input");
                 }
-                $target_calcium[$state->value] = (float)$target_calcium[$state->value];
-                $target_magnesium[$state->value] = (float)$target_magnesium[$state->value];
-                $target_weeks[$state->value] = (float)$target_weeks[$state->value];
-                if ($target_weeks[$state->value] <= 0) {
-                    $target_weeks[$state->value] = 1;
-                }
-                if ($target_calcium[$state->value] <= 0 && $target_magnesium[$state->value] <= 0) {
+                $target_calcium[$week] = (float)$target_calcium[$week];
+                $target_magnesium[$week] = (float)$target_magnesium[$week];
+                if ($target_calcium[$week] <= 0 && $target_magnesium[$week] <= 0) {
                     throw new Exception("Invalid input");
                 }
-                if ($target_calcium[$state->value] < 0) {
-                    $target_calcium[$state->value] = 0;
+                if ($target_calcium[$week] < 0) {
+                    $target_calcium[$week] = 0;
                 }
-                if ($target_magnesium[$state->value] < 0) {
-                    $target_magnesium[$state->value] = 0;
+                if ($target_magnesium[$week] < 0) {
+                    $target_magnesium[$week] = 0;
                 }
             }
 
@@ -466,7 +468,7 @@ class Controller {
                 $fertilizer_elements["magnesium"] = [];
             }
 
-            if (array_sum($fertilizer_elements["calcium"]) + array_sum($fertilizer_elements["magnesium"]) === 0.0) {
+            if (array_sum($fertilizer_elements["calcium"]) + array_sum($fertilizer_elements["magnesium"]) <= 0.0) {
                 $fertilizer_name = "";
             } else {
                 $fertilizer_name = __("content.form.fertilizer.custom.label");
@@ -492,21 +494,20 @@ class Controller {
             ];
 
             $targets = [];
-            foreach ($target_weeks as $index => $week) {
-                $targets[$index] = [
+            foreach ($modelTargets as $week => $model) {
+                $targets[$week] = [
                     "weeks"    => $week,
+                    "state"    => $model["state"],
                     "elements" => [
-                        "calcium"   => $target_calcium[$index] ?? 0,
-                        "magnesium" => $target_magnesium[$index] ?? 0,
+                        "calcium"   => $target_calcium[$week] ?? 0,
+                        "magnesium" => $target_magnesium[$week] ?? 0,
                     ],
                 ];
             }
-
             $this->validated = true;
 
             $this->additive_elements = $additive_elements;
             $this->fertilizer_elements = $fertilizer_elements;
-            $this->target_weeks = $target_weeks;
             $this->target_calcium = $target_calcium;
             $this->target_magnesium = $target_magnesium;
 
@@ -519,7 +520,8 @@ class Controller {
             $this->calculator->setAdditive(["calcium" => "custom_calcium", "magnesium" => "custom_magnesium"], $this->additive_concentration);
 
             $this->calculator->setRatio($this->ratio, 1.0);
-            $this->calculator->setTargets($targets);
+            $this->calculator->setTargetModel($this->target_model);
+            $this->calculator->setModel($targets);
             $this->calculator->setTargetOffset($this->target_offset / 100);
 
             try {
@@ -531,26 +533,15 @@ class Controller {
             try {
                 $this->additive_elements = $additive_elements;
                 $this->fertilizer_elements = $fertilizer_elements;
-                $this->target_weeks = $target_weeks;
                 $this->target_calcium = $target_calcium;
                 $this->target_magnesium = $target_magnesium;
 
                 $this->calculator->setFertilizer($this->fertilizer);
                 $this->calculator->setAdditive($this->additive, $this->additive_concentration);
-
-                $targets = [];
-                foreach ($this->calculator->getTargets() as $index => $target) {
-                    $targets[$index] = [
-                        "weeks"    => $target["weeks"],
-                        "elements" => [
-                            "calcium"   => $target["elements"]["calcium"],
-                        ],
-                    ];
-                }
                 $this->calculator->setRatio($this->ratio, 1.0);
-                $this->calculator->setTargets($targets);
                 $this->calculator->setWater(["elements" => $this->elements]);
                 $this->calculator->setTargetOffset($this->target_offset / 100);
+                $this->calculator->setTargetModel($this->target_model);
             } catch (Exception $e) {
                 // Handle the exception
             }

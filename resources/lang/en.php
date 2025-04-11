@@ -222,7 +222,16 @@ return [
                 "label"       => "Weeks",
                 "description" => "Select the number of weeks for which the target values should be calculated.",
             ],
-            "target_calcium" => [
+            "target_week"            => [
+                "label" => "Week",
+            ],
+            "target_model"           => [
+                // Dünge-Schema
+                "label"       => "Model",
+                // Wähle hier das Dünge-Schema aus, welches du verwenden möchtest. Ob linear oder dynamisch (Ca, Mg, Ca/Mg) bleibt dir und deinen Präferenzen überlassen.
+                "description" => "Select the model you want to use. Whether linear or dynamic (Ca, Mg, Ca/Mg) is up to you and your preferences.",
+            ],
+            "target_calcium"         => [
                 "label"       => "Calcium",
                 "description" => "The target value for calcium indicates how much calcium should be present in your water. This value is given in mg/L.",
             ],

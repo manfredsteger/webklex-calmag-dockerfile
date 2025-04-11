@@ -2,18 +2,30 @@
 <table class="w-full table">
     <tr>
         <td class="font-normal text-left"></td>
-        <?php $week = 0; ?>
-        <?php foreach ($table["targets"] as $state => $target): ?>
-            <td colspan="<?php echo $target["weeks"]; ?>"  class="<?php echo $colors[$week += $target["weeks"]];?>"><?php echo __("content.calculator.state.$state")?></td>
+        <?php $state = null; ?>
+        <?php $colspan = 1; ?>
+        <?php foreach ($table["models"] as $week => $target): ?>
+            <?php if ($state === null): ?>
+                <?php $state = $target["state"]; ?>
+                <?php $colspan = 1; ?>
+            <?php elseif ($state !== $target["state"]): ?>
+                <td colspan="<?php echo $colspan; ?>"  class="<?php echo $colors[$week-1];?>"><?php echo __("content.calculator.state.".$state)?></td>
+                <?php $state = $target["state"]; ?>
+                <?php $colspan = 1; ?>
+            <?php else: ?>
+                <?php $colspan += 1; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
+        <?php if ($state !== null): ?>
+            <td colspan="<?php echo $colspan; ?>"  class="<?php echo $colors[$week-1];?>"><?php echo __("content.calculator.state.".$state)?></td>
+        <?php endif; ?>
+
     </tr>
     <tr>
         <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.week")?></td>
         <?php $week = 1; ?>
-        <?php foreach ($table["targets"] as $state => $target): ?>
-            <?php for ($i = 1; $i <= $target["weeks"]; $i++): ?>
-                <td class="<?php echo $colors[$week];?>"><?php echo $week++ ?></td>
-            <?php endfor; ?>
+        <?php foreach ($table["models"] as $week => $target): ?>
+            <td class="<?php echo $colors[$week];?>"><?php echo $week ?></td>
         <?php endforeach; ?>
     </tr>
     <?php if ($table["fertilizer"]["name"] !== ""): ?>
@@ -188,19 +200,29 @@
     </tr>
     <tr class="result-detail-table">
         <td class="font-normal text-left"></td>
-        <?php $week = 0; ?>
-        <?php foreach ($table["targets"] as $state => $target): ?>
-            <td colspan="<?php echo $target["weeks"]; ?>"
-                class="<?php echo $colors[$week += $target["weeks"]];?> bg-opacity-50"><?php echo __("content.calculator.state.$state")?></td>
+        <?php $state = null; ?>
+        <?php $colspan = 1; ?>
+        <?php foreach ($table["models"] as $week => $target): ?>
+            <?php if ($state === null): ?>
+                <?php $state = $target["state"]; ?>
+                <?php $colspan = 1; ?>
+            <?php elseif ($state !== $target["state"]): ?>
+                <td colspan="<?php echo $colspan; ?>"  class="<?php echo $colors[$week-1];?> bg-opacity-50"><?php echo __("content.calculator.state.".$state)?></td>
+                <?php $state = $target["state"]; ?>
+                <?php $colspan = 1; ?>
+            <?php else: ?>
+                <?php $colspan += 1; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
+        <?php if ($state !== null): ?>
+            <td colspan="<?php echo $colspan; ?>"  class="<?php echo $colors[$week-1];?> bg-opacity-50"><?php echo __("content.calculator.state.".$state)?></td>
+        <?php endif; ?>
     </tr>
     <tr class="result-detail-table">
         <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.week")?></td>
         <?php $week = 1; ?>
-        <?php foreach ($table["targets"] as $state => $target): ?>
-            <?php for ($i = 1; $i <= $target["weeks"]; $i++): ?>
-                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo $week++ ?></td>
-            <?php endfor; ?>
+        <?php foreach ($table["models"] as $week => $target): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo $week ?></td>
         <?php endforeach; ?>
     </tr>
     <?php foreach ($table["target"][1]["elements"] as $element => $_value): ?>
@@ -241,19 +263,29 @@
     </tr>
     <tr class="result-detail-table">
         <td class="font-normal text-left"></td>
-        <?php $week = 0; ?>
-        <?php foreach ($table["targets"] as $state => $target): ?>
-            <td colspan="<?php echo $target["weeks"]; ?>"
-                class="<?php echo $colors[$week += $target["weeks"]];?> bg-opacity-50"><?php echo __("content.calculator.state.$state")?></td>
+        <?php $state = null; ?>
+        <?php $colspan = 1; ?>
+        <?php foreach ($table["models"] as $week => $target): ?>
+            <?php if ($state === null): ?>
+                <?php $state = $target["state"]; ?>
+                <?php $colspan = 1; ?>
+            <?php elseif ($state !== $target["state"]): ?>
+                <td colspan="<?php echo $colspan; ?>"  class="<?php echo $colors[$week-1];?> bg-opacity-50"><?php echo __("content.calculator.state.".$state)?></td>
+                <?php $state = $target["state"]; ?>
+                <?php $colspan = 1; ?>
+            <?php else: ?>
+                <?php $colspan += 1; ?>
+            <?php endif; ?>
         <?php endforeach; ?>
+        <?php if ($state !== null): ?>
+            <td colspan="<?php echo $colspan; ?>"  class="<?php echo $colors[$week-1];?> bg-opacity-50"><?php echo __("content.calculator.state.".$state)?></td>
+        <?php endif; ?>
     </tr>
     <tr class="result-detail-table">
         <td class="pr-2 font-normal text-right"><?php echo __("content.calculator.table.week")?></td>
         <?php $week = 1; ?>
-        <?php foreach ($table["targets"] as $state => $target): ?>
-            <?php for ($i = 1; $i <= $target["weeks"]; $i++): ?>
-                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo $week++ ?></td>
-            <?php endfor; ?>
+        <?php foreach ($table["models"] as $week => $target): ?>
+                <td class="<?php echo $colors[$week];?> bg-opacity-50"><?php echo $week ?></td>
         <?php endforeach; ?>
     </tr>
     <?php if ($table["fertilizer"]["name"] !== ""): ?>

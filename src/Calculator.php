@@ -16,7 +16,8 @@ namespace Webklex\CalMag;
 use Webklex\CalMag\Enums\GrowState;
 
 class Calculator {
-    protected array $targets = [];
+    protected array $models = [];
+    protected $target_model = "linear";
 
     protected array $additives = [];
 
@@ -47,7 +48,7 @@ class Calculator {
      * @param array $additive
      * @param float $ratio
      */
-    public function __construct(array $water, string $fertilizer = "", array $additive = [], float $ratio = 3.5) {
+    public function __construct(array $water, string $fertilizer = "", array $additive = [], float $ratio = 3.5, string $target_model = "linear") {
         if (!isset($water["elements"]["calcium"]) || !isset($water["elements"]["magnesium"])) {
             throw new \InvalidArgumentException("Water needs to have calcium and magnesium values");
         }
@@ -70,7 +71,7 @@ class Calculator {
         $this->setAdditive($additive);
 
         $this->boot();
-
+        $this->setTargetModel($target_model);
         $this->setWater($water);
     }
 
@@ -93,19 +94,16 @@ class Calculator {
                 $this->additives[$element][$index] = $this->calculateRealAdditiveConcentrations($additive);
             }
         }
-        foreach (Config::get("app.targets", []) as $index => $target) {
-            $this->targets[$index] = $this->validateTarget($target);
-        }
     }
 
     protected function calculateRealAdditiveConcentrations(array $additive): array {
         $additive['real'] = [];
-        if(!isset($additive["elements"])) {
+        if (!isset($additive["elements"])) {
             $additive["elements"] = [];
         }
         foreach ($this->summarizeElements($additive['elements']) as $component => $value) {
             $additive['real'][$component] = (($value * 10) * ($additive['concentration'] / 100)) * ($additive["density"] ?? 1.0);
-            if(!isset($additive["elements"][$component])) {
+            if (!isset($additive["elements"][$component])) {
                 $additive["elements"][$component] = 0;
             }
         }
@@ -140,38 +138,24 @@ class Calculator {
     }
 
     public function generateResultTable(): array {
-        $start_elements = $this->targets[GrowState::Propagation->value]["elements"] ?? [
-            "calcium" => 40,
-        ];
         $weeks = [];
-        $week_num = 0;
-        foreach ($this->targets as $state => $target) {
-            $end_elements = $target["elements"];
-            $delta_elements = [];
-            foreach ($end_elements as $component => $value) {
-                $delta_elements[$component] = $value - ($start_elements[$component] ?? 0);
+        foreach ($this->models as $week => $target) {
+            $target_elements = $target["elements"];
+            if (!isset($target_elements["magnesium"]) || $target_elements["magnesium"] <= 0) {
+                $target_elements["magnesium"] = $target_elements["calcium"] / $this->ratios["calcium"];
+            } elseif (!isset($target_elements["calcium"]) || $target_elements["calcium"] <= 0) {
+                $target_elements["calcium"] = $target_elements["magnesium"] * $this->ratios["calcium"];
             }
-            for ($i = 0; $i < $target["weeks"]; $i++) {
-                $target_elements = [];
-                foreach ($end_elements as $component => $value) {
-                    $target_elements[$component] = $start_elements[$component] + ($delta_elements[$component] / $target["weeks"]) * ($i + 1);
-                }
-                if (isset($target_elements["calcium"])) {
-                    $target_elements["magnesium"] = $target_elements["calcium"] / $this->ratios["calcium"];
-                }
-                $_result = $this->calculateFertilizer([
-                                                          ...$target,
-                                                          "elements" => $target_elements,
-                                                      ]);
-                $weeks[$week_num++] = [
-                    "result" => $_result,
-                    "week"   => $week_num,
-                    "state"  => $state,
-                    "target_elements" => $target_elements,
-                ];
-            }
-
-            $start_elements = $end_elements;
+            $_result = $this->calculateFertilizer([
+                                                      ...$target,
+                                                      "elements" => $target_elements,
+                                                  ]);
+            $weeks[$week] = [
+                "result"          => $_result,
+                "week"            => $week,
+                "state"           => $target["state"],
+                "target_elements" => $target_elements,
+            ];
         }
 
 
@@ -179,20 +163,20 @@ class Calculator {
         $mg_additive = $this->additives["magnesium"][$this->additive["magnesium"] ?? ""] ?? [];
 
         $table = [
-            "targets"    => $this->targets,
+            "models"      => $this->models,
             "fertilizer"  => [
                 "name" => $this->fertilizer,
                 "rows" => [],
             ],
             "ca_additive" => [
-                "name" => $this->additive["calcium"] ?? "",
+                "name"          => $this->additive["calcium"] ?? "",
                 "concentration" => $ca_additive["concentration"] ?? 0,
-                "rows" => [],
+                "rows"          => [],
             ],
             "mg_additive" => [
-                "name" => $this->additive["magnesium"] ?? "",
+                "name"          => $this->additive["magnesium"] ?? "",
                 "concentration" => $mg_additive["concentration"] ?? 0,
-                "rows" => [],
+                "rows"          => [],
             ],
             "elements"    => [],
             "water"       => [],
@@ -214,7 +198,7 @@ class Calculator {
             $table["ratio"][$week["week"]] = $week["result"]["ratio"];
             $table["target"][$week["week"]] = [
                 ...$week["result"]["target"],
-                "state" => $week["state"],
+                "state"    => $week["state"],
                 "elements" => $week["target_elements"],
             ];
             $table["missing"][$week["week"]] = $week["result"]["missing"];
@@ -225,12 +209,42 @@ class Calculator {
     }
 
     /**
-     * Get the applied fertilizer results for all targets
+     * Get the applied fertilizer results for all models
      * @return array
      */
     public function getAppliedFertilizer(): array {
+        $targets = [];
+        foreach ($this->models as $week => $target) {
+            if (!isset($targets[$target["state"]])) {
+                $targets[$target["state"]] = [
+                    ...$target,
+                    "weeks" => 1,
+                ];
+            } else {
+                foreach ($target["elements"] as $component => $value) {
+                    if (is_array($value)) {
+                        foreach ($value as $sub_element => $sub_value) {
+                            $targets[$target["state"]]["elements"][$component][$sub_element] += $sub_value;
+                        }
+                    } else {
+                        $targets[$target["state"]]["elements"][$component] += $value;
+                    }
+                }
+                $targets[$target["state"]]["weeks"]++;
+            }
+        }
+
         $result = [];
-        foreach ($this->targets as $state => $target) {
+        foreach ($targets as $state => $target) {
+            foreach ($target["elements"] as $component => $value) {
+                if (is_array($value)) {
+                    foreach ($value as $sub_element => $sub_value) {
+                        $target["elements"][$component][$sub_element] = $sub_value / $target["weeks"];
+                    }
+                } else {
+                    $target["elements"][$component] = $value / $target["weeks"];
+                }
+            }
             $result[$state] = $this->calculateFertilizer($target);
         }
         return $result;
@@ -276,6 +290,7 @@ class Calculator {
             "elements" => [],
         ];
         $elements = $this->summarizeElements($this->water["elements"]);
+        $target = $this->validateTarget($target);
         $dilution = 1.0;
 
         foreach ($target["elements"] as $component => $target_value) {
@@ -325,7 +340,7 @@ class Calculator {
 
         foreach ($this->additive as $element => $name) {
             $additive = $this->additives[$element][$name] ?? null;
-            if($additive === null) {
+            if ($additive === null) {
                 $result['additive'][$element] = [
                     "ml"            => 0,
                     "mg"            => 0,
@@ -336,12 +351,11 @@ class Calculator {
             }
 
             $additive_nanoliter = 0;
-            while ($elements['calcium'] / $elements['magnesium'] > $this->ratios['calcium'] || (
-                    ($elements['calcium'] < $target["elements"]['calcium']) &&
-                    ($elements['calcium'] - $target["elements"]['calcium'] < 0) &&
-                    ($elements['magnesium'] < $target["elements"]['magnesium']) &&
-                    ($elements['magnesium'] - $target["elements"]['magnesium'] < 0)
-                )) {
+            while ((
+                        ($elements['magnesium'] < $target["elements"]['magnesium']) &&
+                        ($elements['magnesium'] - $target["elements"]['magnesium'] < 0)
+                    )
+                ) {
                 if (!isset($additive['real']["magnesium"]) || $additive['real']["magnesium"] <= ($additive['real']["calcium"] ?? 0)) {
                     break;
                 }
@@ -353,12 +367,12 @@ class Calculator {
                 }
                 $additive_nanoliter++;
             }
-            while ($elements['calcium'] / $elements['magnesium'] < $this->ratios['calcium'] || (
-                    ($elements['calcium'] < $target["elements"]['calcium']) &&
-                    ($elements['calcium'] - $target["elements"]['calcium'] < 0) &&
-                    ($elements['magnesium'] < $target["elements"]['magnesium']) &&
-                    ($elements['magnesium'] - $target["elements"]['magnesium'] < 0)
-                )) {
+            while (
+                    (
+                        ($elements['calcium'] < $target["elements"]['calcium']) &&
+                        ($elements['calcium'] - $target["elements"]['calcium'] < 0)
+                    )
+                ) {
                 if (!isset($additive['real']["calcium"]) || $additive['real']["calcium"] <= ($additive['real']["magnesium"] ?? 0)) {
                     break;
                 }
@@ -372,7 +386,10 @@ class Calculator {
             }
 
             if ($additive_nanoliter > 10) {
-                if ($elements['calcium'] / $elements['magnesium'] < $this->ratios['calcium']) {
+                if (
+                    ($elements['calcium'] / $elements['magnesium'] < $this->ratios['calcium'] && ($target["elements"]['calcium'] < $elements['calcium'] || $target["elements"]['calcium'] == 0)) ||
+                    ($elements['calcium'] / $elements['magnesium'] < $this->ratios['calcium'] && ($target["elements"]['magnesium'] < $elements['magnesium'] || $target["elements"]['magnesium'] == 0))
+                ) {
                     foreach ($additive['real'] as $component => $value) {
                         if ($value > 0) {
                             $elements[$component] -= $value / 100;
@@ -413,8 +430,8 @@ class Calculator {
 
         $result["ratio"] = $elements['calcium'] / $elements['magnesium'];
         $result["elements"] = $elements;
-        $result["dilution"] = $dilution;
-        $result["water"] = 1.0 - $dilution;
+        $result["dilution"] = $dilution; // tap water
+        $result["water"] = 1.0 - $dilution; // osmosis water
 
         // Check if the target is reached (within 3% deviation)
         $tolerance = 0.05;
@@ -450,7 +467,7 @@ class Calculator {
 
                 $dilution = min($ca_factor, $mg_factor);
 
-                if($dilution <= 1.0) {
+                if ($dilution <= 1.0 && $dilution > 0) {
                     $result["dilution"] = $dilution;
                     $result["water"] = 1.0 - $dilution;
 
@@ -631,14 +648,14 @@ class Calculator {
             "elements" => [],
         ];
 
-        if(count($fertilizer["elements"]) > 0) {
+        if (count($fertilizer["elements"]) > 0) {
             foreach ($fertilizer["elements"] as $component => $value) {
                 if (!isset($water["elements"][$component])) {
                     $this->water["elements"][$component] = 0;
                 }
                 $this->water["elements"][$component] = $water["elements"][$component] ?? 0.0;
             }
-        }else{
+        } else {
             $this->water["elements"] = $water["elements"];
         }
 
@@ -664,8 +681,10 @@ class Calculator {
      * @return void
      */
     public function setTargetOffset(float $offset): void {
-        foreach ($this->targets as $index => $target) {
-            $this->targets[$index] = [
+        foreach ($this->models as $index => $target) {
+            $target["elements"]["calcium"] = $target["elements"]["calcium"] ?? 0.0;
+            $target["elements"]["magnesium"] = $target["elements"]["magnesium"] ?? 0.0;
+            $this->models[$index] = [
                 ...$target,
                 "elements" => [
                     "calcium"   => $target["elements"]["calcium"] + ($target["elements"]["calcium"] * $offset),
@@ -687,8 +706,8 @@ class Calculator {
             "calcium"   => $calcium,
             "magnesium" => $magnesium,
         ];
-        foreach ($this->targets as $index => $target) {
-            $this->targets[$index] = $this->validateTarget($target);
+        foreach ($this->models as $index => $target) {
+            $this->models[$index] = $this->validateTarget($target);
         }
     }
 
@@ -731,7 +750,7 @@ class Calculator {
     public function getAdditiveComponents(string $element, float $ml): array {
         $additive = $this->additives[$element][$this->additive[$element] ?? ""] ?? null;
         $result = [];
-        if($additive === null) {
+        if ($additive === null) {
             return $result;
         }
 
@@ -760,13 +779,13 @@ class Calculator {
 
     /**
      * Set the target values for a specific state
-     * @param GrowState $state The state to set the target for
+     * @param int $week The week number
      * @param array $target The target values for the given state
      *
      * @return void
      */
-    public function setTarget(GrowState $state, array $target): void {
-        $this->targets[$state->value] = $this->validateTarget($target);
+    public function setTarget(int $week, array $target): void {
+        $this->models[$week] = $this->validateTarget($target);
     }
 
     /**
@@ -851,13 +870,22 @@ class Calculator {
         $this->additives[$element][$name] = $additive;
     }
 
-    public function setTargets(array $targets): void {
-        foreach ($targets as $index => $target) {
-            $this->targets[$index] = $this->validateTarget($target);
+    public function setModels(array $models): void {
+        foreach ($models as $index => $target) {
+            $this->models[$index] = $this->validateTarget($target);
         }
     }
 
     public function setDilutionSupport(bool $dilution_support): void {
         $this->dilution_support = $dilution_support;
+    }
+
+    public function setTargetModel(string $target_model) {
+        $this->target_model = $target_model;
+        $this->setModel(Config::get("app.models.$target_model", []));
+    }
+
+    public function setModel(array $models): void {
+        $this->models = $models;
     }
 }

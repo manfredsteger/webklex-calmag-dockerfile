@@ -27,9 +27,9 @@ class Comparator {
     protected array $water_elements;
 
     /**
-     * @var array $targets The targets
+     * @var array $models The targets
      */
-    protected array $targets;
+    protected array $models;
 
     /**
      * @var array $ratios The ratios
@@ -42,8 +42,8 @@ class Comparator {
             "magnesium" => 1.0,
         ];
 
-        foreach (Config::get("app.targets", []) as $index => $target) {
-            $this->targets[$index] = $this->validateTarget(GrowState::fromString($index), [
+        foreach (Config::get("app.models.linear", []) as $week => $target) {
+            $this->models[$week] = $this->validateTarget(GrowState::fromString($target["state"]), [
                 ...$target,
                 "elements" => [
                     ...$target["elements"] ?? [],
@@ -94,8 +94,8 @@ class Comparator {
             "calcium"   => $calcium,
             "magnesium" => $magnesium,
         ];
-        foreach ($this->targets as $index => $target) {
-            $this->targets[$index] = $this->validateTarget(GrowState::fromString($index), [
+        foreach ($this->models as $week => $target) {
+            $this->models[$week] = $this->validateTarget(GrowState::fromString($target["state"]), [
                 ...$target,
                 "elements" => [
                     ...$target["elements"] ?? [],

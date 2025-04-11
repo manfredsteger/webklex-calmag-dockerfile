@@ -362,8 +362,32 @@
                 </div>
             </div>
 
-            <div class="w-full px-2 pb-2 ">
-                <div class="w-full md:px-4 py-4 text-left  relative">
+            <div class="w-full flex flex-wrap md:px-2 pb-2 ">
+                <div class="w-full md:w-1/3 md:px-4 text-left  relative">
+                    <label for="target_model" class="font-semibold text-slate-200">
+                        <?php echo __("content.form.target_model.label")?>
+                    </label>
+                    <br/>
+                    <select name="target_model" id="target_model"
+                            class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                        <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
+                            Linear / Fumu
+                        </option>
+                        <option value="dynamic_ca" <?php echo "dynamic_ca" == $form["target_model"] ? "selected" : "" ?>>
+                            PPP-Ca
+                        </option>
+                        <option value="dynamic_mg" <?php echo "dynamic_mg" == $form["target_model"] ? "selected" : "" ?>>
+                            PPP-Mg
+                        </option>
+                        <option value="dynamic_ca_mg" <?php echo "dynamic_ca_mg" == $form["target_model"] ? "selected" : "" ?>>
+                            PPP-Ca/Mg
+                        </option>
+                    </select>
+                    <p class="text-xs pt-2 text-slate-400">
+                        <?php echo __("content.form.target_model.description")?>
+                    </p>
+                </div>
+                <div class="w-full md:w-2/3 md:px-4 py-4 md:pt-6 text-left  relative">
                     <label for="support_dilution" class="font-normal text-slate-300">
                         <input type="hidden" name="support_dilution" value="0" />
                         <input type="checkbox"
@@ -385,58 +409,43 @@
     </div>
 
     <div class="w-full flex flex-wrap justify-center items-center">
-        <?php $targets = \Webklex\CalMag\Config::get("app.targets", []); ?>
-        <?php foreach($targets as $state => $target): ?>
+        <?php $targets = \Webklex\CalMag\Config::get("app.models.".$form["target_model"], []); ?>
+        <?php foreach($targets as $week => $target): ?>
+            <?php $state = $target["state"] ?? "default" ?>
             <div class="w-full md:w-1/4 px-2 pb-2">
                 <div class="w-full py-2 text-left md:px-4">
                     <h6 class="text-red-500 text-xl font-normal">
-                        <?php echo __("content.calculator.state.$state")?>
+                        <?php echo __("content.calculator.state.$state")?> (<?php echo __("content.form.target_week.label")?>: <?php echo $week ?>)
                     </h6>
                 </div>
-                <div class="w-full md:px-4 py-2 text-left  relative">
-                    <label for="target_weeks_<?php echo $state ?>" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.target_weeks.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.01"
-                           min="0"
-                           name="target_weeks[<?php echo $state ?>]"
-                           id="target_weeks_<?php echo $state ?>"
-                           class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                           value="<?php echo $form["target_weeks"][$state] ?? $target["weeks"] ?>" />
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.target_weeks.description")?>
-                    </p>
-                </div>
                 <div class="w-full md:px-4 pt-2 text-left  relative">
-                    <label for="target_calcium_<?php echo $state ?>" class="font-semibold text-slate-300">
+                    <label for="target_calcium_<?php echo $week ?>" class="font-semibold text-slate-300">
                         <?php echo __("content.form.target_calcium.label")?>
                     </label>
                     <br/>
                     <input type="number"
                            step="0.01"
                            min="0"
-                           name="target_calcium[<?php echo $state ?>]"
-                           id="target_calcium_<?php echo $state ?>"
+                           name="target_calcium[<?php echo $week ?>]"
+                           id="target_calcium_<?php echo $week ?>"
                            class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                           value="<?php echo $form["target_calcium"][$state] ?? $target["elements"]["calcium"] ?? 0.0 ?>" />
+                           value="<?php echo $form["target_calcium"][$week] ?? $target["elements"]["calcium"] ?? 0.0 ?>" />
                     <p class="text-xs pt-2 text-slate-400">
                         <?php echo __("content.form.target_calcium.description")?>
                     </p>
                 </div>
                 <div class="w-full md:px-4 py-2 text-left  relative">
-                    <label for="target_magnesium_<?php echo $state ?>" class="font-semibold text-slate-300">
+                    <label for="target_magnesium_<?php echo $week ?>" class="font-semibold text-slate-300">
                         <?php echo __("content.form.target_magnesium.label")?>
                     </label>
                     <br/>
                     <input type="number"
                            step="0.01"
                            min="0"
-                           name="target_magnesium[<?php echo $state ?>]"
-                           id="target_magnesium_<?php echo $state ?>"
+                           name="target_magnesium[<?php echo $week ?>]"
+                           id="target_magnesium_<?php echo $week ?>"
                            class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                           value="<?php echo $form["target_magnesium"][$state] ?? $target["elements"]["magnesium"] ?? 0.0 ?>" />
+                           value="<?php echo $form["target_magnesium"][$week] ?? $target["elements"]["magnesium"] ?? 0.0 ?>" />
                     <p class="text-xs pt-2 text-slate-400">
                         <?php echo __("content.form.target_magnesium.description")?>
                     </p>
@@ -538,7 +547,15 @@
     (function (){
         let fertilizer = document.getElementById("fertilizer");
         fertilizer.addEventListener("change", onFertilizerChanged);
-        //onFertilizerChanged({target: fertilizer});
+
+        const calcium = document.getElementById("fertilizer_elements_calcium");
+        const calcium_cao = document.getElementById("fertilizer_elements_calcium_cao");
+        const magnesium = document.getElementById("fertilizer_elements_magnesium");
+        const magnesium_mgo = document.getElementById("fertilizer_elements_magnesium_mgo");
+        if((parseInt(calcium.value) + parseInt(calcium_cao.value) + parseInt(magnesium.value) + parseInt(magnesium_mgo.value)) === 0){
+            onFertilizerChanged({target: fertilizer});
+        }
+
         //updateRatio(fertilizer);
 
         document.getElementById("fertilizer_elements_calcium_cao").addEventListener("change", function(event){

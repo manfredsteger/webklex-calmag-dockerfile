@@ -1,5 +1,5 @@
 <?php $colors = []; ?>
-<?php foreach ($result["table"]["target"] as $week => $target): ?>
+<?php foreach ($result["table"]["models"] as $week => $target): ?>
     <?php $colors[$week] = match ($target["state"]){
         \Webklex\CalMag\Enums\GrowState::Propagation->value => "bg-indigo-700 border border-indigo-800",
         \Webklex\CalMag\Enums\GrowState::Vegetation->value => "bg-green-700 border border-green-800",

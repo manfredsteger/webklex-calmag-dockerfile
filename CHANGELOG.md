@@ -12,6 +12,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Hy-Pro Cal-Mag Agent added
 - Organics Nutrients CalMag Alga added
+- Target models / calculation models added
 
 ## [2.4.1] - 2025-01-07
 ### Fixed
