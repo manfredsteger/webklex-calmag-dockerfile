@@ -11,6 +11,31 @@
 */
 
 return [
+    "canna"   => [
+        "brand_name" => "Canna",
+        "link"       => [
+            "de" => "https://www.canna-de.com/",
+            "us" => "https://www.canna-uk.com/",
+        ],
+        "products"   => [
+            "calmag_agent" => [
+                "name"     => "CalMag Agent",
+                "elements" => [
+                    "calcium"   => 5.6, // %
+                    "magnesium" => 1.7, // %
+                    "nitrogen"  => 3.28, // %
+                ],
+                "density"  => 1.258, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://www.canna-de.com/calmag-agent",
+                    "us" => "https://www.canna-uk.com/calmag-agent",
+                ],
+            ],
+        ],
+    ],
+
     "biobizz" => [
         "brand_name" => "BioBizz",
         "link"       => [
@@ -34,31 +59,6 @@ return [
                 "link"     => [
                     "de" => "https://www.biobizz.com/de/producto/calmag/",
                     "us" => "https://www.biobizz.com/producto/calmag/",
-                ],
-            ],
-        ],
-    ],
-
-    "canna"   => [
-        "brand_name" => "Canna",
-        "link"       => [
-            "de" => "https://www.canna-de.com/",
-            "us" => "https://www.canna-uk.com/",
-        ],
-        "products"   => [
-            "calmag_agent" => [
-                "name"     => "CalMag Agent",
-                "elements" => [
-                    "calcium"   => 5.6, // %
-                    "magnesium" => 1.7, // %
-                    "nitrogen"  => 3.28, // %
-                ],
-                "density"  => 1.258, // g/cm³
-                "ph"       => 7.0, // pH-Wert
-                "schedule" => false,
-                "link"     => [
-                    "de" => "https://www.canna-de.com/calmag-agent",
-                    "us" => "https://www.canna-uk.com/calmag-agent",
                 ],
             ],
         ],
