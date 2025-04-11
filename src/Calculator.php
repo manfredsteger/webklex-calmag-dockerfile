@@ -130,6 +130,7 @@ class Calculator {
         $deficiency = $this->getDeficiencyRatio();
         $results = $this->getAppliedFertilizer();
         $table = $this->generateResultTable();
+
         return [
             "deficiency" => $deficiency,
             "results"    => $results,
@@ -793,8 +794,8 @@ class Calculator {
      *
      * @return array
      */
-    public function getTargets(): array {
-        return $this->targets;
+    public function getModels(): array {
+        return $this->models;
     }
 
     /**

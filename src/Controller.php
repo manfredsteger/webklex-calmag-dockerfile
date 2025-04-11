@@ -28,7 +28,7 @@ class Controller {
         "nitrite"   => "mg",
     ];
 
-    private string $fertilizer = "";
+    private ?string $fertilizer = null;
     private array $additive = [
         "magnesium" => "",
         "calcium"   => "",
@@ -101,12 +101,29 @@ class Controller {
         $this->render(function() {
             $fertilizers = $this->calculator->getFertilizers();
             $additives = $this->calculator->getAdditives();
+            if($this->additive["magnesium"] === "" && $this->additive["calcium"] === "") {
+                $this->additive["magnesium"] = array_key_first($additives["magnesium"]);
+                $this->additive["calcium"] = array_key_first($additives["calcium"]);
+            }elseif($this->additive_elements === []) {
+                $this->additive_elements = [
+                    "calcium"   => [
+                        "calcium" => [
+                            "calcium" => $additives["calcium"][$this->additive["calcium"]]["elements"]["calcium"] ?? 0,
+                            "CaO"     => $additives["calcium"][$this->additive["calcium"]]["elements"]["calcium"]["CaO"] ?? 0,
+                        ]
+                    ],
+                    "magnesium" => [
+                        "magnesium" => [
+                            "magnesium" => $additives["magnesium"][$this->additive["magnesium"]]["elements"]["magnesium"] ?? 0,
+                            "MgO"      => $additives["magnesium"][$this->additive["magnesium"]]["elements"]["magnesium"]["MgO"] ?? 0,
+                        ]
+                    ],
+                ];
+            }
             $form = [
-                "fertilizer"             => array_key_first($fertilizers),
-                "additive"               => [
-                    "magnesium" => array_key_first($additives["magnesium"]),
-                    "calcium"   => array_key_first($additives["calcium"]),
-                ],
+                "fertilizer"             => $this->fertilizer ?? array_key_first($fertilizers),
+                "additive"               => $this->additive,
+                "additive_elements"      => $this->additive_elements,
                 "ratio"                  => $fertilizers[array_key_first($fertilizers)]["ratio"],
                 "volume"                 => $this->volume,
                 "target_model"           => $this->target_model,

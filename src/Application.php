@@ -101,6 +101,7 @@ class Application {
                                           "ratio"                  => $payload["ratio"] ?? 3.5,
                                           "target_offset"          => $payload["target_offset"] ?? 0.0,
                                           "volume"                 => $payload["volume"] ?? 5.0,
+                                          "target_model"           => $payload["target_model"] ?? "linear",
                                           "support_dilution"       => $payload["support_dilution"] ?? true,
                                           "region"                 => $payload["region"] ?? "us",
                                           "elements"               => $payload["elements"] ?? [],
