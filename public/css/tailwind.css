@@ -1183,6 +1183,10 @@ video {
     width: 25%;
   }
 
+  .md\:w-2\/3 {
+    width: 66.666667%;
+  }
+
   .md\:w-3\/12 {
     width: 25%;
   }
@@ -1206,6 +1210,10 @@ video {
     padding-right: 1.5rem;
   }
 
+  .md\:pr-4 {
+    padding-right: 1rem;
+  }
+
   .md\:pt-0 {
     padding-top: 0px;
   }
@@ -1216,6 +1224,10 @@ video {
 
   .md\:pt-4 {
     padding-top: 1rem;
+  }
+
+  .md\:pt-6 {
+    padding-top: 1.5rem;
   }
 }
 
