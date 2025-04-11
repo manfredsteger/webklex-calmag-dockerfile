@@ -54,6 +54,19 @@ class Application {
                 $_payload = json_decode($_payload, true);
                 if (is_array($_payload)) {
                     $payload = $_payload;
+                    // check if a version is present
+                    if (isset($payload["version"])) {
+                        switch ($payload["version"]) {}
+                    }else{
+                        if(isset($payload["additive"])) {
+                            if(isset($payload["additive"]["magnesium"])) {
+                                // MgSO4 has been split into MgSO4 and MgSO4-7H20
+                                if($payload["additive"]["magnesium"] === "MgSO4") {
+                                    $payload["additive"]["magnesium"] = "MgSO4-7H20";
+                                }
+                            }
+                        }
+                    }
                 }
             }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {

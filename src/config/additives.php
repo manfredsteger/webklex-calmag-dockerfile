@@ -79,13 +79,19 @@ return [
             "density"       => 1.23, // g/cm³
             "unit"          => "ml",
         ],
-        "MgSO4"                => [
-            // Magnesiumsulfat
+        "MgSO4-7H20"                => [
+            // Magnesiumsulfat-Heptahydrat aka Epsom-Salz
             "elements"      => [
-                "magnesium" => [
-                    "MgO" => 16.0, // %
-                ],
-                "sulfur"    => 13.0, // %
+                "magnesium" => 9.86,
+                "sulfur"    => 13.01, // %
+            ],
+            "concentration" => 10.0, // %
+        ],
+        "MgSO4"                => [
+            // Magnesiumsulfat aka Bittersalz
+            "elements"      => [
+                "magnesium" => 20.195,
+                "sulfur"    => 26.637, // %
             ],
             "concentration" => 10.0, // %
         ],

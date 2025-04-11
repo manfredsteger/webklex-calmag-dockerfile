@@ -36,9 +36,10 @@ return [
         "label" => "Dilution ratio",
     ],
     "additive" => [
-        "MgSO4" => "Magnesiumsulfate",
-        "C6H6MgO7" => "Magnesiumhydrogencitrat",
-        "C12H10Mg3O14" => "Tri-Magnesiumdicitrat",
+        "MgSO4"                => "Magnesiumsulfate - Magnesiumsulfate",
+        "MgSO4-7H20"           => "Epsom salt - Magnesiumsulfate-Heptahydrate",
+        "C6H6MgO7"             => "Magnesiumhydrogencitrat",
+        "C12H10Mg3O14"         => "Tri-Magnesiumdicitrat",
         "Canna Mono Magnesium" => "Canna Mono Magnesium",
         "Canna Mono Calcium"   => "Canna Mono Calcium",
         "CaC2H3O2H2O" => "Calciumacetat",

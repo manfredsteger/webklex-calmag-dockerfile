@@ -36,7 +36,8 @@ return [
         "label" => "Verdünnungsverhältnis",
     ],
     "additive" => [
-        "MgSO4"                => "Bittersalz",
+        "MgSO4"                => "Bittersalz - Magnesiumsulfat",
+        "MgSO4-7H20"           => "Epsom Salz - Magnesiumsulfat-Heptahydrat",
         "C6H6MgO7"             => "Magnesiumhydrogencitrat",
         "C12H10Mg3O14"         => "Tri-Magnesiumdicitrat",
         "Canna Mono Magnesium" => "Canna Mono Magnesium",
