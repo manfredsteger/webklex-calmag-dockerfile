@@ -31,33 +31,304 @@ return [
         "sulphate"  => "content.form.element.sulphate.label",
         "chloride"  => "content.form.element.chloride.label",
     ],
-    "targets" => [
-        GrowState::Propagation->value => [
-            "elements" => [
-                "calcium" => 60, // mg/L
+    "models" => [
+        "fumus" => [
+            1 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["calcium"   => 60], // mg/L
             ],
-            "weeks" => 1,
+            2 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 80], // mg/L
+            ],
+            3 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 80], // mg/L
+            ],
+            4 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 80], // mg/L
+            ],
+            5 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            6 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            7 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            8 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            9 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
+            10 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
+            11 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
+            12 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
         ],
-        GrowState::Vegetation->value => [
-            "elements" => [
-                //"magnesium" => 26.67, // mg/L
-                "calcium" => 80, // mg/L
+        "linear" => [
+            1 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["calcium"   => 60], // mg/L
             ],
-            "weeks" => 3,
+            2 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 66.85], // mg/L
+            ],
+            3 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 73.37], // mg/L
+            ],
+            4 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 80], // mg/L
+            ],
+            5 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 85.11], // mg/L
+            ],
+            6 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 90.01], // mg/L
+            ],
+            7 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 94.90], // mg/L
+            ],
+            8 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            9 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 107.62], // mg/L
+            ],
+            10 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 115.12], // mg/L
+            ],
+            11 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 122.62], // mg/L
+            ],
+            12 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
         ],
-        GrowState::Flower->value     => [
-            "elements" => [
-                //"magnesium" => 33.33, // mg/L
-                "calcium" => 100, // mg/L
+        "dynamic_ca" => [
+            1 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["calcium"   => 50], // mg/L
             ],
-            "weeks" => 4,
+            2 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["calcium"   => 80], // mg/L
+            ],
+            3 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            4 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 120], // mg/L
+            ],
+            5 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
+            6 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 130], // mg/L
+            ],
+            7 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 125], // mg/L
+            ],
+            8 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 120], // mg/L
+            ],
+            9 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 115], // mg/L
+            ],
+            10 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 110], // mg/L
+            ],
+            11 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 100], // mg/L
+            ],
+            12 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 90], // mg/L
+            ],
+            13 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 80], // mg/L
+            ],
+            14 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 70], // mg/L
+            ],
+            15 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 60], // mg/L
+            ],
+            16 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 50], // mg/L
+            ],
         ],
-        GrowState::LateFlower->value => [
-            "elements" => [
-                //"magnesium" => 43.33, // mg/L
-                "calcium" => 130, // mg/L
+        "dynamic_mg" => [
+            1 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["magnesium"   => 10], // mg/L
             ],
-            "weeks" => 4,
+            2 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["magnesium"   => 20], // mg/L
+            ],
+            3 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["magnesium"   => 30], // mg/L
+            ],
+            4 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["magnesium"   => 40], // mg/L
+            ],
+            5 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["magnesium"   => 45], // mg/L
+            ],
+            6 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["magnesium"   => 45], // mg/L
+            ],
+            7 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["magnesium"   => 40], // mg/L
+            ],
+            8 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["magnesium"   => 35], // mg/L
+            ],
+            9 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["magnesium"   => 35], // mg/L
+            ],
+            10 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 40], // mg/L
+            ],
+            11 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 50], // mg/L
+            ],
+            12 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 60], // mg/L
+            ],
+            13 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 60], // mg/L
+            ],
+            14 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 55], // mg/L
+            ],
+            15 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 50], // mg/L
+            ],
+            16 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["magnesium"   => 40], // mg/L
+            ],
+        ],
+        "dynamic_ca_mg" => [
+            1 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["calcium"   => 50, "magnesium" => 10], // mg/L
+            ],
+            2 => [
+                "state" => GrowState::Propagation->value,
+                "elements" => ["calcium"   => 80, "magnesium" => 20], // mg/L
+            ],
+            3 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 100, "magnesium" => 30], // mg/L
+            ],
+            4 => [
+                "state" => GrowState::Vegetation->value,
+                "elements" => ["calcium"   => 120, "magnesium" => 40], // mg/L
+            ],
+            5 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 130, "magnesium" => 45], // mg/L
+            ],
+            6 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 130, "magnesium" => 45], // mg/L
+            ],
+            7 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 125, "magnesium" => 40], // mg/L
+            ],
+            8 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 120, "magnesium" => 35], // mg/L
+            ],
+            9 => [
+                "state" => GrowState::Flower->value,
+                "elements" => ["calcium"   => 115, "magnesium" => 35], // mg/L
+            ],
+            10 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 110, "magnesium" => 40], // mg/L
+            ],
+            11 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 100, "magnesium" => 50], // mg/L
+            ],
+            12 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 90, "magnesium" => 60], // mg/L
+            ],
+            13 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 80, "magnesium" => 60], // mg/L
+            ],
+            14 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 70, "magnesium" => 55], // mg/L
+            ],
+            15 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 60, "magnesium" => 50], // mg/L
+            ],
+            16 => [
+                "state" => GrowState::LateFlower->value,
+                "elements" => ["calcium"   => 50, "magnesium" => 40], // mg/L
+            ],
         ],
     ],
 ];
