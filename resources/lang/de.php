@@ -22,8 +22,8 @@ return [
         "logo" => [
             "appendix" => "Rechner"
         ],
-        "og" => [
-            "title" => "CalMag Rechner - Optimiere dein Gießwasser",
+        "og"   => [
+            "title"       => "CalMag Rechner - Optimiere dein Gießwasser",
             "description" => "Berechne einfach das perfekte Calcium-zu-Magnesium-Verhältnis für gesündere Pflanzen und besseres Wachstum.",
         ],
     ],
@@ -46,11 +46,11 @@ return [
         "Ca3C6H5O74H2O"        => "Calciumcitrat",
         "CaCO3"                => "Calciumcarbonat",
         "MgCO3"                => "Magnesiumcarbonat",
-        "Action_Gartenkalk"  => "Gartenkalk (Green Boots - Action)",
+        "Action_Gartenkalk"    => "Gartenkalk (Green Boots - Action)",
         "MgO"                  => "Magnesiumoxid",
         "CaO"                  => "Calciumoxid",
-        "custom_calcium"               => "Calcium-Zusatzstoff",
-        "custom_magnesium"             => "Magnesium-Zusatzstoff",
+        "custom_calcium"       => "Calcium-Zusatzstoff",
+        "custom_magnesium"     => "Magnesium-Zusatzstoff",
     ],
     "content"  => [
         "calculator" => [
@@ -67,12 +67,12 @@ return [
             ],
             "missing"     => ":name Defizit von :value mg/L",
             "result"      => [
-                "title"      => "Ergebnisse der CalMag-Berechnung",
+                "title"              => "Ergebnisse der CalMag-Berechnung",
                 "suggested_additive" => "Alternativer Präparatersatz",
-                "deficiency" => [
-                    "magnesium" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :magnesium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
-                    "calcium"   => "Dein Wasser weist ein Calcium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
-                    "state"     => [
+                "deficiency"         => [
+                    "magnesium"                    => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :magnesium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
+                    "calcium"                      => "Dein Wasser weist ein Calcium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :fertilizer und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
+                    "state"                        => [
                         "calcium_and_magnesium_missing" => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:calcium mg/L Calcium</span> und <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span>.',
                         "calcium_missing"               => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:calcium mg/L Calcium</span>.',
                         "magnesium_missing"             => 'Deinem Wasser fehlen <span class="text-red-500 font-bold">:magnesium mg/L Magnesium</span>.',
@@ -105,43 +105,43 @@ return [
                         "suggested_amount"       => 'Die häufig empfohlene Menge an <span class="text-red-500 font-bold">Calcium (:calcium mg/L)</span> und <span class="text-red-500 font-bold">Magnesium (:magnesium mg/L)</span> wird dabei möglichst nicht nennenswert überschritten - lässt sich in extremen Fällen aber nicht unbedingt vermeiden.',
                         "suggested_amount_table" => 'Zur Herstellung von <span class="text-red-500 font-bold">:volume</span> Litern:',
                     ],
-                    "dilution"  => "Dein Wasser sollte verdünnt werden, um die Empfohlenen Grenzwerte nicht zu überschreiten. Mische hierfür :dilution deines Wassers mit :water destilliertem Wasser.",
-                    "none"      => "Dein Wasser enthält ausreichend Calcium und Magnesium.",
+                    "dilution"                     => "Dein Wasser sollte verdünnt werden, um die Empfohlenen Grenzwerte nicht zu überschreiten. Mische hierfür :dilution deines Wassers mit :water destilliertem Wasser.",
+                    "none"                         => "Dein Wasser enthält ausreichend Calcium und Magnesium.",
                     "magnesium_without_fertilizer" => "Dein Wasser weist ein Magnesium-Defizit von :ratio auf. Dieser kann durch die Verwendung von :magnesium_additive und :calcium_additive ausgeglichen werden. Eine mögliche Dosierung findest du in den Phasenabhängigen Ergebnissen unterhalb.",
                 ],
-                "share_link" => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
-                "alternatives" => [
-                    "title" => "Alternativer Präparatersatz",
+                "share_link"         => "Teile dein Ergebnis oder speichere dir folgenden Link, um dieselbe Berechnung später erneut durchzuführen:",
+                "alternatives"       => [
+                    "title"       => "Alternativer Präparatersatz",
                     "description" => "Sollte das gewählte Präparat nicht verfügbar sein, können folgende Alternativen verwendet werden:",
-                    "fertilizer" => [
-                        "title" => "Hauptpräparat",
+                    "fertilizer"  => [
+                        "title"       => "Hauptpräparat",
                         "description" => "Das Hauptpräparat sollte in der Regel das Präparat sein, welches am meisten verwendet wird und sowohl Calcium als auch Magnesium enthält.",
-                        "brand" => [
+                        "brand"       => [
                             "name" => "Hersteller",
-                            "url" => "Hersteller-URL",
+                            "url"  => "Hersteller-URL",
                         ],
-                        "product" => [
-                            "name" => "Produkt",
-                            "url" => "Produkt-URL",
+                        "product"     => [
+                            "name"    => "Produkt",
+                            "url"     => "Produkt-URL",
                             "density" => "Dichte",
-                            "ph" => "pH-Wert",
+                            "ph"      => "pH-Wert",
                         ],
-                        "elements" => "Inhaltsstoffe",
-                        "try_link" => "Berechnung mit diesem Präparat versuchen",
+                        "elements"    => "Inhaltsstoffe",
+                        "try_link"    => "Berechnung mit diesem Präparat versuchen",
                     ],
-                    "additive" => [
-                        "calcium" => [
-                            "title" => "Calcium-Zusatz",
+                    "additive"    => [
+                        "calcium"   => [
+                            "title"       => "Calcium-Zusatz",
                             "description" => "Der Calcium-Zusatz sollte in der Regel ein Präparat sein, welches nur Calcium enthält.",
                         ],
                         "magnesium" => [
-                            "title" => "Magnesium-Zusatz",
+                            "title"       => "Magnesium-Zusatz",
                             "description" => "Der Magnesium-Zusatz sollte in der Regel ein Präparat sein, welches nur Magnesium enthält.",
                         ],
-                        "name" => "Bezeichnung",
-                        "density" => "Dichte",
-                        "elements" => "Inhaltsstoffe",
-                        "try_link" => "Berechnung mit diesem Zusatzstoff versuchen",
+                        "name"      => "Bezeichnung",
+                        "density"   => "Dichte",
+                        "elements"  => "Inhaltsstoffe",
+                        "try_link"  => "Berechnung mit diesem Zusatzstoff versuchen",
                     ]
                 ]
             ],
@@ -149,30 +149,30 @@ return [
                 "query" => "Postleitzahl+Wasserwerte",
             ],
             "button"      => [
-                "search_plz" => "Wasserwerte online suchen.",
-                "calculate"  => "Ergebnis berechnen",
+                "search_plz"         => "Wasserwerte online suchen.",
+                "calculate"          => "Ergebnis berechnen",
                 "table_show_details" => "Inhaltsstoffdetails anzeigen",
                 "table_hide_details" => "Inhaltsstoffdetails verbergen",
-                "regular" => "Einfacher Rechner",
-                "expert" => "Erweiterter Rechner",
-                "compare" => "Vergleichs-Rechner",
+                "regular"            => "Einfacher Rechner",
+                "expert"             => "Erweiterter Rechner",
+                "compare"            => "Vergleichs-Rechner",
             ],
-            "table" => [
-                "phase" => "Phase",
-                "week" => "Woche",
-                "ratio" => "Calcium/Magnesium Verhältnis",
-                "target" => "Inhaltsstoff-Zielwerte",
-                "missing" => "Fehlende Inhaltsstoffe",
+            "table"       => [
+                "phase"    => "Phase",
+                "week"     => "Woche",
+                "ratio"    => "Calcium/Magnesium Verhältnis",
+                "target"   => "Inhaltsstoff-Zielwerte",
+                "missing"  => "Fehlende Inhaltsstoffe",
                 "elements" => "Inhaltsstoffe nach Anpassung",
-                "volume" => "Zur Herstellung von :volume Litern:",
+                "volume"   => "Zur Herstellung von :volume Litern:",
 
-                "before" => "Ausgangsinhaltsstoffe",
-                "adjustment" => "Anpassung & Korrektur",
+                "before"      => "Ausgangsinhaltsstoffe",
+                "adjustment"  => "Anpassung & Korrektur",
                 "mg_additive" => "Magnesium Zusatz",
                 "ca_additive" => "Calcium Zusatz",
-                "fertilizer" => "Präparat",
-                "deficiency" => "Defizit/Zugabe",
-                "final" => "Gesamt",
+                "fertilizer"  => "Präparat",
+                "deficiency"  => "Defizit/Zugabe",
+                "final"       => "Gesamt",
             ]
         ],
         "comparator" => [
@@ -181,20 +181,20 @@ return [
             ]
         ],
         "form"       => [
-            "fertilizer" => [
+            "fertilizer"             => [
                 "label"       => "Präparat",
                 "description" => "Wähle das Präparat aus, welches du verwenden möchtest. Optimalerweise sollte ein Präparat zum passenden Verhältnis gewählt werden.",
-                "option" => [
+                "option"      => [
                     "none" => "Kein Präparat verwenden",
                 ],
-                "element" => [
+                "element"     => [
                     "description" => "Angaben in %/ml wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
                 ],
-                "custom" => [
+                "custom"      => [
                     "label" => "Präparat",
                 ],
             ],
-            "additive"   => [
+            "additive"               => [
                 "magnesium" => [
                     "label"       => "Magnesium-Zusatzstoff",
                     "description" => "Wähle einen Zusatzstoff aus, welcher deinem Wasser hinzugefügt werden kann um den Magnesiumgehalt zu erhöhen, sollte das gewählte Präparat nicht ausreichen.",
@@ -209,15 +209,15 @@ return [
                 "label"       => "Konzentration in %",
                 "description" => "Die Konzentration gibt an, wie viel des Zusatzstoffes (z.B. Bittersalz, oder Canna Mono) in der eigens hergestellten Lösung enthalten ist. Dieser Wert wird in Prozent angegeben. Z.B. 10% Bittersalz bedeutet, dass 10g Bittersalz in 90ml Wasser gelöst wurden.",
             ],
-            "ratio"      => [
+            "ratio"                  => [
                 "label"       => "Calcium / Magnesium - Verhältnis",
                 "description" => "Das Verhältnis von Calcium zu Magnesium liegt oft bei 3.5. Dieses Verhältnis kann beliebig angepasst werden.",
             ],
-            "target_offset"     => [
+            "target_offset"          => [
                 "label"       => "Maximale Abweichung",
                 "description" => "Der Offset gibt an, um wie viel Prozent die Werte vom Zielwert abweichen sollen. Dieser Wert wird in Prozent angegeben.",
             ],
-            "target_weeks" => [
+            "target_weeks"           => [
                 "label"       => "Wochen",
                 "description" => "Wähle hier die Wochen aus, für die die Berechnung durchgeführt werden",
             ],
@@ -232,88 +232,88 @@ return [
                 "label"       => "Calcium",
                 "description" => "Der Zielwert für Calcium gibt an, wie viel Calcium in deinem Wasser enthalten sein sollte. Dieser Wert wird in mg/L angegeben.",
             ],
-            "target_magnesium" => [
+            "target_magnesium"       => [
                 "label"       => "Magnesium",
                 "description" => "Der Zielwert für Magnesium gibt an, wie viel Magnesium in deinem Wasser enthalten sein sollte. Dieser Wert wird in mg/L angegeben.",
             ],
-            "density" => [
-                "label" => "Dichte",
+            "density"                => [
+                "label"       => "Dichte",
                 "description" => "Die Dichte gibt an, wie schwer ein Stoff ist. Dieser Wert wird in g/cm³ angegeben.",
             ],
-            "ml" => [
+            "ml"                     => [
                 "label" => "Milliliter",
             ],
-            "state" => [
+            "state"                  => [
                 "label" => "Phase",
             ],
-            "dilution" => [
+            "dilution"               => [
                 "label" => "Verdünnung",
             ],
-            "support_dilution" => [
-                "label" => "Verdünnen mit Osmose-/ Destilliertem-Wasser",
+            "support_dilution"       => [
+                "label"       => "Verdünnen mit Osmose-/ Destilliertem-Wasser",
                 "description" => "Wenn dein Wasser zu hohe Werte aufweist, kann es sinnvoll sein, das Wasser zu verdünnen.",
             ],
-            "volume"     => [
+            "volume"                 => [
                 "label"       => "Wasser-Volumen in L",
                 "description" => "Das Volumen gibt an, wie viel Wasser behandelt werden soll. Dieser Wert wird in Litern angegeben.",
             ],
-            "region"     => [
+            "region"                 => [
                 "label"       => "Region",
                 "description" => "Wähle hier deine Region aus. Die Region hat keinen Einfluss auf die Berechnung, sondern dient lediglich zur Anzeige der richtigen Links.",
             ],
-            "elements"   => [
+            "elements"               => [
                 "title"       => "Deine Wasserwerte",
                 "description" => "Trage hier die Werte deines Leitungswassers ein. Diese Werte können in der Regel auf der Wasserrechnung oder dem Wasserbericht gefunden werden. Sollten die Werte nicht bekannt sein, können diese auch über die Google Suche ermittelt werden. Klicke dafür einfach auf den nachfolgenden Link und suche nach deiner Postleitzahl und den Wasserwerten:",
             ],
-            "element"    => [
-                "calcium"   => [
+            "element"                => [
+                "calcium"     => [
                     "label" => "Calcium",
                     "cao"   => [
-                        "label" => "Calciumoxid",
+                        "label"       => "Calciumoxid",
                         "description" => "Angaben in % wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
                     ],
                 ],
-                "magnesium" => [
+                "magnesium"   => [
                     "label" => "Magnesium",
                     "mgo"   => [
-                        "label" => "Magnesiumoxid",
+                        "label"       => "Magnesiumoxid",
                         "description" => "Angaben in % wie auf der Verpackung angegeben. Ggf. muss die Dichte des Präparates berücksichtigt werden.",
                     ],
                 ],
-                "potassium" => [
+                "potassium"   => [
                     "label" => "Kalium",
                 ],
-                "iron"      => [
+                "iron"        => [
                     "label" => "Eisen",
                 ],
-                "sulphate"  => [
+                "sulphate"    => [
                     "label" => "Sulfat",
                 ],
-                "nitrate"   => [
+                "nitrate"     => [
                     "label" => "Nitrat",
                 ],
                 "manganese"   => [
                     "label" => "Manganese",
                 ],
-                "zinc"   => [
+                "zinc"        => [
                     "label" => "Zink",
                 ],
-                "nitrite"   => [
+                "nitrite"     => [
                     "label" => "Nitrit",
                 ],
-                "sulfur"    => [
+                "sulfur"      => [
                     "label" => "Schwefel",
                 ],
-                "nitrogen"  => [
+                "nitrogen"    => [
                     "label" => "Stickstoff",
                 ],
                 "humic_acids" => [
                     "label" => "Huminsäuren",
                 ],
-                "boron" => [
+                "boron"       => [
                     "label" => "Bor",
                 ],
-                "chloride" => [
+                "chloride"    => [
                     "label" => "Chlorid",
                 ],
             ],
