@@ -15,27 +15,37 @@ namespace Webklex\CalMag;
 use Webklex\CalMag\Enums\GrowState;
 
 /**
- * Class Comparator
+ * Comparator class for analyzing and comparing different fertilizer combinations
+ * 
+ * This class provides functionality to compare different fertilizers and their effects
+ * on nutrient ratios. It helps in determining the most suitable fertilizer combination
+ * for achieving target nutrient levels.
  *
  * @package Webklex\CalMag
  */
 class Comparator {
 
     /**
-     * @var array $water_elements The water
+     * @var array The water element concentrations
      */
     protected array $water_elements;
 
     /**
-     * @var array $models The targets
+     * @var array The target models for different growth stages
      */
     protected array $models;
 
     /**
-     * @var array $ratios The ratios
+     * @var array The target ratios for calcium and magnesium
      */
     protected array $ratios;
 
+    /**
+     * Constructor initializes the comparator with water composition and target ratio
+     * 
+     * @param array $water_elements Array of element concentrations in water
+     * @param float $ratio Target calcium to magnesium ratio (default: 3.5)
+     */
     public function __construct(array $water_elements, float $ratio = 3.5) {
         $this->ratios = [
             "calcium"   => $ratio,
@@ -56,6 +66,14 @@ class Comparator {
         $this->setWaterElements($water_elements);
     }
 
+    /**
+     * Calculate comparison results for all available fertilizers
+     * 
+     * Creates a calculator instance for each fertilizer and compares their
+     * effectiveness in achieving the target nutrient levels.
+     * 
+     * @return array Results for each fertilizer
+     */
     public function calculate(): array {
         $result = [];
 
@@ -69,6 +87,16 @@ class Comparator {
         return $result;
     }
 
+    /**
+     * Set the water element concentrations and convert units if needed
+     * 
+     * Handles unit conversions for various compounds:
+     * - Sulphate to Sulfur
+     * - Nitrate and Nitrite to Nitrogen
+     * 
+     * @param array $water_elements Array of element concentrations
+     * @return void
+     */
     public function setWaterElements(array $water_elements): void {
         if (isset($water_elements["sulphate"])) {
             $water_elements["sulfur"] = $water_elements["sulphate"] * 0.334;
@@ -79,16 +107,20 @@ class Comparator {
         if (isset($water_elements["nitrite"])) {
             $water_elements["nitrogen"] = ($water_elements["nitrogen"] ?? 0) + ($water_elements["nitrite"] * 0.304);
         }
-        /*if(!isset($water_elements["magnesium"])) {
-            $water_elements["magnesium"] = 0.0001;
-        }
-        if(!isset($water_elements["calcium"])) {
-            $water_elements["calcium"] = 0.0001;
-        }*/
 
         $this->water_elements = $water_elements;
     }
 
+    /**
+     * Set the target ratios for calcium and magnesium
+     * 
+     * Updates the target ratios and recalculates all model targets
+     * based on the new ratios.
+     * 
+     * @param float $calcium Target calcium ratio
+     * @param float $magnesium Target magnesium ratio
+     * @return void
+     */
     public function setRatio(float $calcium, float $magnesium): void {
         $this->ratios = [
             "calcium"   => $calcium,
@@ -105,6 +137,16 @@ class Comparator {
         }
     }
 
+    /**
+     * Validate and normalize target values for a growth state
+     * 
+     * Ensures that calcium and magnesium values maintain the proper ratio
+     * and adds default values based on the growth state.
+     * 
+     * @param GrowState $state The growth state (Propagation, Vegetation, Flower, LateFlower)
+     * @param array $target The target configuration
+     * @return array Validated and normalized target configuration
+     */
     protected function validateTarget(GrowState $state, array $target): array {
         $elements = $target['elements'] ?? [];
         if (!isset($elements['calcium'])) {

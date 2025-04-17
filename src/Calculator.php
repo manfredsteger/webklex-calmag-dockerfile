@@ -15,6 +15,10 @@ namespace Webklex\CalMag;
 
 use Webklex\CalMag\Enums\GrowState;
 
+/**
+ * Calculator class for managing and calculating nutrient ratios in hydroponics
+ * Handles water, fertilizer, and additive calculations for calcium and magnesium
+ */
 class Calculator {
     protected array $models = [];
     protected $target_model = "linear";
@@ -43,10 +47,12 @@ class Calculator {
 
     /**
      * Calculator constructor.
-     * @param array $water
-     * @param string $fertilizer
-     * @param array $additive
-     * @param float $ratio
+     * @param array $water The water configuration containing element concentrations
+     * @param string $fertilizer The name of the fertilizer to use (default: "")
+     * @param array $additive The additives configuration (default: [])
+     * @param float $ratio The calcium to magnesium ratio (default: 3.5)
+     * @param string $target_model The calculation model to use (default: "linear")
+     * @throws \InvalidArgumentException If water values are missing
      */
     public function __construct(array $water, string $fertilizer = "", array $additive = [], float $ratio = 3.5, string $target_model = "linear") {
         if (!isset($water["elements"]["calcium"]) || !isset($water["elements"]["magnesium"])) {
@@ -75,6 +81,10 @@ class Calculator {
         $this->setWater($water);
     }
 
+    /**
+     * Initialize the calculator by processing fertilizers and additives
+     * @return void
+     */
     private function boot(): void {
         foreach ($this->fertilizers as $index => $fertilizer) {
             $elements = $this->summarizeElements($fertilizer["elements"]);
@@ -96,6 +106,11 @@ class Calculator {
         }
     }
 
+    /**
+     * Calculate the actual concentrations of additives based on their properties
+     * @param array $additive The additive configuration
+     * @return array The processed additive with real concentrations
+     */
     protected function calculateRealAdditiveConcentrations(array $additive): array {
         $additive['real'] = [];
         if (!isset($additive["elements"])) {
@@ -110,6 +125,11 @@ class Calculator {
         return $additive;
     }
 
+    /**
+     * Validate and normalize target values for calculations
+     * @param array $target The target configuration
+     * @return array The validated target configuration
+     */
     protected function validateTarget(array $target): array {
         $elements = $target['elements'] ?? [
             "calcium"   => 0.001,
@@ -126,6 +146,10 @@ class Calculator {
         return $target;
     }
 
+    /**
+     * Calculate the nutrient ratios and required additions
+     * @return array The calculation results including deficiency, results and table data
+     */
     public function calculate(): array {
         $deficiency = $this->getDeficiencyRatio();
         $results = $this->getAppliedFertilizer();
@@ -138,6 +162,10 @@ class Calculator {
         ];
     }
 
+    /**
+     * Generate a detailed results table for all calculation models
+     * @return array The results table containing all calculation data
+     */
     public function generateResultTable(): array {
         $weeks = [];
         foreach ($this->models as $week => $target) {
@@ -210,8 +238,8 @@ class Calculator {
     }
 
     /**
-     * Get the applied fertilizer results for all models
-     * @return array
+     * Get the applied fertilizer results for all growth states
+     * @return array An array containing the calculated fertilizer results per growth state
      */
     public function getAppliedFertilizer(): array {
         $targets = [];
@@ -745,8 +773,7 @@ class Calculator {
      * Get the additive components for a specific element
      * @param string $element The element to get the additive components for
      * @param float $ml The amount of additive in ml
-     *
-     * @return array
+     * @return array The additive components and their values
      */
     public function getAdditiveComponents(string $element, float $ml): array {
         $additive = $this->additives[$element][$this->additive[$element] ?? ""] ?? null;
@@ -763,26 +790,25 @@ class Calculator {
     }
 
     /**
-     * Get the currently selected additive
-     * @return array|string[]
+     * Get the currently configured additive settings
+     * @return array The current additive configuration
      */
     public function getAdditive(): array {
         return $this->additive;
     }
 
     /**
-     * Get the currently selected fertilizer
-     * @return string
+     * Get the currently selected fertilizer name
+     * @return string The fertilizer name
      */
     public function getFertilizer(): string {
         return $this->fertilizer;
     }
 
     /**
-     * Set the target values for a specific state
+     * Set the target values for a specific week
      * @param int $week The week number
-     * @param array $target The target values for the given state
-     *
+     * @param array $target The target configuration
      * @return void
      */
     public function setTarget(int $week, array $target): void {
@@ -790,27 +816,24 @@ class Calculator {
     }
 
     /**
-     * Get all loaded and available targets
-     *
-     * @return array
+     * Get all configured calculation models
+     * @return array The calculation models
      */
     public function getModels(): array {
         return $this->models;
     }
 
     /**
-     * Get all loaded and available fertilizers
-     *
-     * @return array
+     * Get all available fertilizers
+     * @return array The available fertilizers
      */
     public function getFertilizers(): array {
         return $this->fertilizers;
     }
 
     /**
-     * Get all loaded and available additives
-     *
-     * @return array
+     * Get all available additives
+     * @return array The available additives
      */
     public function getAdditives(): array {
         $additives = [];
@@ -826,9 +849,8 @@ class Calculator {
     }
 
     /**
-     * Get all elements that are present in the water, fertilizers and additives
-     *
-     * @return array
+     * Get all available elements and their properties
+     * @return array The available elements
      */
     public function getElements(): array {
         $elements = [];
@@ -855,37 +877,69 @@ class Calculator {
 
     /**
      * Get the ratio for a specific element
-     * @param $element string The element to get the ratio for
-     *
-     * @return float
+     * @param string $element The element name
+     * @return float The element ratio
      */
     public function getRatio(string $element): float {
         return $this->ratios[$element];
     }
 
+    /**
+     * Add a new fertilizer to the available fertilizers
+     * @param string $name The fertilizer name
+     * @param array $fertilizer The fertilizer configuration
+     * @return void
+     */
     public function addFertilizer(string $name, array $fertilizer): void {
         $this->fertilizers[$name] = $fertilizer;
     }
 
+    /**
+     * Add a new additive for a specific element
+     * @param string $element The element name
+     * @param string $name The additive name
+     * @param array $additive The additive configuration
+     * @return void
+     */
     public function addAdditive(string $element, string $name, array $additive): void {
         $this->additives[$element][$name] = $additive;
     }
 
+    /**
+     * Set the calculation models
+     * @param array $models The calculation models
+     * @return void
+     */
     public function setModels(array $models): void {
         foreach ($models as $index => $target) {
             $this->models[$index] = $this->validateTarget($target);
         }
     }
 
+    /**
+     * Enable or disable dilution support
+     * @param bool $dilution_support Whether to enable dilution support
+     * @return void
+     */
     public function setDilutionSupport(bool $dilution_support): void {
         $this->dilution_support = $dilution_support;
     }
 
+    /**
+     * Set the target calculation model
+     * @param string $target_model The target model name
+     * @return void
+     */
     public function setTargetModel(string $target_model) {
         $this->target_model = $target_model;
         $this->setModel(Config::get("app.models.$target_model", []));
     }
 
+    /**
+     * Set the calculation model
+     * @param array $models The model configuration
+     * @return void
+     */
     public function setModel(array $models): void {
         $this->models = $models;
     }

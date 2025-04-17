@@ -13,8 +13,12 @@
 namespace Webklex\CalMag;
 
 /**
- * Class Application
- *
+ * Main application class that handles routing and request processing
+ * 
+ * This class serves as the entry point for the application, handling both GET and POST
+ * requests, and routing them to the appropriate controller methods. It also handles
+ * payload processing and version compatibility.
+ * 
  * @package Webklex\CalMag
  */
 class Application {
@@ -25,20 +29,28 @@ class Application {
     const VERSION = "3.0.0";
 
     /**
-     * @var Controller $controller The controller instance
+     * @var Controller $controller The controller instance handling all requests
      */
     protected Controller $controller;
 
-
     /**
      * Application constructor.
+     * Initializes a new controller instance
      */
     public function __construct() {
         $this->controller = new Controller();
     }
 
     /**
-     * Route the request
+     * Route the request to the appropriate controller method
+     * 
+     * Handles different types of requests:
+     * - GET requests with shared payload
+     * - POST requests with JSON content
+     * - Compare functionality
+     * - Builder functionality
+     * - Default calculator functionality
+     * 
      * @return void
      */
     public function route(): void {

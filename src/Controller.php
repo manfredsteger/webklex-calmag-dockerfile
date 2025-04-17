@@ -6,18 +6,34 @@ use Exception;
 use Webklex\CalMag\Enums\GrowState;
 
 /**
- * Class Controller
+ * Main controller class handling all calculator operations and view rendering
+ * 
+ * This class manages the calculator instance, handles form submissions,
+ * validates input data, and renders appropriate views. It supports different
+ * calculation modes including standard calculation, comparison, and builder mode.
  *
  * @package Webklex\CalMag
  */
 class Controller {
 
+    /**
+     * @var Calculator The calculator instance for nutrient calculations
+     */
     private Calculator $calculator;
 
+    /**
+     * @var array The current element values for water composition
+     */
     private array $elements;
 
+    /**
+     * @var array List of elements available for calculation
+     */
     protected array $available_elements;
 
+    /**
+     * @var array Default units for each element type
+     */
     protected array $element_units = [
         "calcium"   => "mg",
         "magnesium" => "mg",
@@ -28,34 +44,99 @@ class Controller {
         "nitrite"   => "mg",
     ];
 
+    /**
+     * @var string|null Currently selected fertilizer
+     */
     private ?string $fertilizer = null;
+
+    /**
+     * @var array Currently selected additives for each element
+     */
     private array $additive = [
         "magnesium" => "",
         "calcium"   => "",
     ];
+
+    /**
+     * @var array Concentration values for additives
+     */
     private array $additive_concentration;
+
+    /**
+     * @var array Units for additive measurements
+     */
     private array $additive_units;
+
+    /**
+     * @var float Calcium to magnesium ratio
+     */
     private float $ratio = 3.5;
+
+    /**
+     * @var float Density factor for calculations
+     */
     private float $density = 1.0;
+
+    /**
+     * @var string Current calculation model
+     */
     protected string $target_model = "linear";
 
+    /**
+     * @var float Volume for calculations in liters
+     */
     private float $volume = 5.0;
+
+    /**
+     * @var bool Whether to support water dilution
+     */
     private bool $support_dilution = true;
+
+    /**
+     * @var float Offset applied to target values
+     */
     private float $target_offset = 0.0;
 
+    /**
+     * @var string Current region setting
+     */
     private string $region = "us";
 
+    /**
+     * @var array Available regions and their configurations
+     */
     private array $regions;
 
+    /**
+     * @var array Element compositions for additives
+     */
     private array $additive_elements = [];
+
+    /**
+     * @var array Element compositions for fertilizers
+     */
     private array $fertilizer_elements = [];
+
+    /**
+     * @var array Target calcium values per growth stage
+     */
     private array $target_calcium = [];
+
+    /**
+     * @var array Target magnesium values per growth stage
+     */
     private array $target_magnesium = [];
 
+    /**
+     * @var bool Whether input data has been validated
+     */
     private bool $validated = false;
 
     /**
-     * Controller constructor.
+     * Controller constructor
+     * 
+     * Initializes the controller with default values and configurations.
+     * Loads elements, regions, and calculator instance.
      */
     public function __construct() {
         $this->elements = Config::get("app.elements");
@@ -75,8 +156,11 @@ class Controller {
     }
 
     /**
-     * Load the Calculator instance and set the default additive concentrations for both magnesium and calcium based on
-     * the first additive.
+     * Load the Calculator instance and configure default additive settings
+     * 
+     * Initializes a new calculator instance and sets up default concentrations
+     * and units for both magnesium and calcium additives.
+     * 
      * @return void
      */
     private function loadCalculator(): void {
@@ -94,7 +178,11 @@ class Controller {
     }
 
     /**
-     * Render the index page - the calculator form, without any result
+     * Render the index page with the calculator form
+     * 
+     * Displays the initial calculator form without any calculation results.
+     * Sets up default values and available options for the form.
+     * 
      * @return void
      */
     public function index(): void {
@@ -145,8 +233,12 @@ class Controller {
     }
 
     /**
-     * Render the result page - the calculator form with the result
-     * @param array $payload The POST payload
+     * Process and render calculation results
+     * 
+     * Validates input data, performs calculations, and renders the result page
+     * with both the form and calculation results.
+     * 
+     * @param array $payload The form submission data
      * @return void
      */
     public function result(array $payload): void {
@@ -187,6 +279,15 @@ class Controller {
         });
     }
 
+    /**
+     * Handle comparison mode calculations
+     * 
+     * Processes and displays comparisons between different fertilizers
+     * for given water composition and target values.
+     * 
+     * @param array $payload The comparison configuration data
+     * @return void
+     */
     public function compare(array $payload): void {
         $valid_elements = ["calcium", "magnesium"];
         $_elements = $payload['elements'] ?? $this->elements;
@@ -237,6 +338,15 @@ class Controller {
         }, "compare");
     }
 
+    /**
+     * Handle builder mode for custom nutrient solutions
+     * 
+     * Allows users to build custom nutrient solutions by specifying
+     * exact compositions of fertilizers and additives.
+     * 
+     * @param array $payload The builder configuration data
+     * @return void
+     */
     public function builder(array $payload): void {
         try {
             $this->validate($payload);
