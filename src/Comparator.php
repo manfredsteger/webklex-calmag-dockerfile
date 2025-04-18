@@ -38,7 +38,12 @@ class Comparator {
     /**
      * @var array The target ratios for calcium and magnesium
      */
-    protected array $ratios;
+    protected array $ratios = [
+        "calcium"   => 3.5,
+        "magnesium" => 1.0,
+    ];
+
+    protected $target_model = "linear";
 
     /**
      * Constructor initializes the comparator with water composition and target ratio
@@ -46,13 +51,14 @@ class Comparator {
      * @param array $water_elements Array of element concentrations in water
      * @param float $ratio Target calcium to magnesium ratio (default: 3.5)
      */
-    public function __construct(array $water_elements, float $ratio = 3.5) {
+    public function __construct(array $water_elements, float $ratio = 3.5, $target_model = "linear") {
         $this->ratios = [
             "calcium"   => $ratio,
             "magnesium" => 1.0,
         ];
+        $this->target_model = $target_model;
 
-        foreach (Config::get("app.models.linear", []) as $week => $target) {
+        foreach (Config::get("app.models.".$this->target_model, []) as $week => $target) {
             $this->models[$week] = $this->validateTarget(GrowState::fromString($target["state"]), [
                 ...$target,
                 "elements" => [
@@ -81,6 +87,7 @@ class Comparator {
         $fertilizers = $calculator->getFertilizers();
         foreach($fertilizers as $fertilizer_name => $fertilizer) {
             $calculator = new Calculator(["elements" => $this->water_elements,], $fertilizer_name, ["calcium" => "", "magnesium" => ""], $this->ratios["calcium"]);
+            $calculator->setDilutionSupport(true);
             $result[$fertilizer_name] = $calculator->getAppliedFertilizer();
         }
 
@@ -127,12 +134,20 @@ class Comparator {
             "magnesium" => $magnesium,
         ];
         foreach ($this->models as $week => $target) {
+            if(($target['calcium'] ?? 0) > 0) {
+                $target['magnesium'] = $target['calcium'] / $this->ratios['calcium'];
+            } elseif(($target['magnesium'] ?? 0) > 0) {
+                $target['calcium'] = $target['magnesium'] * $this->ratios['calcium'];
+            } else {
+                $target['calcium'] = 0;
+                $target['magnesium'] = 0;
+            }
             $this->models[$week] = $this->validateTarget(GrowState::fromString($target["state"]), [
                 ...$target,
                 "elements" => [
                     ...$target["elements"] ?? [],
-                    "calcium" => $target['calcium'] ?? 0,
-                    "magnesium" => $target['magnesium'] ?? 0,
+                    "calcium" => $target['calcium'],
+                    "magnesium" => $target['magnesium'],
             ]]);
         }
     }
@@ -156,14 +171,17 @@ class Comparator {
         }
         return array_merge($elements, (match ($state) {
             GrowState::Propagation => [
+                "state" => $state->value,
                 "days" => $target['days'] ?? 7,
                 "ph"   => $target['ph'] ?? 6.3,
             ],
             GrowState::Vegetation => [
+                "state" => $state->value,
                 "days" => $target['days'] ?? 3 * 7,
                 "ph"   => $target['ph'] ?? 6.3,
             ],
             GrowState::Flower, GrowState::LateFlower => [
+                "state" => $state->value,
                 "days" => $target['days'] ?? 4 * 7,
                 "ph"   => $target['ph'] ?? 6.3,
             ],

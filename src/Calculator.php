@@ -274,6 +274,12 @@ class Calculator {
                     $target["elements"][$component] = $value / $target["weeks"];
                 }
             }
+            if(!isset($target["elements"]["calcium"]) || $target["elements"]["calcium"] <= 0) {
+                $target["elements"]["calcium"] = $target["elements"]["magnesium"] * $this->ratios["calcium"];
+            } elseif (!isset($target["elements"]["magnesium"]) || $target["elements"]["magnesium"] <= 0) {
+                $target["elements"]["magnesium"] = $target["elements"]["calcium"] / $this->ratios["calcium"];
+            }
+
             $result[$state] = $this->calculateFertilizer($target);
         }
         return $result;
@@ -473,6 +479,9 @@ class Calculator {
             // dilute the water until the target can be reached (within 3% deviation) by adding a fertilizer or the water is completely diluted (10%)
             $ca_water_ratio = $this->water["elements"]['calcium'] / $this->water["elements"]['magnesium'];
             $ca_fertilizer_ratio = $fertilizer_elements['calcium'] / $fertilizer_elements['magnesium'];
+
+            // Check if the water has a higher calcium to magnesium ratio than the fertilizer
+            // If so, we need to add more magnesium to the water
             if ($ca_water_ratio > $ca_fertilizer_ratio) {
                 $runs = 5000;
                 do {
