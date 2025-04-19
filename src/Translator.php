@@ -34,6 +34,11 @@ class Translator {
     private array $translations = [];
 
     /**
+     * @var array Raw translations before dot notation conversion
+     */
+    private array $raw_translations = [];
+
+    /**
      * @var self Singleton instance
      */
     private static self $instance;
@@ -72,6 +77,17 @@ class Translator {
     }
 
     /**
+     * Static method to get an array of translations for a given key
+     * 
+     * @param string $key Translation key that points to an array
+     * @param array $params Parameters to replace in any string values within the array
+     * @return array Array of translations with parameters replaced
+     */
+    public static function getArray(string $key, array $params = []): array {
+        return self::getInstance()->getTranslationArray($key, $params);
+    }
+
+    /**
      * Load translations for the current locale
      * 
      * Attempts to detect the user's preferred language from HTTP headers
@@ -92,9 +108,9 @@ class Translator {
         }else{
             $this->locale = "en";
         }
-        $translations = include __DIR__ . '/../resources/lang/' . $this->locale . '.php';
+        $this->raw_translations = include __DIR__ . '/../resources/lang/' . $this->locale . '.php';
         //dot notation
-        $this->translations = array_dot($translations);
+        $this->translations = array_dot($this->raw_translations);
     }
 
     /**
@@ -107,6 +123,41 @@ class Translator {
     public function get(string $key, array $params = []): string {
         $translation = $this->translations[$key] ?? $key;
         return $this->replaceParams($translation, $params);
+    }
+
+    /**
+     * Get an array of translations for a given key
+     * 
+     * @param string $key Translation key that points to an array
+     * @param array $params Parameters to replace in any string values within the array
+     * @return array Array of translations with parameters replaced
+     */
+    public function getTranslationArray(string $key, array $params = []): array {
+        // Check if key exists in dot notation
+        $parentKey = $key . '.';
+        $arrayTranslations = array_filter($this->translations, function($k) use ($parentKey) {
+            return str_starts_with($k, $parentKey);
+        }, ARRAY_FILTER_USE_KEY);
+
+        if (empty($arrayTranslations)) {
+            return [];
+        }
+
+        // Convert filtered dot notation back to nested array
+        $result = array_undot($arrayTranslations);
+        $parts = explode('.', $key);
+        
+        // Navigate to the correct nesting level
+        foreach ($parts as $part) {
+            if (isset($result[$part])) {
+                $result = $result[$part];
+            } else {
+                return [];
+            }
+        }
+        
+        // Replace parameters in all string values recursively
+        return $this->replaceParamsRecursive($result, $params);
     }
 
     /**
@@ -125,4 +176,34 @@ class Translator {
         return $translation;
     }
 
+    /**
+     * Recursively replace parameters in all string values within an array
+     * 
+     * @param mixed $value The value to process (array or string)
+     * @param array $params Parameters to replace
+     * @return mixed The processed value with parameters replaced in strings
+     */
+    private function replaceParamsRecursive(mixed $value, array $params): mixed {
+        if (is_string($value)) {
+            return $this->replaceParams($value, $params);
+        }
+        
+        if (is_array($value)) {
+            return array_map(
+                fn($item) => $this->replaceParamsRecursive($item, $params),
+                $value
+            );
+        }
+        
+        return $value;
+    }
+
+    /**
+     * Get the raw translations array before dot notation conversion
+     * 
+     * @return array Raw translations
+     */
+    public function getRawTranslations(): array {
+        return $this->raw_translations;
+    }
 }

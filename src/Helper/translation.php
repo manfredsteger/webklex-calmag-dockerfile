@@ -11,14 +11,44 @@
 */
 
 if(!function_exists('translate')) {
+    /**
+     * Get a string translation by key with optional parameter replacement
+     * 
+     * @param string $key Translation key
+     * @param array $params Parameters to replace in the translation
+     * @return string Translated text
+     */
     function translate(string $key, array $params = []): string {
         return \Webklex\CalMag\Translator::translate($key, $params);
     }
 }
 
 if(!function_exists('__')) {
-    function __(string $key, array $params = []): string {
+    /**
+     * Shorthand function to get a string translation
+     * 
+     * @param string $key Translation key
+     * @param array $params Parameters to replace in the translation
+     * @return string|array Translated text or array of translations
+     */
+    function __(string $key, array $params = [], bool $is_array = false): string|array {
+        if($is_array){
+            return trans_array($key, $params);
+        }
         return translate($key, $params);
+    }
+}
+
+if(!function_exists('trans_array')) {
+    /**
+     * Get an array of translations for a given key
+     * 
+     * @param string $key Translation key that points to an array
+     * @param array $params Parameters to replace in any string values within the array
+     * @return array Array of translations with parameters replaced
+     */
+    function trans_array(string $key, array $params = []): array {
+        return \Webklex\CalMag\Translator::getArray($key, $params);
     }
 }
 
