@@ -156,6 +156,7 @@ return [
                 "regular"            => "Regular Calculator",
                 "expert"             => "Extended Calculator",
                 "compare"            => "Comparison Fertilizer",
+                "wizard"             => "Wizard",
             ],
             "table"       => [
                 "phase"    => "Phase",
@@ -322,6 +323,110 @@ return [
                     "label" => "Chloride",
                 ],
             ],
+        ],
+        "wizard" => [
+            "step" => [
+                "water" => [
+                    "title" => "Select Your Water Source",
+                    "description" => "Your water source is crucial as it determines the base mineral content of your solution. Different water sources contain varying levels of calcium, magnesium, and other minerals.",
+                    "help" => [
+                        "title" => "Understanding Water Sources",
+                        "description" => "Different water sources have different properties:",
+                        "sources" => [
+                            "ro" => "RO Water: Virtually mineral-free, perfect base for precise nutrient control",
+                            "rain" => "Rain Water: Generally low in minerals, may vary by region and collection method",
+                            "tap" => "Tap Water: Mineral content varies by location, check local water reports",
+                            "well" => "Well Water: Can have high mineral content, testing recommended"
+                        ]
+                    ],
+                    "source" => [
+                        "label" => "Water Source",
+                        "description" => "Select your primary water source. This will help determine if additional mineral content needs to be considered.",
+                        "ro" => "Reverse Osmosis (RO) Water",
+                        "rain" => "Rain Water",
+                        "tap" => "Tap Water",
+                        "well" => "Well Water"
+                    ],
+                    "minerals" => [
+                        "title" => "Water Mineral Content",
+                        "description" => "Please provide the mineral content of your water if known. You can usually find this information from your water supplier or through a water test.",
+                        "help" => [
+                            "title" => "Don't know your water's mineral content?",
+                            "tips" => [
+                                "Check your water supplier's website for a water quality report",
+                                "Search online using your postal code + \"water quality report\" or \"water analysis\"",
+                                "Use a water testing kit from your local garden center or hydroponics store",
+                                "Contact your water supplier directly for detailed information",
+                                "Consider professional water testing services for accurate results",
+                                "Check your latest water bill - it may include mineral content information",
+                                "Join local gardening groups - members often share water analysis data",
+                                "Use online water quality databases specific to your region"
+                            ],
+                            "search" => [
+                                "title" => "Search Online",
+                                "description" => "Click below to search for your water quality report:",
+                                "button" => "Search Water Analysis"
+                            ]
+                        ]
+                    ]
+                ],
+                "fertilizer" => [
+                    "title" => "Choose Your Fertilizer",
+                    "description" => "The fertilizer choice is crucial as it determines the base ratio of calcium to magnesium in your solution. Select a pre-configured fertilizer or choose \"No fertilizer used\" to create a custom mix.",
+                    "help" => [
+                        "title" => "Consider these factors when choosing your fertilizer:",
+                        "factors" => [
+                            "ratio" => "Pre-mixed fertilizers often have specific Ca:Mg ratios",
+                            "uptake" => "The ratio affects nutrient availability and plant uptake",
+                            "stage" => "Choose based on your plant's growth stage and needs",
+                            "custom" => "Consider selecting \"No fertilizer\" for custom additive mixing"
+                        ]
+                    ]
+                ],
+                "additives" => [
+                    "title" => "Select Additives",
+                    "description" => "Additives help fine-tune your nutrient solution. Choose calcium and magnesium additives and their concentrations to achieve the perfect balance for your plants.",
+                    "help" => [
+                        "title" => "Tips for additive selection and concentration:",
+                        "tips" => [
+                            "concentration_high" => "Higher concentrations mean less volume needed but require more precise measuring",
+                            "concentration_low" => "Lower concentrations are more forgiving but require larger volumes",
+                            "solubility" => "Consider solubility limits when setting concentrations",
+                            "ph" => "Some additives may affect pH - check product documentation"
+                        ]
+                    ]
+                ],
+                "settings" => [
+                    "title" => "Final Settings",
+                    "description" => "Configure the final parameters for your calculation, including the target ratio, solution volume, and calculation model.",
+                    "help" => [
+                        "title" => "Understanding the settings:",
+                        "settings" => [
+                            "ratio" => "Ca:Mg Ratio: 3.5:1 is common, but may vary by plant type and growth stage",
+                            "volume" => "Volume: Calculate total solution needed for your system",
+                            "models" => [
+                                "title" => "Model Selection:",
+                                "linear" => "Linear/Fumu: Consistent ratios throughout growth",
+                                "ppp_ca" => "PPP-Ca: Optimized for calcium-heavy feeding",
+                                "ppp_mg" => "PPP-Mg: Optimized for magnesium-heavy feeding",
+                                "ppp_ca_mg" => "PPP-Ca/Mg: Dynamic ratio adjustment"
+                            ],
+                            "dilution" => "Dilution Support: Enable if your water has high mineral content"
+                        ]
+                    ]
+                ]
+            ],
+            "navigation" => [
+                "next" => "Next Step",
+                "previous" => "Previous",
+                "calculate" => "Calculate Results",
+                "steps" => [
+                    "water" => "1. Water Source",
+                    "fertilizer" => "2. Fertilizer",
+                    "additives" => "3. Additives",
+                    "settings" => "4. Settings"
+                ]
+            ]
         ]
     ]
 ];

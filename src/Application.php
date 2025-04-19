@@ -26,7 +26,7 @@ class Application {
     /**
      * @var string VERSION The current version of the application
      */
-    const VERSION = "3.0.0";
+    const VERSION = "3.1.0";
 
     /**
      * @var Controller $controller The controller instance handling all requests
@@ -104,6 +104,10 @@ class Application {
         if (isset($_GET["builder"])) {
             $this->controller->builder($payload);
             return;
+        }
+
+        if(empty($payload) && !isset($_GET["regular"]) && !isset($_GET["expert"])) {
+            $_GET["wizard"] = 1;
         }
 
         if (count($payload) > 0) {

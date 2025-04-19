@@ -29,11 +29,14 @@
             <div class="w-full py-2">
                 <?php if(isset($_GET["expert"])): ?>
                     <?php include __DIR__."/calculator_expert_form.phtml"; ?>
+                <?php elseif(isset($_GET["wizard"])): ?>
+                    <?php include __DIR__."/calculator_wizard_form.phtml"; ?>
                 <?php else: ?>
                     <?php include __DIR__."/calculator_form.phtml"; ?>
                 <?php endif; ?>
             </div>
 
+            <?php if(!isset($_GET["wizard"])): ?>
             <div class="w-full py-2">
                 <?php if(($result ?? null) !== null): ?>
                     <?php include __DIR__."/calculator_result.phtml"; ?>
@@ -43,9 +46,12 @@
                     <?php endif; ?>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
         </div>
+    </div>
 </div>
 
+<?php if(!isset($_GET["wizard"])): ?>
 <div class="container px-4 md:px-2 opacity-50">
     <i class="fa fa-robot text-red-500"></i>
     <i class="fa fa-heart text-red-500"></i>
@@ -72,6 +78,7 @@
             "target_magnesium"       => $form["target_magnesium"] ?? [],
                                                                                                                                                  ]); ?>' <?php echo $link?></div>
 </div>
+<?php endif; ?>
 
 <script type="application/javascript">
     function toggle_result_detail_table() {

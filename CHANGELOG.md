@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
-- NaN
+- Wizard added
 
 ## [3.0.0] - 2025-04-12
 ### Fixed

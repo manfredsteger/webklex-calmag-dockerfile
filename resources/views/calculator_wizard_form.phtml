@@ -1,0 +1,704 @@
+<?php
+/** @var \Webklex\CalMag\Calculator $calculator */
+
+// Create payload for form data
+$payload = [
+    "fertilizer" => $form["fertilizer"] ?? "",
+    "additive" => $form["additive"] ?? [],
+    "additive_concentration" => $form["additive_concentration"] ?? [],
+    "additive_units" => $form["additive_units"] ?? [],
+    "elements" => $form["elements"] ?? [],
+    "element_units" => $form["element_units"] ?? [],
+    "ratio" => $form["ratio"] ?? 0.0,
+    "version" => \Webklex\CalMag\Application::VERSION,
+    "region" => $form["region"] ?? "",
+    "volume" => $form["volume"] ?? 0.0,
+    "target_model" => $form["target_model"] ?? "linear",
+    "support_dilution" => $form["support_dilution"] ?? false,
+    "target_offset" => $form["target_offset"] ?? 0,
+    "additive_elements" => $form["additive_elements"] ?? [],
+    "fertilizer_elements" => $form["fertilizer_elements"] ?? [],
+    "target_weeks" => $form["target_weeks"] ?? [],
+    "target_calcium" => $form["target_calcium"] ?? [],
+    "target_magnesium" => $form["target_magnesium"] ?? [],
+];
+$payload_link = base64_encode(json_encode($payload));
+?>
+<form method="POST" target="_self" action="?regular=1#results" class="w-full flex flex-wrap" id="wizard-form">
+    <!-- Hidden field to store the current step -->
+    <input type="hidden" name="current_step" id="current_step" value="1">
+    
+    <!-- Hidden fields to store water source data -->
+    <input type="hidden" name="water_source_type" id="water_source_type" value="">
+    <input type="hidden" name="p" id="payload_data" value="">
+    
+    <!-- Hidden fields for elements data -->
+    <input type="hidden" name="elements[calcium]" id="elements_calcium" value="<?php echo $form["elements"]["calcium"] ?? 0.0 ?>">
+    <input type="hidden" name="elements[magnesium]" id="elements_magnesium" value="<?php echo $form["elements"]["magnesium"] ?? 0.0 ?>">
+    <input type="hidden" name="element_units[calcium]" id="element_units_calcium" value="<?php echo $form["element_units"]["calcium"] ?? "mg" ?>">
+    <input type="hidden" name="element_units[magnesium]" id="element_units_magnesium" value="<?php echo $form["element_units"]["magnesium"] ?? "mg" ?>">
+    
+    <!-- Wizard Navigation -->
+    <div class="w-full flex justify-center mb-12">
+        <div class="flex items-center justify-between relative w-full max-w-3xl px-6 md:px-12">
+            <!-- Progress Bar Container -->
+            <div class="absolute top-1/2 left-[24px] right-[24px] md:left-[48px] md:right-[48px] -translate-y-1/2 pointer-events-none">
+                <!-- Progress Bar Background -->
+                <div class="h-1 w-full bg-slate-600"></div>
+                <!-- Active Progress Bar -->
+                <div class="absolute top-0 left-0 h-1 bg-green-500 transition-all duration-300" style="width: 0%" id="progress-bar"></div>
+            </div>
+            
+            <!-- Step Buttons -->
+            <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="1">
+                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-green-500 flex items-center justify-center text-green-500 font-semibold relative z-10 transition-all duration-300">1</div>
+                <span class="absolute text-sm font-medium text-slate-300 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                    <?php echo __("content.wizard.navigation.steps.water")?>
+                </span>
+            </div>
+            
+            <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="2">
+                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-slate-400 font-semibold relative z-10 transition-all duration-300">2</div>
+                <span class="absolute text-sm font-medium text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                    <?php echo __("content.wizard.navigation.steps.fertilizer")?>
+                </span>
+            </div>
+            
+            <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="3">
+                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-slate-400 font-semibold relative z-10 transition-all duration-300">3</div>
+                <span class="absolute text-sm font-medium text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                    <?php echo __("content.wizard.navigation.steps.additives")?>
+                </span>
+            </div>
+            
+            <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="4">
+                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-slate-400 font-semibold relative z-10 transition-all duration-300">4</div>
+                <span class="absolute text-sm font-medium text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                    <?php echo __("content.wizard.navigation.steps.settings")?>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 1: Water Source -->
+    <div class="wizard-step active w-full" data-step="1">
+        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.water.title")?></h2>
+            <p class="text-slate-300 mb-6">
+                <?php echo __("content.wizard.step.water.description")?>
+            </p>
+            
+            <div class="mb-6">
+                <label for="water_source" class="font-semibold text-blue-200 block mb-2">
+                    <?php echo __("content.wizard.step.water.source.label")?>
+                </label>
+                <select name="water_source" id="water_source" 
+                        class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-4">
+                    <option value="ro"><?php echo __("content.wizard.step.water.source.ro")?></option>
+                    <option value="rain"><?php echo __("content.wizard.step.water.source.rain")?></option>
+                    <option value="tap"><?php echo __("content.wizard.step.water.source.tap")?></option>
+                    <option value="well"><?php echo __("content.wizard.step.water.source.well")?></option>
+                </select>
+                <p class="text-xs text-slate-400 mb-4">
+                    <?php echo __("content.wizard.step.water.source.description")?>
+                <span class="block mt-2 text-slate-400">
+                    <?php echo __("content.wizard.step.water.help.description")?>
+                    <ul class="list-disc pl-6 -mt-2 space-y-1">
+                        <?php foreach (__("content.wizard.step.water.help.sources", [], true) as $source): ?>
+                            <li class="text-xs text-slate-400"><?php echo $source ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </span>
+                </p>
+            </div>
+
+            <!-- Water Elements Section -->
+            <div id="water_elements_section" class="hidden">
+                <h3 class="text-xl font-bold text-white mb-4"><?php echo __("content.wizard.step.water.minerals.title")?></h3>
+                <p class="text-slate-300 mb-6">
+                    <?php echo __("content.wizard.step.water.minerals.description")?>
+                </p>
+
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="w-full md:w-1/2">
+                        <label for="water_calcium" class="font-semibold text-red-200 block mb-2">
+                            <?php echo __("content.form.element.calcium.label")?>
+                        </label>
+                        <div class="flex flex-row gap-2">
+                            <input type="number"
+                                   step="0.001"
+                                   min="0"
+                                   name="water_elements[calcium]"
+                                   id="water_calcium"
+                                   placeholder="0.0"
+                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none water-element" />
+                            <select name="water_element_units[calcium]"
+                                    class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none water-element">
+                                <option value="mg">mg/L</option>
+                                <option value="mmol">mmol/L</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2">
+                        <label for="water_magnesium" class="font-semibold text-sky-200 block mb-2">
+                            <?php echo __("content.form.element.magnesium.label")?>
+                        </label>
+                        <div class="flex flex-row gap-2">
+                            <input type="number"
+                                   step="0.001"
+                                   min="0"
+                                   name="water_elements[magnesium]"
+                                   id="water_magnesium"
+                                   placeholder="0.0"
+                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none water-element" />
+                            <select name="water_element_units[magnesium]"
+                                    class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none water-element">
+                                <option value="mg">mg/L</option>
+                                <option value="mmol">mmol/L</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs text-slate-400 mb-6 mt-4">
+                    <p class="mb-2"><?php echo __("content.wizard.step.water.minerals.help.title")?></p>
+                    <ul class="list-disc pl-4 mb-6">
+                        <?php foreach (__("content.wizard.step.water.minerals.help.tips", [], true) as $tip): ?>
+                            <li class="mb-1"><?php echo $tip ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    
+                    <!-- Search Section -->
+                    <div class="mt-4">
+                        <h4 class="font-semibold mb-2"><?php echo __("content.wizard.step.water.minerals.help.search.title")?></h4>
+                        <p class="mb-2"><?php echo __("content.wizard.step.water.minerals.help.search.description")?></p>
+                        <a href="https://duckduckgo.com/?q=<?php echo urlencode(__("content.calculator.google.query")) ?>"
+                           target="_blank"
+                           class="text-red-500">
+                            <?php echo __("content.wizard.step.water.minerals.help.search.button")?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 flex justify-end">
+                <button type="button" class="next-step bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                    <?php echo __("content.wizard.navigation.next")?>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Fertilizer -->
+    <div class="wizard-step hidden w-full" data-step="2">
+        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.fertilizer.title")?></h2>
+            <p class="text-slate-300 mb-6">
+                <?php echo __("content.wizard.step.fertilizer.description")?>
+            </p>
+
+            <div class="mb-6">
+                <label for="fertilizer" class="font-semibold text-green-200 block mb-2">
+                    <?php echo __("content.form.fertilizer.label")?>
+                </label>
+                <?php $fertilizers = $calculator->getFertilizers(); ?>
+                <select name="fertilizer" id="fertilizer" 
+                        class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-4">
+                    <?php foreach ($fertilizers as $name => $fertilizer): ?>
+                        <option value="<?php echo $name ?>" <?php echo $name == $form["fertilizer"] ? "selected" : "" ?>
+                                data-ratio="<?php echo round($fertilizer["ratio"], 2) ?>">
+                            <?php echo $name ?> (<?php echo round($fertilizer["ratio"], 2) ?>:1)
+                        </option>
+                    <?php endforeach; ?>
+                    <option value="" data-ratio="3.5" <?php echo $form["fertilizer"] === "" ? "selected" : "" ?>>
+                        <?php echo __("content.form.fertilizer.option.none") ?>
+                    </option>
+                </select>
+                <p class="text-xs text-slate-400 mb-4">
+                    <?php echo __("content.form.fertilizer.description")?>
+                    <span class="block mt-2 text-slate-400">
+                        <?php echo __("content.wizard.step.fertilizer.help.title")?>
+                        <ul class="list-disc pl-6 -mt-2 space-y-1">
+                            <?php foreach (__("content.wizard.step.fertilizer.help.factors", [], true) as $factor): ?>
+                                <li class="text-xs text-slate-400"><?php echo $factor ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </span>
+                </p>
+            </div>
+            
+            <div class="mt-8 flex justify-between">
+                <button type="button" class="prev-step bg-slate-500 text-white px-6 py-2 rounded hover:bg-slate-600">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <?php echo __("content.wizard.navigation.previous")?>
+                </button>
+                <button type="button" class="next-step bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                    <?php echo __("content.wizard.navigation.next")?>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Additives -->
+    <div class="wizard-step hidden w-full" data-step="3">
+        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.additives.title")?></h2>
+            <p class="text-slate-300 mb-6">
+                <?php echo __("content.wizard.step.additives.description")?>
+            </p>
+
+            <div class="flex flex-col md:flex-row md:gap-6">
+                <?php foreach ($calculator->getAdditives() as $element => $additives): ?>
+                    <div class="mb-6 md:mb-0 w-full md:w-1/2">
+                        <label for="additive_<?php echo $element ?>" 
+                               class="font-semibold <?php echo $element === "calcium" ? "text-red-200" : "text-sky-200" ?> block mb-2">
+                            <?php echo __("content.form.additive.$element.label")?>
+                        </label>
+                        <div class="w-full flex flex-row mb-4">
+                            <select name="additive[<?php echo $element ?>]" 
+                                    id="additive_<?php echo $element ?>"
+                                    onchange="(function(){
+                                        let elm = document.getElementById('additive_<?php echo $element ?>');
+                                        document.getElementById('additive_concentration_<?php echo $element ?>').value = 
+                                            elm.options[elm.selectedIndex].getAttribute('data-concentration');
+                                    })()"
+                                    class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                <?php foreach ($additives as $name => $additive): ?>
+                                    <option value="<?php echo $name ?>" 
+                                            <?php echo $name == ($form["additive"][$element] ?? "") ? "selected" : "" ?> 
+                                            data-concentration="<?php echo $additive["concentration"] ?>">
+                                        <?php echo __("additive.$name") ?>
+                                    </option>
+                                <?php endforeach; ?>
+                                <option value="" 
+                                        <?php echo ($form["additive"][$element] ?? "") === "" ? "selected" : "" ?> 
+                                        data-concentration="100">
+                                    <?php echo __("content.form.additive.none") ?>
+                                </option>
+                            </select>
+                        </div>
+
+                        <div id="additive_concentration_wrapper_<?php echo $element ?>" class="mb-4">
+                            <label for="additive_concentration_<?php echo $element ?>" 
+                                   class="font-semibold text-slate-300 block mb-2">
+                                <?php echo __("content.form.additive_concentration.label")?>
+                            </label>
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   max="100"
+                                   name="additive_concentration[<?php echo $element?>]"
+                                   id="additive_concentration_<?php echo $element ?>"
+                                   class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
+                                   value="<?php echo $form["additive_concentration"][$element] ?? $additives[array_key_first($additives)]["concentration"] ?>" />
+                            <p class="text-xs mt-2 text-slate-400">
+                                <?php echo __("content.form.additive_concentration.description")?>
+                            </p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <p class="text-xs text-slate-400 mb-4">
+                <?php echo __("content.wizard.step.additives.help.title")?>
+                <span class="block mt-2 text-slate-400">
+                    <ul class="list-disc pl-6 -mt-2 space-y-1">
+                        <?php foreach (__("content.wizard.step.additives.help.tips", [], true) as $tip): ?>
+                            <li class="text-xs text-slate-400"><?php echo $tip ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </span>
+            </p>
+
+            <div class="mt-8 flex justify-between">
+                <button type="button" class="prev-step bg-slate-500 text-white px-6 py-2 rounded hover:bg-slate-600">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <?php echo __("content.wizard.navigation.previous")?>
+                </button>
+                <button type="button" class="next-step bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                    <?php echo __("content.wizard.navigation.next")?>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Settings -->
+    <div class="wizard-step hidden w-full" data-step="4">
+        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.settings.title")?></h2>
+            <p class="text-slate-300 mb-6">
+                <?php echo __("content.wizard.step.settings.description")?>
+            </p>
+
+            <div class="flex flex-col md:flex-row md:gap-6">
+                <div class="w-full md:w-1/2">
+                    <div class="mb-6">
+                        <label for="ratio" class="font-semibold text-slate-300 block mb-2">
+                            <?php echo __("content.form.ratio.label")?>
+                        </label>
+                        <input type="number"
+                               step="0.01"
+                               min="0"
+                               name="ratio" 
+                               id="ratio"
+                               class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-2"
+                               value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ratio"] ?? 0.0, 2) ?>"
+                               required />
+                        <p class="text-xs text-slate-400">
+                            <?php echo __("content.form.ratio.description")?>
+                        </p>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="volume" class="font-semibold text-slate-300 block mb-2">
+                            <?php echo __("content.form.volume.label")?>
+                        </label>
+                        <input type="number"
+                               step="0.1"
+                               min="0"
+                               name="volume" 
+                               id="volume" 
+                               class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-2"
+                               value="<?php echo $form["volume"] ?>"
+                               required />
+                        <p class="text-xs text-slate-400">
+                            <?php echo __("content.form.volume.description")?>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-1/2">
+                    <div class="mb-6 md:mt-7 w-full">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="hidden" name="support_dilution" value="0">
+                            <input type="checkbox" 
+                                   name="support_dilution" 
+                                   id="support_dilution" 
+                                   value="1"
+                                   <?php echo ($form["support_dilution"] ?? false) ? "checked" : "" ?>
+                                   class="bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mr-2" />
+                            <span class="text-slate-300"><?php echo __("content.form.support_dilution.label")?></span>
+                        </label>
+                        <p class="text-xs text-slate-400 mt-2 ml-6">
+                            <?php echo __("content.form.support_dilution.description")?>
+                        </p>
+                    </div>
+
+                    <div class="mb-6 md:mt-11">
+                        <label for="target_model" class="font-semibold text-slate-200 block mb-2">
+                            <?php echo __("content.form.target_model.label")?>
+                        </label>
+                        <select name="target_model" 
+                                id="target_model"
+                                class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-2"
+                                required>
+                            <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
+                                Linear / Fumu
+                            </option>
+                            <option value="dynamic_ca" <?php echo "dynamic_ca" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Ca
+                            </option>
+                            <option value="dynamic_mg" <?php echo "dynamic_mg" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Mg
+                            </option>
+                            <option value="dynamic_ca_mg" <?php echo "dynamic_ca_mg" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Ca/Mg
+                            </option>
+                        </select>
+                        <p class="text-xs text-slate-400">
+                            <?php echo __("content.form.target_model.description")?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-400 mb-4">
+                <?php echo __("content.wizard.step.settings.help.title")?>
+                <span class="block mt-2 text-slate-400">
+                    <ul class="list-disc pl-6 -mt-2 space-y-1">
+                        <?php foreach (__("content.wizard.step.settings.help.settings", [], true) as $key => $setting): ?>
+                            <?php if ($key === 'models'): ?>
+                                <li class="text-xs text-slate-400">
+                                    <?php echo $setting['title'] ?>
+                                    <ul class="list-disc pl-6 mt-1 space-y-1">
+                                        <?php foreach ($setting as $model_key => $model): ?>
+                                            <?php if ($model_key !== 'title'): ?>
+                                                <li class="text-xs text-slate-400"><?php echo $model ?></li>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </li>
+                            <?php else: ?>
+                                <li class="text-xs text-slate-400"><?php echo $setting ?></li>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </span>
+            </p>
+
+            <div class="mt-8 flex justify-between">
+                <button type="button" class="prev-step bg-slate-500 text-white px-6 py-2 rounded hover:bg-slate-600">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <?php echo __("content.wizard.navigation.previous")?>
+                </button>
+                <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                    <?php echo __("content.wizard.navigation.calculate")?>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full items-center justify-items-center pt-4 md:pt-8">
+        <div class="flex flex-wrap gap-2 justify-center">
+            <a href="?regular=1&p=<?php echo $payload_link?>" 
+                class="px-2 py-2 md:px-6 md:py-3 bg-sky-500 text-white hover:bg-sky-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150">
+                <?php echo __("content.calculator.button.regular")?>
+            </a>
+            <a href="?expert=1&p=<?php echo $payload_link?>"
+                class="px-2 py-2 md:px-6 md:py-3 bg-sky-500 text-white hover:bg-sky-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.expert")?>
+            </a>
+            <a href="?compare=1&p=<?php echo $payload_link?>"
+                class="px-2 py-2 md:px-6 md:py-3 bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.compare")?>
+            </a>
+        </div>
+    </div>
+</form>
+
+<style>
+.wizard-step-btn {
+    @apply px-4 py-2 rounded-full border-2 border-slate-500 text-slate-300;
+}
+
+.wizard-step-btn.active {
+    @apply bg-green-500 border-green-500 text-white;
+}
+
+.wizard-step {
+    @apply w-full transition-all duration-300 ease-in-out;
+}
+
+.wizard-step > div {
+    @apply min-h-[300px] md:min-h-[500px];
+}
+
+.wizard-step.hidden {
+    @apply hidden opacity-0;
+}
+
+.wizard-step.active {
+    @apply flex opacity-100;
+}
+</style>
+
+<script>
+// Global functions
+function updateElementValues() {
+    const waterSource = document.getElementById('water_source').value;
+    const waterCalcium = document.getElementById('water_calcium');
+    const waterMagnesium = document.getElementById('water_magnesium');
+    const waterCalciumUnit = document.querySelector('select[name="water_element_units[calcium]"]');
+    const waterMagnesiumUnit = document.querySelector('select[name="water_element_units[magnesium]"]');
+    
+    // Update hidden element fields
+    document.getElementById('elements_calcium').value = waterSource === 'ro' || waterSource === 'rain' ? '0.0' : (waterCalcium.value || '0.0');
+    document.getElementById('elements_magnesium').value = waterSource === 'ro' || waterSource === 'rain' ? '0.0' : (waterMagnesium.value || '0.0');
+    document.getElementById('element_units_calcium').value = waterCalciumUnit.value;
+    document.getElementById('element_units_magnesium').value = waterMagnesiumUnit.value;
+}
+
+function toggleWaterElements(waterSource) {
+    const waterElementsSection = document.getElementById('water_elements_section');
+    const waterCalcium = document.getElementById('water_calcium');
+    const waterMagnesium = document.getElementById('water_magnesium');
+
+    if (waterSource === 'tap' || waterSource === 'well') {
+        waterElementsSection.classList.remove('hidden');
+        waterCalcium.setAttribute('required', 'required');
+        waterMagnesium.setAttribute('required', 'required');
+    } else {
+        waterElementsSection.classList.add('hidden');
+        waterCalcium.removeAttribute('required');
+        waterMagnesium.removeAttribute('required');
+        // Reset values for RO/rain water
+        waterCalcium.value = '';
+        waterMagnesium.value = '';
+    }
+    
+    // Update hidden element fields whenever water source changes
+    updateElementValues();
+}
+
+function validateWaterElements() {
+    const waterSource = document.getElementById('water_source').value;
+    const nextButton = document.querySelector('.wizard-step[data-step="1"] .next-step');
+    
+    if (waterSource === 'tap' || waterSource === 'well') {
+        const calcium = document.getElementById('water_calcium').value;
+        const magnesium = document.getElementById('water_magnesium').value;
+        
+        if (!calcium || !magnesium) {
+            nextButton.disabled = true;
+            nextButton.classList.add('opacity-50', 'cursor-not-allowed', 'hover:bg-green-500');
+            nextButton.classList.remove('hover:bg-green-600');
+        } else {
+            nextButton.disabled = false;
+            nextButton.classList.remove('opacity-50', 'cursor-not-allowed', 'hover:bg-green-500');
+            nextButton.classList.add('hover:bg-green-600');
+        }
+    } else {
+        nextButton.disabled = false;
+        nextButton.classList.remove('opacity-50', 'cursor-not-allowed', 'hover:bg-green-500');
+        nextButton.classList.add('hover:bg-green-600');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const wizardSteps = document.querySelectorAll('.wizard-step');
+    const stepButtons = document.querySelectorAll('.wizard-step-btn');
+    const nextButtons = document.querySelectorAll('.next-step');
+    const prevButtons = document.querySelectorAll('.prev-step');
+    const form = document.getElementById('wizard-form');
+    const currentStepInput = document.getElementById('current_step');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Initialize water elements visibility and values
+    const waterSource = document.getElementById('water_source');
+    toggleWaterElements(waterSource.value);
+
+    // Add event listener for water source changes
+    waterSource.addEventListener('change', function() {
+        toggleWaterElements(this.value);
+        validateWaterElements();
+    });
+
+    // Add validation to water element inputs
+    const waterElements = document.querySelectorAll('.water-element');
+    waterElements.forEach(function(element) {
+        element.addEventListener('input', function() {
+            updateElementValues();
+            validateWaterElements();
+        });
+    });
+
+    function updateStepStyles(stepNumber) {
+        // Update progress bar
+        const progress = ((stepNumber - 1) / (wizardSteps.length - 1)) * 100;
+        progressBar.style.width = `${progress}%`;
+
+        // Update step buttons
+        stepButtons.forEach((btn, index) => {
+            const btnNumber = index + 1;
+            const circle = btn.querySelector('div');
+            const text = btn.querySelector('span');
+
+            if (btnNumber < stepNumber) {
+                // Completed steps
+                circle.classList.remove('border-slate-500', 'text-slate-400');
+                circle.classList.add('border-green-500', 'bg-green-500', 'text-white');
+                text.classList.remove('text-slate-400');
+                text.classList.add('text-slate-300');
+            } else if (btnNumber === stepNumber) {
+                // Current step
+                circle.classList.remove('border-slate-500', 'text-slate-400', 'bg-green-500');
+                circle.classList.add('border-green-500', 'text-green-500');
+                text.classList.remove('text-slate-400');
+                text.classList.add('text-slate-300');
+            } else {
+                // Future steps
+                circle.classList.remove('border-green-500', 'text-green-500', 'bg-green-500', 'text-white');
+                circle.classList.add('border-slate-500', 'text-slate-400');
+                text.classList.remove('text-slate-300');
+                text.classList.add('text-slate-400');
+            }
+        });
+    }
+
+    function showStep(stepNumber) {
+        wizardSteps.forEach(step => {
+            step.classList.add('hidden');
+            step.classList.remove('active');
+        });
+
+        const currentStep = document.querySelector(`.wizard-step[data-step="${stepNumber}"]`);
+        currentStep.classList.remove('hidden');
+        currentStep.classList.add('active');
+        
+        currentStepInput.value = stepNumber;
+        updateStepStyles(stepNumber);
+    }
+
+    // Validate current step before proceeding
+    function validateStep(stepNumber) {
+        let isValid = true;
+        const currentStep = document.querySelector(`.wizard-step[data-step="${stepNumber}"]`);
+        
+        // Get all required inputs in the current step
+        const requiredInputs = currentStep.querySelectorAll('input[required], select[required]');
+        
+        requiredInputs.forEach(input => {
+            if (!input.value) {
+                isValid = false;
+                input.classList.add('border-red-500');
+            } else {
+                input.classList.remove('border-red-500');
+            }
+        });
+
+        // Special validation for water source step
+        if (stepNumber === 1) {
+            const waterSource = document.getElementById('water_source').value;
+            if (waterSource === 'tap' || waterSource === 'well') {
+                const calcium = document.getElementById('water_calcium').value;
+                const magnesium = document.getElementById('water_magnesium').value;
+                if (!calcium || !magnesium) {
+                    isValid = false;
+                    if (!calcium) document.getElementById('water_calcium').classList.add('border-red-500');
+                    if (!magnesium) document.getElementById('water_magnesium').classList.add('border-red-500');
+                }
+            }
+        }
+        
+        return isValid;
+    }
+
+    nextButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const currentStep = parseInt(button.closest('.wizard-step').dataset.step);
+            if (validateStep(currentStep)) {
+                showStep(currentStep + 1);
+            }
+        });
+    });
+
+    prevButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const currentStep = parseInt(button.closest('.wizard-step').dataset.step);
+            showStep(currentStep - 1);
+        });
+    });
+
+    stepButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetStep = parseInt(this.dataset.step);
+            const currentStep = parseInt(currentStepInput.value);
+            
+            // Only allow going to previous steps or current step
+            if (targetStep <= currentStep) {
+                showStep(targetStep);
+            }
+        });
+    });
+
+    // Initialize the first step
+    showStep(1);
+
+    // Initial validation
+    validateWaterElements();
+});
+</script> 

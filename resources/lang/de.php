@@ -156,6 +156,7 @@ return [
                 "regular"            => "Einfacher Rechner",
                 "expert"             => "Erweiterter Rechner",
                 "compare"            => "Vergleichs-Rechner",
+                "wizard"             => "Wizzard",
             ],
             "table"       => [
                 "phase"    => "Phase",
@@ -317,6 +318,110 @@ return [
                     "label" => "Chlorid",
                 ],
             ],
+        ],
+        "wizard" => [
+            "step" => [
+                "water" => [
+                    "title" => "Wähle deine Wasserquelle",
+                    "description" => "Deine Wasserquelle ist entscheidend, da sie den Grundgehalt an Mineralien in deiner Lösung bestimmt. Verschiedene Wasserquellen enthalten unterschiedliche Mengen an Calcium, Magnesium und anderen Mineralien.",
+                    "help" => [
+                        "title" => "Wasserquellen verstehen",
+                        "description" => "Verschiedene Wasserquellen haben unterschiedliche Eigenschaften:",
+                        "sources" => [
+                            "ro" => "RO-Wasser: Praktisch mineralfrei, perfekte Basis für präzise Nährstoffkontrolle",
+                            "rain" => "Regenwasser: Generell mineralarm, kann je nach Region und Sammelmethode variieren",
+                            "tap" => "Leitungswasser: Mineralgehalt variiert je nach Standort, Wasserberichte prüfen",
+                            "well" => "Brunnenwasser: Kann einen hohen Mineralgehalt haben, Testung empfohlen"
+                        ]
+                    ],
+                    "source" => [
+                        "label" => "Wasserquelle",
+                        "description" => "Wähle deine primäre Wasserquelle. Dies hilft zu bestimmen, ob zusätzliche Mineralien berücksichtigt werden müssen.",
+                        "ro" => "Umkehrosmose (RO) Wasser",
+                        "rain" => "Regenwasser",
+                        "tap" => "Leitungswasser",
+                        "well" => "Brunnenwasser"
+                    ],
+                    "minerals" => [
+                        "title" => "Mineralgehalt des Wassers",
+                        "description" => "Bitte gib den Mineralgehalt deines Wassers an, falls bekannt. Diese Informationen findest du in der Regel bei deinem Wasserversorger oder durch einen Wassertest.",
+                        "help" => [
+                            "title" => "Kennst du den Mineralgehalt deines Wassers nicht?",
+                            "tips" => [
+                                "Prüfe die Website deines Wasserversorgers nach einem Wasserbericht",
+                                "Suche online mit deiner Postleitzahl + \"Wasserqualitätsbericht\" oder \"Wasseranalyse\"",
+                                "Verwende ein Wassertestkit aus deinem Gartencenter oder Hydroponikladen",
+                                "Kontaktiere deinen Wasserversorger direkt für detaillierte Informationen",
+                                "Erwäge professionelle Wassertestservices für genaue Ergebnisse",
+                                "Prüfe deine letzte Wasserrechnung - sie enthält möglicherweise Informationen zum Mineralgehalt",
+                                "Tritt lokalen Gartengruppen bei - Mitglieder teilen oft Wasseranalysedaten",
+                                "Nutze Online-Wasserqualitätsdatenbanken für deine Region"
+                            ],
+                            "search" => [
+                                "title" => "Online suchen",
+                                "description" => "Klicke unten, um nach deinem Wasserqualitätsbericht zu suchen:",
+                                "button" => "Wasseranalyse suchen"
+                            ]
+                        ]
+                    ]
+                ],
+                "fertilizer" => [
+                    "title" => "Wähle dein Düngemittel",
+                    "description" => "Die Wahl des Düngemittels ist entscheidend, da es das Grundverhältnis von Calcium zu Magnesium in deiner Lösung bestimmt. Wähle ein vorkonfiguriertes Düngemittel oder wähle \"Kein Präparat verwenden\" für eine individuelle Mischung.",
+                    "help" => [
+                        "title" => "Berücksichtige diese Faktoren bei der Wahl deines Düngemittels:",
+                        "factors" => [
+                            "ratio" => "Vorgemischte Düngemittel haben oft spezifische Ca:Mg-Verhältnisse",
+                            "uptake" => "Das Verhältnis beeinflusst die Nährstoffverfügbarkeit und -aufnahme",
+                            "stage" => "Wähle basierend auf der Wachstumsphase und den Bedürfnissen deiner Pflanze",
+                            "custom" => "Erwäge \"Kein Präparat verwenden\" für individuelle Zusatzstoffmischungen"
+                        ]
+                    ]
+                ],
+                "additives" => [
+                    "title" => "Wähle Zusatzstoffe",
+                    "description" => "Zusatzstoffe helfen bei der Feinabstimmung deiner Nährstofflösung. Wähle Calcium- und Magnesium-Zusatzstoffe und deren Konzentrationen, um das perfekte Gleichgewicht für deine Pflanzen zu erreichen.",
+                    "help" => [
+                        "title" => "Tipps für die Auswahl und Konzentration von Zusatzstoffen:",
+                        "tips" => [
+                            "concentration_high" => "Höhere Konzentrationen bedeuten weniger Volumen, erfordern aber präziseres Messen",
+                            "concentration_low" => "Niedrigere Konzentrationen sind fehlerverzeihender, benötigen aber größere Volumen",
+                            "solubility" => "Beachte die Löslichkeitsgrenzen bei der Festlegung der Konzentrationen",
+                            "ph" => "Einige Zusatzstoffe können den pH-Wert beeinflussen - Produktdokumentation beachten"
+                        ]
+                    ]
+                ],
+                "settings" => [
+                    "title" => "Abschließende Einstellungen",
+                    "description" => "Konfiguriere die finalen Parameter für deine Berechnung, einschließlich des Zielverhältnisses, des Lösungsvolumens und des Berechnungsmodells.",
+                    "help" => [
+                        "title" => "Die Einstellungen verstehen:",
+                        "settings" => [
+                            "ratio" => "Ca:Mg-Verhältnis: 3,5:1 ist üblich, kann aber je nach Pflanzenart und Wachstumsphase variieren",
+                            "volume" => "Volumen: Berechne die benötigte Gesamtlösung für dein System",
+                            "models" => [
+                                "title" => "Modellauswahl:",
+                                "linear" => "Linear/Fumu: Konstante Verhältnisse während des Wachstums",
+                                "ppp_ca" => "PPP-Ca: Optimiert für calciumlastige Fütterung",
+                                "ppp_mg" => "PPP-Mg: Optimiert für magnesiumlastige Fütterung",
+                                "ppp_ca_mg" => "PPP-Ca/Mg: Dynamische Verhältnisanpassung"
+                            ],
+                            "dilution" => "Verdünnungsunterstützung: Aktivieren, wenn dein Wasser einen hohen Mineralgehalt hat"
+                        ]
+                    ]
+                ]
+            ],
+            "navigation" => [
+                "next" => "Nächster Schritt",
+                "previous" => "Zurück",
+                "calculate" => "Ergebnis berechnen",
+                "steps" => [
+                    "water" => "1. Wasserquelle",
+                    "fertilizer" => "2. Düngemittel",
+                    "additives" => "3. Zusatzstoffe",
+                    "settings" => "4. Einstellungen"
+                ]
+            ]
         ]
     ]
 ];
