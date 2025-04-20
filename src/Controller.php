@@ -451,9 +451,18 @@ class Controller {
             $this->available_elements = Config::get("app.expert_elements");
         }
 
-        if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements) || !is_array($additive_concentration) || !is_array($additive_units)) {
+        if (!is_string($fertilizer) || !is_array($additive) || !is_array($elements) || !is_array($additive_concentration)) {
             throw new Exception("Invalid input");
         }
+        
+        if (!is_array($element_units)) {
+            throw new Exception("Invalid element_units");
+        }
+        
+        if (!is_array($additive_units)) {
+            throw new Exception("Invalid additive_units");
+        }
+        
         if (!isset($this->calculator->getFertilizers()[$fertilizer]) && $fertilizer !== "") {
             throw new Exception("Invalid fertilizer");
         }

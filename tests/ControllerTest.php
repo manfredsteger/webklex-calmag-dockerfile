@@ -17,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Webklex\CalMag\Calculator;
 use Webklex\CalMag\Config;
 use Webklex\CalMag\Controller;
+use Webklex\CalMag\Translator;
 
 class ControllerTest extends TestCase {
 
@@ -26,8 +27,13 @@ class ControllerTest extends TestCase {
      * @return void
      */
     public function setUp(): void {
+        parent::setUp();
         $_SERVER['REQUEST_URI'] = '/';
         $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US,en;q=0.9';
+        
+        // Reset $_GET to prevent state from persisting between tests
+        $_GET = [];
     }
 
     /**
@@ -71,7 +77,8 @@ class ControllerTest extends TestCase {
             "element_units"          => [
                 "calcium"   => "mg",
                 "magnesium" => "mg"
-            ]
+            ],
+            "target_model"           => "linear"
         ];
         ob_start();
         $controller->result($payload);
@@ -81,7 +88,7 @@ class ControllerTest extends TestCase {
         ob_start();
         $controller->result(["fertilizer" => 47.11]);
         $output = ob_get_clean();
-        self::assertStringNotContainsString('CalMag calculation results', $output);
+        self::assertStringNotContainsString(Translator::translate("content.calculator.result.title"), $output);
     }
 
     public function testBuilder() {
@@ -101,17 +108,18 @@ class ControllerTest extends TestCase {
             "element_units" => [
                 "calcium"   => "mg",
                 "magnesium" => "mg"
-            ]
+            ],
+            "target_model"  => "linear"
         ];
         ob_start();
         $controller->builder($payload);
         $output = ob_get_clean();
-        self::assertStringContainsString('CalMag calculation results', $output);
+        self::assertStringContainsString(Translator::translate("content.calculator.result.title"), $output);
 
         ob_start();
         $controller->builder(["fertilizer" => 47.11]);
         $output = ob_get_clean();
-        self::assertStringNotContainsString('CalMag calculation results', $output);
+        self::assertStringNotContainsString(Translator::translate("content.calculator.result.title"), $output);
     }
 
     public function testApi() {
@@ -137,13 +145,15 @@ class ControllerTest extends TestCase {
             "element_units"          => [
                 "calcium"   => "mg",
                 "magnesium" => "mg"
-            ]
+            ],
+            "target_model"           => "linear"
         ];
         ob_start();
         $controller->api($payload);
         $output = ob_get_clean();
 
         $json = json_decode($output, true);
+        
         self::assertIsArray($json);
         self::assertArrayHasKey('version', $json);
         self::assertArrayHasKey('result', $json);
