@@ -12,6 +12,7 @@ module.exports = {
     "./resources/views/*.{phtml,php}",
     "./resources/**/*.{phtml,php}",
   ],
+  darkMode: 'class',
   theme: {
     colors: {
       ...colors,
@@ -20,6 +21,7 @@ module.exports = {
   },
   plugins: [],
   safelist: [
-    "text-teal-500"
+    "text-teal-500",
+    "dark"
   ]
 }

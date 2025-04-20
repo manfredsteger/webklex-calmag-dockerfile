@@ -54,6 +54,11 @@ if(!function_exists('trans_array')) {
 
 if(!function_exists('pretty_number')) {
     function pretty_number(mixed $value, string $unit, int $decimals = 2, ?string $decimal_separator = '.', ?string $thousands_separator = ''): string {
+        // Handle null values
+        if ($value === null) {
+            $value = 0;
+        }
+        
         switch ($unit) {
             case "mg":
                 if($value >= 1000){

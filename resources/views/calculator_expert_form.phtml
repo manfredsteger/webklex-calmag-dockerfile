@@ -3,17 +3,17 @@
 ?>
 <form method="POST" target="_self" action="?expert=1#results" class="w-full flex flex-wrap">
 
-    <div class="w-full md:w-1/2 md:mt-1 flex flex-wrap justify-start items-start self-start">
-        <div class="w-full pb-2 md:pt-2">
-            <div class="w-full flex flex-wrap px-2 pb-2 text-left  relative">
+    <div class="w-full md:w-1/2 mt-1 flex flex-wrap justify-start items-start self-start">
+        <div class="w-full px-2 py-2">
+            <div class="w-full px-4 py-2 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
                 <div class="w-full py-2">
-                    <label for="fertilizer" class="font-semibold text-green-200">
+                    <label for="fertilizer" class="font-semibold text-green-600 dark:text-green-200">
                         <?php echo __("content.form.fertilizer.label")?>
                     </label>
                     <br/>
                     <?php $fertilizers = $calculator->getFertilizers(); ?>
                     <select name="fertilizer" id="fertilizer"
-                            class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                            class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded px-3 py-2 outline-none">
                         <?php foreach ($fertilizers as $name => $fertilizer): ?>
                             <option value="<?php echo $name ?>" <?php echo $name == $form["fertilizer"] ? "selected" : "" ?>
                                     data-ratio="<?php echo round($fertilizer["ratio"], 2) ?>"
@@ -27,77 +27,90 @@
                             <?php echo __("content.form.fertilizer.option.none") ?>
                         </option>
                     </select>
-                    <p class="text-xs pt-2 text-slate-400">
+                    <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                         <?php echo __("content.form.fertilizer.description")?>
                     </p>
                 </div>
 
-                <div class="w-full md:w-1/2 pb-2">
-                    <label for="fertilizer_elements_calcium" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.element.calcium.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.0001"
-                           min="0"
-                           name="fertilizer_elements[calcium][calcium]"
-                           id="fertilizer_elements_calcium"
-                           class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none mb-2"
-                           value="<?php echo $form["fertilizer_elements"]["calcium"]["calcium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["calcium"] ?? 0.0 ?>" />
-                    <br/>
-                    <label for="fertilizer_elements_calcium_cao" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.element.calcium.cao.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.0001"
-                           min="0"
-                           name="fertilizer_elements[calcium][CaO]"
-                           id="fertilizer_elements_calcium_cao"
-                           class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                           value="<?php echo $form["fertilizer_elements"]["calcium"]["CaO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["CaO"] ?? 0.0 ?>" />
+                <div class="w-full flex flex-wrap">
+                    <div class="w-full md:w-1/2 pb-2 md:pr-2">
+                        <label for="fertilizer_elements_calcium" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.element.calcium.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center mb-2">
+                            <input type="number"
+                                   step="0.0001"
+                                   min="0"
+                                   name="fertilizer_elements[calcium][calcium]"
+                                   id="fertilizer_elements_calcium"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["fertilizer_elements"]["calcium"]["calcium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["calcium"] ?? 0.0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                        </div>
+                        
+                        <label for="fertilizer_elements_calcium_cao" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.element.calcium.cao.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                   step="0.0001"
+                                   min="0"
+                                   name="fertilizer_elements[calcium][CaO]"
+                                   id="fertilizer_elements_calcium_cao"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["fertilizer_elements"]["calcium"]["CaO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["CaO"] ?? 0.0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                        </div>
 
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.element.calcium.cao.description")?>
-                    </p>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.element.calcium.cao.description")?>
+                        </p>
+                    </div>
+
+                    <div class="w-full md:w-1/2 pb-2 md:pl-2">
+                        <label for="fertilizer_elements_magnesium" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.element.magnesium.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center mb-2">
+                            <input type="number"
+                                   step="0.0001"
+                                   min="0"
+                                   name="fertilizer_elements[magnesium][magnesium]"
+                                   id="fertilizer_elements_magnesium"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["fertilizer_elements"]["magnesium"]["magnesium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["magnesium"] ?? 0.0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                        </div>
+                        
+                        <label for="fertilizer_elements_magnesium_mgo" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.element.magnesium.mgo.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                   step="0.0001"
+                                   min="0"
+                                   name="fertilizer_elements[magnesium][MgO]"
+                                   id="fertilizer_elements_magnesium_mgo"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["fertilizer_elements"]["magnesium"]["MgO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["MgO"] ?? 0.0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                        </div>
+
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.element.magnesium.mgo.description")?>
+                        </p>
+                    </div>
                 </div>
-
-                <div class="w-full md:w-1/2 pb-2">
-                    <label for="fertilizer_elements_magnesium" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.element.magnesium.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.0001"
-                           min="0"
-                           name="fertilizer_elements[magnesium][magnesium]"
-                           id="fertilizer_elements_magnesium"
-                           class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none mb-2"
-                           value="<?php echo $form["fertilizer_elements"]["magnesium"]["magnesium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["magnesium"] ?? 0.0 ?>" />
-                    <br/>
-                    <label for="fertilizer_elements_magnesium_mgo" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.element.magnesium.mgo.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.0001"
-                           min="0"
-                           name="fertilizer_elements[magnesium][MgO]"
-                           id="fertilizer_elements_magnesium_mgo"
-                           class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                           value="<?php echo $form["fertilizer_elements"]["magnesium"]["MgO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["MgO"] ?? 0.0 ?>" />
-
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.element.magnesium.mgo.description")?>
-                    </p>
-                </div>
-
             </div>
         </div>
         <?php foreach ($calculator->getAdditives() as $element => $additives): ?>
-            <div class="w-full md:w-1/2 py-2">
-                <div class="w-full px-2 py-4 text-left  relative">
-                    <label for="additive_<?php echo $element ?>" class="font-semibold <?php echo $element === "calcium" ? "text-red-200" : "text-sky-200" ?>">
+            <div class="w-full md:w-1/2 px-2 py-2">
+                <div class="w-full px-4 py-4 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+                    <label for="additive_<?php echo $element ?>" class="font-semibold <?php echo $element === "calcium" ? "text-red-600 dark:text-red-200" : "text-sky-600 dark:text-sky-200" ?>">
                         <?php echo __("content.form.additive.$element.label")?>
                     </label>
                     <br/>
@@ -137,7 +150,7 @@
                                             }
                                         }
                                         })()"
-                                class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                class="w-7/12 md:w-9/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded px-3 py-2 outline-none">
                             <?php foreach ($additives as $name => $additive): ?>
                                 <option value="<?php echo $name ?>" <?php echo $name == ($form["additive"][$element] ?? "") ? "selected" : "" ?>
                                         data-elements="<?php echo base64_encode(json_encode($additive))?>"
@@ -154,7 +167,7 @@
                         <select name="additive_units[<?php echo $element ?>]"
                                 id="additive_unit_<?php echo $element ?>"
                                 data-target="additive_concentration_wrapper_<?php echo $element ?>"
-                                class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none additive_unit_selector">
+                                class="w-5/12 md:w-3/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-r py-3 outline-none additive_unit_selector">
                             <?php foreach (["ml", "mg"] as $unit): ?>
                                 <option value="<?php echo $unit ?>" <?php echo $unit == ($form["additive_units"][$element] ?? "ml") ? "selected" : "" ?>>
                                     <?php echo $unit ?>/L
@@ -162,101 +175,115 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <p class="text-xs pt-2 text-slate-400 pb-2">
+                    <p class="text-xs pt-2 text-slate-500 dark:text-slate-400 pb-2">
                         <?php echo __("content.form.additive.$element.description")?>
                     </p>
 
                     <div id="additive_concentration_wrapper_<?php echo $element ?>" class="w-full">
-                        <label for="additive_concentration_<?php echo $element ?>" class="font-semibold text-slate-300">
+                        <label for="additive_concentration_<?php echo $element ?>" class="font-semibold text-slate-600 dark:text-slate-300">
                             <?php echo __("content.form.additive_concentration.label")?>
                         </label>
                         <br/>
-                        <input type="number"
-                               step="0.01"
-                               min="0"
-                               max="100"
-                               name="additive_concentration[<?php echo $element?>]"
-                               id="additive_concentration_<?php echo $element ?>"
-                               class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                               value="<?php echo $form["additive_concentration"][$element] ?? $additives[array_key_first($additives)]["concentration"] ?>" />
-                        <p class="text-xs pt-2 text-slate-400">
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   name="additive_concentration[<?php echo $element?>]"
+                                   id="additive_concentration_<?php echo $element ?>"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["additive_concentration"][$element] ?? $additives[array_key_first($additives)]["concentration"] ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                        </div>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.additive_concentration.description")?>
                         </p>
                     </div>
 
                     <?php if ($element === "calcium"): ?>
                         <div class="w-full pb-2">
-                            <label for="additive_elements_<?php echo $element ?>_calcium" class="font-semibold text-slate-300">
+                            <label for="additive_elements_<?php echo $element ?>_calcium" class="font-semibold text-slate-600 dark:text-slate-300">
                                 <?php echo __("content.form.element.calcium.label")?>
                             </label>
                             <br/>
-                            <input type="number"
-                                   step="0.0001"
-                                   min="0"
-                                   name="additive_elements[<?php echo $element ?>][calcium][calcium]"
-                                   id="additive_elements_<?php echo $element ?>_calcium"
-                                   onchange="(function(){
-                                        let calcium_cao = document.getElementById('additive_elements_<?php echo $element ?>_calcium_cao');
-                                        calcium_cao.value = 0;
-                                        })()"
-                                   class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none mb-2"
-                                   value="<?php echo $form["additive_elements"][$element]["calcium"]["calcium"] ?? $additives[array_key_first($additives)]["elements"]["calcium"]["calcium"] ?? 0.0 ?>" />
-                            <br/>
-                            <label for="additive_elements_<?php echo $element ?>_calcium_cao" class="font-semibold text-slate-300">
+                            <div class="flex items-center content-center mb-2">
+                                <input type="number"
+                                       step="0.0001"
+                                       min="0"
+                                       name="additive_elements[<?php echo $element ?>][calcium][calcium]"
+                                       id="additive_elements_<?php echo $element ?>_calcium"
+                                       onchange="(function(){
+                                            let calcium_cao = document.getElementById('additive_elements_<?php echo $element ?>_calcium_cao');
+                                            calcium_cao.value = 0;
+                                            })()"
+                                       class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                       value="<?php echo is_array($form["additive_elements"][$element]["calcium"]["calcium"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["calcium"]["calcium"] ?? $additives[array_key_first($additives)]["elements"]["calcium"]["calcium"] ?? 0.0) ?>" />
+                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            </div>
+                            
+                            <label for="additive_elements_<?php echo $element ?>_calcium_cao" class="font-semibold text-slate-600 dark:text-slate-300">
                                 <?php echo __("content.form.element.calcium.cao.label")?>
                             </label>
                             <br/>
-                            <input type="number"
-                                   step="0.0001"
-                                   min="0"
-                                   name="additive_elements[<?php echo $element ?>][calcium][CaO]"
-                                   id="additive_elements_<?php echo $element ?>_calcium_cao"
-                                      onchange="(function(){
-                                         let calcium = document.getElementById('additive_elements_<?php echo $element ?>_calcium');
-                                         calcium.value = 0;
-                                         })()"
-                                   class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                                   value="<?php echo $form["additive_elements"][$element]["calcium"]["CaO"] ?? $additives[array_key_first($additives)]["elements"]["calcium"]["CaO"] ??  0.0 ?>" />
+                            <div class="flex items-center content-center">
+                                <input type="number"
+                                       step="0.0001"
+                                       min="0"
+                                       name="additive_elements[<?php echo $element ?>][calcium][CaO]"
+                                       id="additive_elements_<?php echo $element ?>_calcium_cao"
+                                       onchange="(function(){
+                                             let calcium = document.getElementById('additive_elements_<?php echo $element ?>_calcium');
+                                             calcium.value = 0;
+                                             })()"
+                                       class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                       value="<?php echo is_array($form["additive_elements"][$element]["calcium"]["CaO"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["calcium"]["CaO"] ?? $additives[array_key_first($additives)]["elements"]["calcium"]["CaO"] ??  0.0) ?>" />
+                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            </div>
 
-                            <p class="text-xs pt-2 text-slate-400">
+                            <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                                 <?php echo __("content.form.element.calcium.cao.description")?>
                             </p>
                         </div>
                     <?php elseif ($element === "magnesium"): ?>
-                        <div class="w-full  pb-2">
-                            <label for="additive_elements_<?php echo $element ?>_magnesium" class="font-semibold text-slate-300">
+                        <div class="w-full pb-2">
+                            <label for="additive_elements_<?php echo $element ?>_magnesium" class="font-semibold text-slate-600 dark:text-slate-300">
                                 <?php echo __("content.form.element.magnesium.label")?>
                             </label>
                             <br/>
-                            <input type="number"
-                                   step="0.0001"
-                                   min="0"
-                                   name="additive_elements[<?php echo $element ?>][magnesium][magnesium]"
-                                   id="additive_elements_<?php echo $element ?>_magnesium"
-                                      oninput="(function(){
-                                         let magnesium_mgo = document.getElementById('additive_elements_<?php echo $element ?>_magnesium_mgo');
-                                         magnesium_mgo.value = 0;
-                                         })()"
-                                   class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none mb-2"
-                                   value="<?php echo $form["additive_elements"][$element]["magnesium"]["magnesium"] ?? $additives[array_key_first($additives)]["elements"]["magnesium"]["magnesium"] ??  0.0 ?>" />
-                            <br/>
-                            <label for="additive_elements_<?php echo $element ?>magnesium_mgo" class="font-semibold text-slate-300">
+                            <div class="flex items-center content-center mb-2">
+                                <input type="number"
+                                       step="0.0001"
+                                       min="0"
+                                       name="additive_elements[<?php echo $element ?>][magnesium][magnesium]"
+                                       id="additive_elements_<?php echo $element ?>_magnesium"
+                                       oninput="(function(){
+                                             let magnesium_mgo = document.getElementById('additive_elements_<?php echo $element ?>_magnesium_mgo');
+                                             magnesium_mgo.value = 0;
+                                             })()"
+                                       class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                       value="<?php echo is_array($form["additive_elements"][$element]["magnesium"]["magnesium"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["magnesium"]["magnesium"] ?? $additives[array_key_first($additives)]["elements"]["magnesium"]["magnesium"] ??  0.0) ?>" />
+                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            </div>
+                            
+                            <label for="additive_elements_<?php echo $element ?>_magnesium_mgo" class="font-semibold text-slate-600 dark:text-slate-300">
                                 <?php echo __("content.form.element.magnesium.mgo.label")?>
                             </label>
                             <br/>
-                            <input type="number"
-                                   step="0.0001"
-                                   min="0"
-                                   name="additive_elements[<?php echo $element ?>][magnesium][MgO]"
-                                   id="additive_elements_<?php echo $element ?>_magnesium_mgo"
-                                      oninput="(function(){
-                                          let magnesium = document.getElementById('additive_elements_<?php echo $element ?>_magnesium');
-                                          magnesium.value = 0;
-                                          })()"
-                                   class="w-full bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                                   value="<?php echo $form["additive_elements"][$element]["magnesium"]["MgO"] ?? $additives[array_key_first($additives)]["elements"]["magnesium"]["MgO"] ?? 0.0 ?>" />
+                            <div class="flex items-center content-center">
+                                <input type="number"
+                                       step="0.0001"
+                                       min="0"
+                                       name="additive_elements[<?php echo $element ?>][magnesium][MgO]"
+                                       id="additive_elements_<?php echo $element ?>_magnesium_mgo"
+                                       oninput="(function(){
+                                              let magnesium = document.getElementById('additive_elements_<?php echo $element ?>_magnesium');
+                                              magnesium.value = 0;
+                                              })()"
+                                       class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                       value="<?php echo is_array($form["additive_elements"][$element]["magnesium"]["MgO"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["magnesium"]["MgO"] ?? $additives[array_key_first($additives)]["elements"]["magnesium"]["MgO"] ?? 0.0) ?>" />
+                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            </div>
 
-                            <p class="text-xs pt-2 text-slate-400">
+                            <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                                 <?php echo __("content.form.element.magnesium.mgo.description")?>
                             </p>
                         </div>
@@ -266,144 +293,160 @@
         <?php endforeach; ?>
 
     </div>
-    <div class="w-full md:w-1/2 flex flex-wrap justify-center items-center">
+    <div class="w-full md:w-1/2 flex flex-wrap justify-start items-start py-3">
 
-        <div class="w-full flex flex-wrap self-start">
-            <div class="w-full text-left px-2 py-2 ">
-                <h6 class="w-full text-red-500 font-semibold">
-                    <?php echo __("content.form.elements.title")?>
-                </h6>
-                <p class="text-xs pt-2 text-slate-400">
-                    <?php echo __("content.form.elements.description")?>
-                    <a href="https://duckduckgo.com/?q=<?php echo urlencode( __("content.calculator.google.query")) ?>"
-                       target="_blank"
-                       class="text-red-500 ">
-                        <?php echo __("content.calculator.button.search_plz")?>
-                    </a>
-                </p>
+        <div class="w-full px-2">
+            <div class="w-full px-4 py-2 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+
+                <div class="w-full text-left py-2 ">
+                    <h6 class="w-full text-red-500 font-semibold">
+                        <?php echo __("content.form.elements.title")?>
+                    </h6>
+                    <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                        <?php echo __("content.form.elements.description")?>
+                        <a href="https://duckduckgo.com/?q=<?php echo urlencode( __("content.calculator.google.query")) ?>"
+                        target="_blank"
+                        class="text-red-500 ">
+                            <?php echo __("content.calculator.button.search_plz")?>
+                        </a>
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap">
+                    <?php foreach ($available_elements as $element => $label): ?>
+                        <div class="w-1/2 md:w-1/3 pb-4 pr-2">
+                            <label for="elements_<?php echo $element ?>" class="font-semibold text-slate-600 dark:text-slate-300">
+                                <?php echo __($label)?>
+                            </label>
+                            <br/>
+                            <div class="w-full flex flex-row">
+                                <input type="number"
+                                      step="0.001"
+                                      min="0"
+                                      name="elements[<?php echo $element ?>]"
+                                      id="elements_<?php echo $element ?>"
+                                      class="w-7/12 md:w-9/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                      value="<?php echo $form["elements"][$element] ?? 0.0 ?>" />
+                                <select name="element_units[<?php echo $element ?>]"
+                                        id="element_unit_<?php echo $element ?>"
+                                        class="w-5/12 md:w-3/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-r py-3 outline-none">
+                                    <?php foreach (["mg", "mmol"] as $unit): ?>
+                                        <option value="<?php echo $unit ?>" <?php echo $unit == ($form["element_units"][$element] ?? "mg") ? "selected" : "" ?>>
+                                            <?php echo $unit ?>/L
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
+        </div>
 
-            <?php foreach ($available_elements as $element => $label): ?>
-                <div class="w-1/2 md:w-1/2 px-2 py-2">
-                    <div class="w-full md:px-4 py-4 text-left  relative">
-                        <label for="elements_<?php echo $element ?>" class="font-semibold text-slate-300">
-                            <?php echo __($label)?>
+        <div class="w-full px-2 py-2">
+            <div class="w-full px-4 py-4 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+                <div class="flex flex-wrap">
+                    <div class="w-full md:w-2/4 pb-4 md:pr-2">
+                        <label for="ratio" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.ratio.label")?>
                         </label>
                         <br/>
-                        <div class="w-full flex flex-row">
+                        <div class="flex items-center content-center">
                             <input type="number"
-                                   step="0.001"
-                                   min="0"
-                                   name="elements[<?php echo $element ?>]"
-                                   id="elements_<?php echo $element ?>"
-                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none"
-                                   value="<?php echo $form["elements"][$element] ?? 0.0 ?>" />
-                            <select name="element_units[<?php echo $element ?>]"
-                                    id="element_unit_<?php echo $element ?>"
-                                    class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none">
-                                <?php foreach (["mg", "mmol"] as $unit): ?>
-                                    <option value="<?php echo $unit ?>" <?php echo $unit == ($form["element_units"][$element] ?? "mg") ? "selected" : "" ?>>
-                                        <?php echo $unit ?>/L
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                                  step="0.01"
+                                  min="0"
+                                  name="ratio" id="ratio" 
+                                  class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                  value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ration"] ?? 0.0, 2) ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">:1</span>
                         </div>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.ratio.description")?>
+                        </p>
+                    </div>
+
+                    <div class="w-full md:w-1/4 pb-4 md:px-2">
+                        <label for="volume" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.volume.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                  step="0.1"
+                                  min="0"
+                                  name="volume" id="volume" 
+                                  class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none" 
+                                  value="<?php echo $form["volume"] ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">L</span>
+                        </div>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.volume.description")?>
+                        </p>
+                    </div>
+
+                    <div class="w-full md:w-1/4 pb-4 md:pl-2">
+                        <label for="target_offset" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.target_offset.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                  step="0.1"
+                                  min="-100.0"
+                                  max="100.0"
+                                  name="target_offset" id="target_offset" 
+                                  class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none" 
+                                  value="<?php echo $form["target_offset"] ?? 0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                        </div>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.target_offset.description")?>
+                        </p>
+                    </div>
+
+                    <div class="w-full md:w-1/3 pb-4 md:pr-2">
+                        <label for="target_model" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.target_model.label")?>
+                        </label>
+                        <br/>
+                        <select name="target_model" id="target_model"
+                                class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded px-3 py-2 outline-none">
+                            <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
+                                Linear / Fumu
+                            </option>
+                            <option value="dynamic_ca" <?php echo "dynamic_ca" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Ca
+                            </option>
+                            <option value="dynamic_mg" <?php echo "dynamic_mg" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Mg
+                            </option>
+                            <option value="dynamic_ca_mg" <?php echo "dynamic_ca_mg" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Ca/Mg
+                            </option>
+                        </select>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.target_model.description")?>
+                        </p>
+                    </div>
+                    
+                    <div class="w-full md:w-2/3 pb-4 md:pl-2">
+                        <div class="pt-4 md:pt-6 ">
+                            <input type="hidden" name="support_dilution" value="0" />
+                            <input type="checkbox"
+                                  value="1"
+                                  name="support_dilution" id="support_dilution"
+                                  class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded px-3 py-2 outline-none mr-2"
+                                <?php echo ($form["support_dilution"] ?? false) ? "checked" : "" ?> />
+                            <span class="text-slate-600 dark:text-slate-300">
+                                <?php echo __("content.form.support_dilution.label")?>
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.support_dilution.description")?>
+                        </p>
                     </div>
                 </div>
-            <?php endforeach; ?>
-
-            <div class="w-full md:w-1/3 px-2 py-2 ">
-                <div class="w-full md:px-4 py-4 text-left  relative">
-                    <label for="ratio" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.ratio.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.01"
-                           min="0"
-                           name="ratio" id="ratio" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                           value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ration"] ?? 0.0, 2) ?>" />
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.ratio.description")?>
-                    </p>
-                </div>
             </div>
-
-            <div class="w-full md:w-1/3 px-2 pt-2 ">
-                <div class="w-full md:px-4 py-4 text-left  relative">
-                    <label for="volume" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.volume.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.1"
-                           min="0"
-                           name="volume" id="volume" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["volume"] ?>" />
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.volume.description")?>
-                    </p>
-                </div>
-            </div>
-
-            <div class="w-full md:w-1/3 px-2 pt-2 ">
-                <div class="w-full md:px-4 py-4 text-left  relative">
-                    <label for="target_offset" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.target_offset.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.1"
-                           min="-100.0"
-                            max="100.0"
-                           name="target_offset" id="target_offset" class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none" value="<?php echo $form["target_offset"] ?? 0 ?>" />
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.target_offset.description")?>
-                    </p>
-                </div>
-            </div>
-
-            <div class="w-full flex flex-wrap md:px-2 pb-2 ">
-                <div class="w-full md:w-1/3 md:px-4 text-left  relative">
-                    <label for="target_model" class="font-semibold text-slate-200">
-                        <?php echo __("content.form.target_model.label")?>
-                    </label>
-                    <br/>
-                    <select name="target_model" id="target_model"
-                            class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
-                        <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
-                            Linear / Fumu
-                        </option>
-                        <option value="dynamic_ca" <?php echo "dynamic_ca" == $form["target_model"] ? "selected" : "" ?>>
-                            PPP-Ca
-                        </option>
-                        <option value="dynamic_mg" <?php echo "dynamic_mg" == $form["target_model"] ? "selected" : "" ?>>
-                            PPP-Mg
-                        </option>
-                        <option value="dynamic_ca_mg" <?php echo "dynamic_ca_mg" == $form["target_model"] ? "selected" : "" ?>>
-                            PPP-Ca/Mg
-                        </option>
-                    </select>
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.target_model.description")?>
-                    </p>
-                </div>
-                <div class="w-full md:w-2/3 md:px-4 py-4 md:pt-6 text-left  relative">
-                    <label for="support_dilution" class="font-normal text-slate-300">
-                        <input type="hidden" name="support_dilution" value="0" />
-                        <input type="checkbox"
-                               value="1"
-                               name="support_dilution" id="support_dilution"
-                               class="bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mr-2"
-                            <?php echo ($form["support_dilution"] ?? false) ? "checked" : "" ?> />
-                        <?php echo __("content.form.support_dilution.label")?>
-                    </label>
-                    <br/>
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.support_dilution.description")?>
-                    </p>
-                </div>
-            </div>
-
         </div>
 
     </div>
@@ -413,70 +456,82 @@
         <?php foreach($targets as $week => $target): ?>
             <?php $state = $target["state"] ?? "default" ?>
             <div class="w-full md:w-1/4 px-2 pb-2">
-                <div class="w-full py-2 text-left md:px-4">
-                    <h6 class="text-red-500 text-xl font-normal">
+                <div class="w-full px-4 py-4 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+                    <h6 class="text-red-500 text-xl font-normal pb-2">
                         <?php echo __("content.calculator.state.$state")?> (<?php echo __("content.form.target_week.label")?>: <?php echo $week ?>)
                     </h6>
-                </div>
-                <div class="w-full md:px-4 pt-2 text-left  relative">
-                    <label for="target_calcium_<?php echo $week ?>" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.target_calcium.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.01"
-                           min="0"
-                           name="target_calcium[<?php echo $week ?>]"
-                           id="target_calcium_<?php echo $week ?>"
-                           class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                           value="<?php echo $form["target_calcium"][$week] ?? $target["elements"]["calcium"] ?? 0.0 ?>" />
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.target_calcium.description")?>
-                    </p>
-                </div>
-                <div class="w-full md:px-4 py-2 text-left  relative">
-                    <label for="target_magnesium_<?php echo $week ?>" class="font-semibold text-slate-300">
-                        <?php echo __("content.form.target_magnesium.label")?>
-                    </label>
-                    <br/>
-                    <input type="number"
-                           step="0.01"
-                           min="0"
-                           name="target_magnesium[<?php echo $week ?>]"
-                           id="target_magnesium_<?php echo $week ?>"
-                           class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
-                           value="<?php echo $form["target_magnesium"][$week] ?? $target["elements"]["magnesium"] ?? 0.0 ?>" />
-                    <p class="text-xs pt-2 text-slate-400">
-                        <?php echo __("content.form.target_magnesium.description")?>
-                    </p>
+                
+                    <div class="w-full pt-2">
+                        <label for="target_calcium_<?php echo $week ?>" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.target_calcium.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   name="target_calcium[<?php echo $week ?>]"
+                                   id="target_calcium_<?php echo $week ?>"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["target_calcium"][$week] ?? $target["elements"]["calcium"] ?? 0.0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">mg/l</span>
+                        </div>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.target_calcium.description")?>
+                        </p>
+                    </div>
+                    <div class="w-full py-2">
+                        <label for="target_magnesium_<?php echo $week ?>" class="font-semibold text-slate-600 dark:text-slate-300">
+                            <?php echo __("content.form.target_magnesium.label")?>
+                        </label>
+                        <br/>
+                        <div class="flex items-center content-center">
+                            <input type="number"
+                                   step="0.01"
+                                   min="0"
+                                   name="target_magnesium[<?php echo $week ?>]"
+                                   id="target_magnesium_<?php echo $week ?>"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
+                                   value="<?php echo $form["target_magnesium"][$week] ?? $target["elements"]["magnesium"] ?? 0.0 ?>" />
+                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">mg/l</span>
+                        </div>
+                        <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
+                            <?php echo __("content.form.target_magnesium.description")?>
+                        </p>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
 
-        <div class="w-full  items-center justify-items-center pt-4 md:pt-4">
-            <div class="w-full md:w-1/2 flex items-center justify-items-center justify-center">
-                <button type="submit"
-                        class="bg-red-500 flex-col text-white hover:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                    <?php echo __("content.calculator.button.calculate")?>
-                </button>
-                <a href="?regular=1&p=<?php echo $payload_link?>" class="bg-sky-500 flex-col text-white hover:bg-sky-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                    <?php echo __("content.calculator.button.regular")?>
-                </a>
-                <a href="?compare=1&p=<?php echo $payload_link?>"
-                   class="bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 line">
-                    <?php echo __("content.calculator.button.compare")?>
-                </a>
-                <!--
-                <a href="?wizard=1"
-                class="bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 line">
-                    <?php echo __("content.calculator.button.wizard")?>
-                </a>
-                -->
-                <!--<a href="?builder=1" class="bg-sky-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                                    <?php echo __("content.calculator.button.builder") ?>
-                                </a>-->
-            </div>
+
+
+    <div class="w-full items-center justify-items-center pt-4 md:pt-8">
+        <div class="flex flex-wrap gap-2 justify-center">
+            <button type="submit"
+                    class="px-2 py-2 md:px-6 md:py-3 bg-green-500 text-white hover:bg-green-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150">
+                <?php echo __("content.calculator.button.calculate")?>
+            </button>
+            <a href="?regular=1&p=<?php echo $payload_link?>"
+                class="px-2 py-2 md:px-6 md:py-3 bg-sky-500 text-white hover:bg-sky-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.regular")?>
+            </a>
+            <a href="?compare=1&p=<?php echo $payload_link?>"
+                class="px-2 py-2 md:px-6 md:py-3 bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.compare")?>
+            </a>
+            <!--
+            <a href="?wizard=1&p=<?php echo $payload_link?>"
+                class="px-2 py-2 md:px-6 md:py-3 bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.wizard")?>
+            </a>
+            <a href="?builder=1&p=<?php echo $payload_link?>"
+                class="px-2 py-2 md:px-6 md:py-3 bg-yellow-500 text-slate-900 hover:bg-yellow-600 font-bold uppercase text-sm rounded shadow hover:shadow-lg outline-none border-0 focus:outline-none ease-linear transition-all duration-150 line">
+                <?php echo __("content.calculator.button.builder")?>
+            </a>
+        -->
         </div>
+    </div>
+
     </div>
 
 </form>
@@ -564,11 +619,24 @@
 
         //updateRatio(fertilizer);
 
+        document.getElementById("fertilizer_elements_calcium").addEventListener("change", function(event){
+            let value = parseFloat(event.target.value);
+            let calcium_cao = document.getElementById("fertilizer_elements_calcium_cao");
+            calcium_cao.value = 0;
+        });
+        
         document.getElementById("fertilizer_elements_calcium_cao").addEventListener("change", function(event){
             let value = parseFloat(event.target.value);
             let calcium = document.getElementById("fertilizer_elements_calcium");
             calcium.value = (value * 0.7143).toFixed(4);
         });
+        
+        document.getElementById("fertilizer_elements_magnesium").addEventListener("change", function(event){
+            let value = parseFloat(event.target.value);
+            let magnesium_mgo = document.getElementById("fertilizer_elements_magnesium_mgo");
+            magnesium_mgo.value = 0;
+        });
+        
         document.getElementById("fertilizer_elements_magnesium_mgo").addEventListener("change", function(event){
             let value = parseFloat(event.target.value);
             let magnesium = document.getElementById("fertilizer_elements_magnesium");

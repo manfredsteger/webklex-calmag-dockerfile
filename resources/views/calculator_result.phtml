@@ -53,5 +53,5 @@
     <?php echo __("content.calculator.result.share_link")?>
     <?php $link = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]/?"; ?>
     <?php $link = ($_GET["expert"] ?? null) ? $link."expert=1&" : $link; ?>
-    <div class="mono bg-slate-800 py-2 px-2 text-left text-xs mt-1"><?php echo $link?>p=<?php echo $payload_link?></div>
+    <div class="mono bg-slate-200 dark:bg-slate-800 py-2 px-2 text-left text-xs mt-1"><?php echo $link?>p=<?php echo $payload_link?></div>
 </div>

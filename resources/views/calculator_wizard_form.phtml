@@ -44,36 +44,36 @@ $payload_link = base64_encode(json_encode($payload));
             <!-- Progress Bar Container -->
             <div class="absolute top-1/2 left-[24px] right-[24px] md:left-[48px] md:right-[48px] -translate-y-1/2 pointer-events-none">
                 <!-- Progress Bar Background -->
-                <div class="h-1 w-full bg-slate-600"></div>
+                <div class="h-1 w-full bg-slate-300 dark:bg-slate-600"></div>
                 <!-- Active Progress Bar -->
-                <div class="absolute top-0 left-0 h-1 bg-green-500 transition-all duration-300" style="width: 0%" id="progress-bar"></div>
+                <div class="absolute top-0 left-0 h-1 bg-green-500 dark:bg-green-500 transition-all duration-300" style="width: 0%" id="progress-bar"></div>
             </div>
             
             <!-- Step Buttons -->
             <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="1">
-                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-green-500 flex items-center justify-center text-green-500 font-semibold relative z-10 transition-all duration-300">1</div>
-                <span class="absolute text-sm font-medium text-slate-300 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 border-2 border-green-500 flex items-center justify-center text-green-500 font-semibold relative z-10 transition-all duration-300">1</div>
+                <span class="absolute text-sm font-medium text-green-500 dark:text-green-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
                     <?php echo __("content.wizard.navigation.steps.water")?>
                 </span>
             </div>
             
             <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="2">
-                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-slate-400 font-semibold relative z-10 transition-all duration-300">2</div>
-                <span class="absolute text-sm font-medium text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-500 flex items-center justify-center text-slate-400 dark:text-slate-400 font-semibold relative z-10 transition-all duration-300">2</div>
+                <span class="absolute text-sm font-medium text-slate-400 dark:text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
                     <?php echo __("content.wizard.navigation.steps.fertilizer")?>
                 </span>
             </div>
             
             <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="3">
-                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-slate-400 font-semibold relative z-10 transition-all duration-300">3</div>
-                <span class="absolute text-sm font-medium text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-500 flex items-center justify-center text-slate-400 dark:text-slate-400 font-semibold relative z-10 transition-all duration-300">3</div>
+                <span class="absolute text-sm font-medium text-slate-400 dark:text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
                     <?php echo __("content.wizard.navigation.steps.additives")?>
                 </span>
             </div>
             
             <div type="button" class="wizard-step-btn clickable relative flex flex-col items-center group" data-step="4">
-                <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-500 flex items-center justify-center text-slate-400 font-semibold relative z-10 transition-all duration-300">4</div>
-                <span class="absolute text-sm font-medium text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
+                <div class="w-8 h-8 rounded-full bg-white dark:bg-slate-700 border-2 border-slate-300 dark:border-slate-500 flex items-center justify-center text-slate-400 dark:text-slate-400 font-semibold relative z-10 transition-all duration-300">4</div>
+                <span class="absolute text-sm font-medium text-slate-400 dark:text-slate-400 whitespace-nowrap text-center transform scale-90 md:scale-100 md:-bottom-8 -bottom-6 text-[10px] md:text-sm">
                     <?php echo __("content.wizard.navigation.steps.settings")?>
                 </span>
             </div>
@@ -82,30 +82,30 @@ $payload_link = base64_encode(json_encode($payload));
 
     <!-- Step 1: Water Source -->
     <div class="wizard-step active w-full" data-step="1">
-        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
-            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.water.title")?></h2>
-            <p class="text-slate-300 mb-6">
+        <div class="w-full px-4 py-6 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-4"><?php echo __("content.wizard.step.water.title")?></h2>
+            <p class="text-slate-600 dark:text-slate-300 mb-6">
                 <?php echo __("content.wizard.step.water.description")?>
             </p>
             
             <div class="mb-6">
-                <label for="water_source" class="font-semibold text-blue-200 block mb-2">
+                <label for="water_source" class="font-semibold text-blue-600 dark:text-blue-200 block mb-2">
                     <?php echo __("content.wizard.step.water.source.label")?>
                 </label>
                 <select name="water_source" id="water_source" 
-                        class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-4">
+                        class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mb-4">
                     <option value="ro"><?php echo __("content.wizard.step.water.source.ro")?></option>
                     <option value="rain"><?php echo __("content.wizard.step.water.source.rain")?></option>
                     <option value="tap"><?php echo __("content.wizard.step.water.source.tap")?></option>
                     <option value="well"><?php echo __("content.wizard.step.water.source.well")?></option>
                 </select>
-                <p class="text-xs text-slate-400 mb-4">
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
                     <?php echo __("content.wizard.step.water.source.description")?>
-                <span class="block mt-2 text-slate-400">
+                <span class="block mt-2 text-slate-500 dark:text-slate-400">
                     <?php echo __("content.wizard.step.water.help.description")?>
                     <ul class="list-disc pl-6 -mt-2 space-y-1">
                         <?php foreach (__("content.wizard.step.water.help.sources", [], true) as $source): ?>
-                            <li class="text-xs text-slate-400"><?php echo $source ?></li>
+                            <li class="text-xs text-slate-500 dark:text-slate-400"><?php echo $source ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </span>
@@ -114,14 +114,14 @@ $payload_link = base64_encode(json_encode($payload));
 
             <!-- Water Elements Section -->
             <div id="water_elements_section" class="hidden">
-                <h3 class="text-xl font-bold text-white mb-4"><?php echo __("content.wizard.step.water.minerals.title")?></h3>
-                <p class="text-slate-300 mb-6">
+                <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-4"><?php echo __("content.wizard.step.water.minerals.title")?></h3>
+                <p class="text-slate-600 dark:text-slate-300 mb-6">
                     <?php echo __("content.wizard.step.water.minerals.description")?>
                 </p>
 
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full md:w-1/2">
-                        <label for="water_calcium" class="font-semibold text-red-200 block mb-2">
+                        <label for="water_calcium" class="font-semibold text-red-600 dark:text-red-200 block mb-2">
                             <?php echo __("content.form.element.calcium.label")?>
                         </label>
                         <div class="flex flex-row gap-2">
@@ -131,9 +131,9 @@ $payload_link = base64_encode(json_encode($payload));
                                    name="water_elements[calcium]"
                                    id="water_calcium"
                                    placeholder="0.0"
-                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none water-element" />
+                                   class="w-7/12 md:w-9/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded-l px-3 py-2 outline-none water-element" />
                             <select name="water_element_units[calcium]"
-                                    class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none water-element">
+                                    class="w-5/12 md:w-3/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded-r py-3 outline-none water-element">
                                 <option value="mg">mg/L</option>
                                 <option value="mmol">mmol/L</option>
                             </select>
@@ -141,7 +141,7 @@ $payload_link = base64_encode(json_encode($payload));
                     </div>
 
                     <div class="w-full md:w-1/2">
-                        <label for="water_magnesium" class="font-semibold text-sky-200 block mb-2">
+                        <label for="water_magnesium" class="font-semibold text-sky-600 dark:text-sky-200 block mb-2">
                             <?php echo __("content.form.element.magnesium.label")?>
                         </label>
                         <div class="flex flex-row gap-2">
@@ -151,9 +151,9 @@ $payload_link = base64_encode(json_encode($payload));
                                    name="water_elements[magnesium]"
                                    id="water_magnesium"
                                    placeholder="0.0"
-                                   class="w-7/12 md:w-9/12 bg-slate-800 text-slate-200 rounded-l px-3 py-2 outline-none water-element" />
+                                   class="w-7/12 md:w-9/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded-l px-3 py-2 outline-none water-element" />
                             <select name="water_element_units[magnesium]"
-                                    class="w-5/12 md:w-3/12 bg-slate-800 text-slate-200 rounded-r py-3 outline-none water-element">
+                                    class="w-5/12 md:w-3/12 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded-r py-3 outline-none water-element">
                                 <option value="mg">mg/L</option>
                                 <option value="mmol">mmol/L</option>
                             </select>
@@ -161,7 +161,7 @@ $payload_link = base64_encode(json_encode($payload));
                     </div>
                 </div>
 
-                <div class="text-xs text-slate-400 mb-6 mt-4">
+                <div class="text-xs text-slate-500 dark:text-slate-400 mb-6 mt-4">
                     <p class="mb-2"><?php echo __("content.wizard.step.water.minerals.help.title")?></p>
                     <ul class="list-disc pl-4 mb-6">
                         <?php foreach (__("content.wizard.step.water.minerals.help.tips", [], true) as $tip): ?>
@@ -183,7 +183,7 @@ $payload_link = base64_encode(json_encode($payload));
             </div>
             
             <div class="mt-8 flex justify-end">
-                <button type="button" class="next-step bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                <button type="button" class="next-step bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition-colors">
                     <?php echo __("content.wizard.navigation.next")?>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -193,19 +193,19 @@ $payload_link = base64_encode(json_encode($payload));
 
     <!-- Step 2: Fertilizer -->
     <div class="wizard-step hidden w-full" data-step="2">
-        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
-            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.fertilizer.title")?></h2>
-            <p class="text-slate-300 mb-6">
+        <div class="w-full px-4 py-6 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-4"><?php echo __("content.wizard.step.fertilizer.title")?></h2>
+            <p class="text-slate-600 dark:text-slate-300 mb-6">
                 <?php echo __("content.wizard.step.fertilizer.description")?>
             </p>
 
             <div class="mb-6">
-                <label for="fertilizer" class="font-semibold text-green-200 block mb-2">
+                <label for="fertilizer" class="font-semibold text-green-600 dark:text-green-200 block mb-2">
                     <?php echo __("content.form.fertilizer.label")?>
                 </label>
                 <?php $fertilizers = $calculator->getFertilizers(); ?>
                 <select name="fertilizer" id="fertilizer" 
-                        class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-4">
+                        class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mb-4">
                     <?php foreach ($fertilizers as $name => $fertilizer): ?>
                         <option value="<?php echo $name ?>" <?php echo $name == $form["fertilizer"] ? "selected" : "" ?>
                                 data-ratio="<?php echo round($fertilizer["ratio"], 2) ?>">
@@ -216,13 +216,13 @@ $payload_link = base64_encode(json_encode($payload));
                         <?php echo __("content.form.fertilizer.option.none") ?>
                     </option>
                 </select>
-                <p class="text-xs text-slate-400 mb-4">
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
                     <?php echo __("content.form.fertilizer.description")?>
-                    <span class="block mt-2 text-slate-400">
+                    <span class="block mt-2 text-slate-500 dark:text-slate-400">
                         <?php echo __("content.wizard.step.fertilizer.help.title")?>
                         <ul class="list-disc pl-6 -mt-2 space-y-1">
                             <?php foreach (__("content.wizard.step.fertilizer.help.factors", [], true) as $factor): ?>
-                                <li class="text-xs text-slate-400"><?php echo $factor ?></li>
+                                <li class="text-xs text-slate-500 dark:text-slate-400"><?php echo $factor ?></li>
                             <?php endforeach; ?>
                         </ul>
                     </span>
@@ -230,11 +230,11 @@ $payload_link = base64_encode(json_encode($payload));
             </div>
             
             <div class="mt-8 flex justify-between">
-                <button type="button" class="prev-step bg-slate-500 text-white px-6 py-2 rounded hover:bg-slate-600">
+                <button type="button" class="prev-step bg-slate-500 hover:bg-slate-600 text-white px-6 py-2 rounded transition-colors">
                     <i class="fa-solid fa-chevron-left"></i>
                     <?php echo __("content.wizard.navigation.previous")?>
                 </button>
-                <button type="button" class="next-step bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                <button type="button" class="next-step bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition-colors">
                     <?php echo __("content.wizard.navigation.next")?>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -244,9 +244,9 @@ $payload_link = base64_encode(json_encode($payload));
 
     <!-- Step 3: Additives -->
     <div class="wizard-step hidden w-full" data-step="3">
-        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
-            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.additives.title")?></h2>
-            <p class="text-slate-300 mb-6">
+        <div class="w-full px-4 py-6 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-4"><?php echo __("content.wizard.step.additives.title")?></h2>
+            <p class="text-slate-600 dark:text-slate-300 mb-6">
                 <?php echo __("content.wizard.step.additives.description")?>
             </p>
 
@@ -254,7 +254,7 @@ $payload_link = base64_encode(json_encode($payload));
                 <?php foreach ($calculator->getAdditives() as $element => $additives): ?>
                     <div class="mb-6 md:mb-0 w-full md:w-1/2">
                         <label for="additive_<?php echo $element ?>" 
-                               class="font-semibold <?php echo $element === "calcium" ? "text-red-200" : "text-sky-200" ?> block mb-2">
+                               class="font-semibold <?php echo $element === "calcium" ? "text-red-600 dark:text-red-200" : "text-sky-600 dark:text-sky-200" ?> block mb-2">
                             <?php echo __("content.form.additive.$element.label")?>
                         </label>
                         <div class="w-full flex flex-row mb-4">
@@ -265,7 +265,7 @@ $payload_link = base64_encode(json_encode($payload));
                                         document.getElementById('additive_concentration_<?php echo $element ?>').value = 
                                             elm.options[elm.selectedIndex].getAttribute('data-concentration');
                                     })()"
-                                    class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none">
+                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none">
                                 <?php foreach ($additives as $name => $additive): ?>
                                     <option value="<?php echo $name ?>" 
                                             <?php echo $name == ($form["additive"][$element] ?? "") ? "selected" : "" ?> 
@@ -283,7 +283,7 @@ $payload_link = base64_encode(json_encode($payload));
 
                         <div id="additive_concentration_wrapper_<?php echo $element ?>" class="mb-4">
                             <label for="additive_concentration_<?php echo $element ?>" 
-                                   class="font-semibold text-slate-300 block mb-2">
+                                   class="font-semibold text-slate-600 dark:text-slate-300 block mb-2">
                                 <?php echo __("content.form.additive_concentration.label")?>
                             </label>
                             <input type="number"
@@ -292,9 +292,9 @@ $payload_link = base64_encode(json_encode($payload));
                                    max="100"
                                    name="additive_concentration[<?php echo $element?>]"
                                    id="additive_concentration_<?php echo $element ?>"
-                                   class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none"
+                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none"
                                    value="<?php echo $form["additive_concentration"][$element] ?? $additives[array_key_first($additives)]["concentration"] ?>" />
-                            <p class="text-xs mt-2 text-slate-400">
+                            <p class="text-xs mt-2 text-slate-500 dark:text-slate-400">
                                 <?php echo __("content.form.additive_concentration.description")?>
                             </p>
                         </div>
@@ -302,23 +302,23 @@ $payload_link = base64_encode(json_encode($payload));
                 <?php endforeach; ?>
             </div>
 
-            <p class="text-xs text-slate-400 mb-4">
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
                 <?php echo __("content.wizard.step.additives.help.title")?>
-                <span class="block mt-2 text-slate-400">
+                <span class="block mt-2 text-slate-500 dark:text-slate-400">
                     <ul class="list-disc pl-6 -mt-2 space-y-1">
                         <?php foreach (__("content.wizard.step.additives.help.tips", [], true) as $tip): ?>
-                            <li class="text-xs text-slate-400"><?php echo $tip ?></li>
+                            <li class="text-xs text-slate-500 dark:text-slate-400"><?php echo $tip ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </span>
             </p>
 
             <div class="mt-8 flex justify-between">
-                <button type="button" class="prev-step bg-slate-500 text-white px-6 py-2 rounded hover:bg-slate-600">
+                <button type="button" class="prev-step bg-slate-500 hover:bg-slate-600 text-white px-6 py-2 rounded transition-colors">
                     <i class="fa-solid fa-chevron-left"></i>
                     <?php echo __("content.wizard.navigation.previous")?>
                 </button>
-                <button type="button" class="next-step bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                <button type="button" class="next-step bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition-colors">
                     <?php echo __("content.wizard.navigation.next")?>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
@@ -328,16 +328,16 @@ $payload_link = base64_encode(json_encode($payload));
 
     <!-- Step 4: Settings -->
     <div class="wizard-step hidden w-full" data-step="4">
-        <div class="w-full px-4 py-6 text-left bg-slate-700 shadow-lg rounded relative">
-            <h2 class="text-2xl font-bold text-white mb-4"><?php echo __("content.wizard.step.settings.title")?></h2>
-            <p class="text-slate-300 mb-6">
+        <div class="w-full px-4 py-6 text-left bg-slate-50 dark:bg-slate-700 shadow-lg rounded relative">
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-4"><?php echo __("content.wizard.step.settings.title")?></h2>
+            <p class="text-slate-600 dark:text-slate-300 mb-6">
                 <?php echo __("content.wizard.step.settings.description")?>
             </p>
 
             <div class="flex flex-col md:flex-row md:gap-6">
                 <div class="w-full md:w-1/2">
                     <div class="mb-6">
-                        <label for="ratio" class="font-semibold text-slate-300 block mb-2">
+                        <label for="ratio" class="font-semibold text-slate-600 dark:text-slate-300 block mb-2">
                             <?php echo __("content.form.ratio.label")?>
                         </label>
                         <input type="number"
@@ -345,16 +345,16 @@ $payload_link = base64_encode(json_encode($payload));
                                min="0"
                                name="ratio" 
                                id="ratio"
-                               class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-2"
+                               class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mb-2"
                                value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ratio"] ?? 0.0, 2) ?>"
                                required />
-                        <p class="text-xs text-slate-400">
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.ratio.description")?>
                         </p>
                     </div>
 
                     <div class="mb-6">
-                        <label for="volume" class="font-semibold text-slate-300 block mb-2">
+                        <label for="volume" class="font-semibold text-slate-600 dark:text-slate-300 block mb-2">
                             <?php echo __("content.form.volume.label")?>
                         </label>
                         <input type="number"
@@ -362,10 +362,10 @@ $payload_link = base64_encode(json_encode($payload));
                                min="0"
                                name="volume" 
                                id="volume" 
-                               class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-2"
+                               class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mb-2"
                                value="<?php echo $form["volume"] ?>"
                                required />
-                        <p class="text-xs text-slate-400">
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.volume.description")?>
                         </p>
                     </div>
@@ -380,21 +380,21 @@ $payload_link = base64_encode(json_encode($payload));
                                    id="support_dilution" 
                                    value="1"
                                    <?php echo ($form["support_dilution"] ?? false) ? "checked" : "" ?>
-                                   class="bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mr-2" />
-                            <span class="text-slate-300"><?php echo __("content.form.support_dilution.label")?></span>
+                                   class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mr-2" />
+                            <span class="text-slate-600 dark:text-slate-300"><?php echo __("content.form.support_dilution.label")?></span>
                         </label>
-                        <p class="text-xs text-slate-400 mt-2 ml-6">
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 ml-6">
                             <?php echo __("content.form.support_dilution.description")?>
                         </p>
                     </div>
 
                     <div class="mb-6 md:mt-11">
-                        <label for="target_model" class="font-semibold text-slate-200 block mb-2">
+                        <label for="target_model" class="font-semibold text-slate-600 dark:text-slate-300 block mb-2">
                             <?php echo __("content.form.target_model.label")?>
                         </label>
                         <select name="target_model" 
                                 id="target_model"
-                                class="w-full bg-slate-800 text-slate-200 rounded px-3 py-2 outline-none mb-2"
+                                class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mb-2"
                                 required>
                             <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
                                 Linear / Fumu
@@ -409,31 +409,31 @@ $payload_link = base64_encode(json_encode($payload));
                                 PPP-Ca/Mg
                             </option>
                         </select>
-                        <p class="text-xs text-slate-400">
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.target_model.description")?>
                         </p>
                     </div>
                 </div>
             </div>
 
-            <p class="text-xs text-slate-400 mb-4">
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
                 <?php echo __("content.wizard.step.settings.help.title")?>
-                <span class="block mt-2 text-slate-400">
+                <span class="block mt-2 text-slate-500 dark:text-slate-400">
                     <ul class="list-disc pl-6 -mt-2 space-y-1">
                         <?php foreach (__("content.wizard.step.settings.help.settings", [], true) as $key => $setting): ?>
                             <?php if ($key === 'models'): ?>
-                                <li class="text-xs text-slate-400">
+                                <li class="text-xs text-slate-500 dark:text-slate-400">
                                     <?php echo $setting['title'] ?>
                                     <ul class="list-disc pl-6 mt-1 space-y-1">
                                         <?php foreach ($setting as $model_key => $model): ?>
                                             <?php if ($model_key !== 'title'): ?>
-                                                <li class="text-xs text-slate-400"><?php echo $model ?></li>
+                                                <li class="text-xs text-slate-500 dark:text-slate-400"><?php echo $model ?></li>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
                                     </ul>
                                 </li>
                             <?php else: ?>
-                                <li class="text-xs text-slate-400"><?php echo $setting ?></li>
+                                <li class="text-xs text-slate-500 dark:text-slate-400"><?php echo $setting ?></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>
@@ -441,11 +441,11 @@ $payload_link = base64_encode(json_encode($payload));
             </p>
 
             <div class="mt-8 flex justify-between">
-                <button type="button" class="prev-step bg-slate-500 text-white px-6 py-2 rounded hover:bg-slate-600">
+                <button type="button" class="prev-step bg-slate-500 hover:bg-slate-600 text-white px-6 py-2 rounded transition-colors">
                     <i class="fa-solid fa-chevron-left"></i>
                     <?php echo __("content.wizard.navigation.previous")?>
                 </button>
-                <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600">
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded transition-colors">
                     <?php echo __("content.wizard.navigation.calculate")?>
                 </button>
             </div>
@@ -596,25 +596,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const btnNumber = index + 1;
             const circle = btn.querySelector('div');
             const text = btn.querySelector('span');
-
+            
+            // First remove all potential classes to avoid conflicts
+            circle.classList.remove(
+                'border-slate-300', 'border-slate-500', 'border-green-500', 'border-green-600',
+                'dark:border-slate-500', 'dark:border-slate-600', 'dark:border-green-500',
+                'bg-green-500', 'dark:bg-green-500',
+                'text-slate-500', 'text-slate-400',
+                'text-green-500', 'text-green-900', 'text-white',
+                'dark:text-slate-400', 'dark:text-green-400', 'dark:text-white',
+                'text-slate-500', 'text-slate-400', 'dark:text-slate-400'
+            );
+            
             if (btnNumber < stepNumber) {
                 // Completed steps
-                circle.classList.remove('border-slate-500', 'text-slate-400');
-                circle.classList.add('border-green-500', 'bg-green-500', 'text-white');
-                text.classList.remove('text-slate-400');
-                text.classList.add('text-slate-300');
+                circle.classList.add('border-green-500', 'bg-green-500', 'text-slate-500', 'dark:border-green-500', 'dark:bg-green-500', 'dark:text-white');
+                text.classList.remove('text-slate-400', 'text-slate-500', 'dark:text-slate-400');
+                text.classList.add('text-green-500', 'dark:text-green-400');
             } else if (btnNumber === stepNumber) {
                 // Current step
-                circle.classList.remove('border-slate-500', 'text-slate-400', 'bg-green-500');
-                circle.classList.add('border-green-500', 'text-green-500');
-                text.classList.remove('text-slate-400');
-                text.classList.add('text-slate-300');
+                circle.classList.add('border-green-500', 'text-green-500', 'dark:border-green-500', 'dark:text-green-400');
+                text.classList.remove('text-slate-400', 'text-slate-500', 'dark:text-slate-400');
+                text.classList.add('text-green-500', 'dark:text-green-400');
             } else {
-                // Future steps
-                circle.classList.remove('border-green-500', 'text-green-500', 'bg-green-500', 'text-white');
-                circle.classList.add('border-slate-500', 'text-slate-400');
-                text.classList.remove('text-slate-300');
-                text.classList.add('text-slate-400');
+                // Future steps - revert to original styling
+                circle.classList.add('border-slate-300', 'text-slate-400', 'dark:border-slate-500', 'dark:text-slate-400');
+                text.classList.remove('text-green-500', 'text-green-900', 'dark:text-green-400', 'dark:text-white');
+                text.classList.add('text-slate-400', 'dark:text-slate-400');
             }
         });
     }

@@ -19,25 +19,28 @@
     <link href="/css/app.css?cache=v<?php echo Webklex\CalMag\Application::VERSION; ?>" rel="stylesheet">
     <link href="/css/tailwind.css?cache=v<?php echo Webklex\CalMag\Application::VERSION; ?>" rel="stylesheet">
 </head>
-<body class="bg-slate-900 text-slate-200 flex flex-wrap justify-center">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 flex flex-wrap justify-center">
     <div id="main" class="w-full flex flex-wrap justify-center">
 
-        <div class="w-full border-b border-slate-700 bg-slate-800 px-4 md:px-6 py-2 shadow-lg justify-center justify-items-center align-middle">
+        <div class="w-full border-b border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-800 px-4 md:px-6 py-2 shadow-lg justify-center justify-items-center align-middle">
             <div class="container px-2">
                 <div class="flex align-middle justify-end justify-items-end">
-                    <a class="flex-none text-slate-300 font-semibold text-3xl pb-1 align-middle" href="/">
+                    <a class="flex-none text-slate-700 dark:text-slate-300 font-semibold text-3xl pb-1 align-middle" href="/">
                         <span class="text-red-500 font-light">Cal</span>
-                        <span class="text-sky-100 font-light -ml-1">Mag</span>
+                        <span class="text-sky-700 dark:text-sky-100 font-light -ml-1">Mag</span>
                         <span class="pl-1"><?php echo __("header.logo.appendix")?></span>
                         <span class="text-xs">v<?php echo Webklex\CalMag\Application::VERSION; ?></span>
                     </a>
-                    <div class="pl-4 grow text-slate-300 font-light grid gap-1 justify-items-end content-center ">
-                        <div class="flex flex-wrap justify-items-end">
-                            <a href="https://discord.gg/QQY3VEbeQq" class="px-2 inline-block" title="Pott Planter Discord">
+                    <div class="grow text-slate-700 dark:text-slate-300 font-light justify-items-end content-center">
+                        <div class="flex flex-wrap justify-items-end items-center">
+                            <!-- <a href="https://discord.gg/QQY3VEbeQq" class="px-1 inline-block" title="Pott Planter Discord">
                                 <img src="/images/pott_planter_discord.png" class="h-8" alt="Pott Planter Discord">
+                            </a> -->
+                            <a href="https://discord.gg/QQY3VEbeQq" class="text-red-600 dark:text-red-700 w-6 md:w-12 pr-1 md:pr-2 pt-1 inline-block" title="Pott Planter Discord">
+                                <i class="fa-brands fa-discord fa-2xl"></i>
                             </a>
-                            <a href="https://github.com/webklex/calmag" class="text-red-700 px-2 w-6 pt-1 inline-block" title="Fork me on GitHub">
-                                <i class="fa-brands fa-github-alt fa-2xl"></i>
+                            <a href="https://github.com/webklex/calmag" class="text-red-600 dark:text-red-700 w-6 md:w-12 pl-1 md:pl-2 pt-1 inline-block" title="Fork me on GitHub">
+                                <i class="fa-brands fa-github fa-2xl"></i>
                             </a>
                         </div>
                     </div>

@@ -156,6 +156,7 @@ return [
                 "regular"            => "Einfacher Rechner",
                 "expert"             => "Erweiterter Rechner",
                 "compare"            => "Vergleichs-Rechner",
+                "builder"            => "CalMag-Builder",
                 "wizard"             => "Wizzard",
             ],
             "table"       => [

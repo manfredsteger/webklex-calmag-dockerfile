@@ -157,6 +157,7 @@ return [
                 "expert"             => "Extended Calculator",
                 "compare"            => "Comparison Fertilizer",
                 "wizard"             => "Wizard",
+                "builder"            => "CalMag Builder",
             ],
             "table"       => [
                 "phase"    => "Phase",
