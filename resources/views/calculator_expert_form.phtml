@@ -46,7 +46,7 @@
                                    id="fertilizer_elements_calcium"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["fertilizer_elements"]["calcium"]["calcium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["calcium"] ?? 0.0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                         </div>
                         
                         <label for="fertilizer_elements_calcium_cao" class="font-semibold text-slate-600 dark:text-slate-300">
@@ -61,7 +61,7 @@
                                    id="fertilizer_elements_calcium_cao"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["fertilizer_elements"]["calcium"]["CaO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["calcium"]["CaO"] ?? 0.0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                         </div>
 
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
@@ -82,7 +82,7 @@
                                    id="fertilizer_elements_magnesium"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["fertilizer_elements"]["magnesium"]["magnesium"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["magnesium"] ?? 0.0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                         </div>
                         
                         <label for="fertilizer_elements_magnesium_mgo" class="font-semibold text-slate-600 dark:text-slate-300">
@@ -97,7 +97,7 @@
                                    id="fertilizer_elements_magnesium_mgo"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["fertilizer_elements"]["magnesium"]["MgO"] ?? $fertilizers[array_key_first($fertilizers)]["elements"]["magnesium"]["MgO"] ?? 0.0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                         </div>
 
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
@@ -192,7 +192,7 @@
                                    id="additive_concentration_<?php echo $element ?>"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["additive_concentration"][$element] ?? $additives[array_key_first($additives)]["concentration"] ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.additive_concentration.description")?>
@@ -217,7 +217,7 @@
                                             })()"
                                        class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                        value="<?php echo is_array($form["additive_elements"][$element]["calcium"]["calcium"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["calcium"]["calcium"] ?? $additives[array_key_first($additives)]["elements"]["calcium"]["calcium"] ?? 0.0) ?>" />
-                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                                <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                             </div>
                             
                             <label for="additive_elements_<?php echo $element ?>_calcium_cao" class="font-semibold text-slate-600 dark:text-slate-300">
@@ -236,7 +236,7 @@
                                              })()"
                                        class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                        value="<?php echo is_array($form["additive_elements"][$element]["calcium"]["CaO"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["calcium"]["CaO"] ?? $additives[array_key_first($additives)]["elements"]["calcium"]["CaO"] ??  0.0) ?>" />
-                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                                <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                             </div>
 
                             <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
@@ -261,7 +261,7 @@
                                              })()"
                                        class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                        value="<?php echo is_array($form["additive_elements"][$element]["magnesium"]["magnesium"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["magnesium"]["magnesium"] ?? $additives[array_key_first($additives)]["elements"]["magnesium"]["magnesium"] ??  0.0) ?>" />
-                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                                <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                             </div>
                             
                             <label for="additive_elements_<?php echo $element ?>_magnesium_mgo" class="font-semibold text-slate-600 dark:text-slate-300">
@@ -280,7 +280,7 @@
                                               })()"
                                        class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                        value="<?php echo is_array($form["additive_elements"][$element]["magnesium"]["MgO"] ?? null) ? 0.0 : ($form["additive_elements"][$element]["magnesium"]["MgO"] ?? $additives[array_key_first($additives)]["elements"]["magnesium"]["MgO"] ?? 0.0) ?>" />
-                                <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                                <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                             </div>
 
                             <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
@@ -358,7 +358,7 @@
                                   name="ratio" id="ratio" 
                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                   value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ration"] ?? 0.0, 2) ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">:1</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">:1</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.ratio.description")?>
@@ -377,7 +377,7 @@
                                   name="volume" id="volume" 
                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none" 
                                   value="<?php echo $form["volume"] ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">L</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">L</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.volume.description")?>
@@ -397,7 +397,7 @@
                                   name="target_offset" id="target_offset" 
                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none" 
                                   value="<?php echo $form["target_offset"] ?? 0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">%</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.target_offset.description")?>
@@ -474,7 +474,7 @@
                                    id="target_calcium_<?php echo $week ?>"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["target_calcium"][$week] ?? $target["elements"]["calcium"] ?? 0.0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">mg/l</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">mg/l</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.target_calcium.description")?>
@@ -493,7 +493,7 @@
                                    id="target_magnesium_<?php echo $week ?>"
                                    class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
                                    value="<?php echo $form["target_magnesium"][$week] ?? $target["elements"]["magnesium"] ?? 0.0 ?>" />
-                            <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">mg/l</span>
+                            <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">mg/l</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
                             <?php echo __("content.form.target_magnesium.description")?>
