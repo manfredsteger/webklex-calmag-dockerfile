@@ -1,4 +1,3 @@
-
 # CalMag Calculator
 A simple calculator to calculate the optimal calcium and magnesium concentration for your nutrient solutions. You can find
 a demo of the calculator [here](https://calmag.webklex.com/).
@@ -14,6 +13,7 @@ a demo of the calculator [here](https://calmag.webklex.com/).
 ## Table of Contents
 - [Installation](#installation)
     - [Requirements](#requirements)
+- [Docker](#docker)
 - [Configuration](#configuration)
     - [Additives](#additives)
     - [Fertilizers](#fertilizers)
@@ -43,6 +43,29 @@ php -S localhost:8000 -t public
 ### Requirements
 - PHP >= 8.1
 - Composer
+
+## Docker
+You can run the app using Docker for a quick and isolated setup:
+
+### Build system architecture
+```bash
+docker buildx build -t webklex-calmag:dev .
+docker run -d -p 8000:8000 --name webklex-calmag webklex-calmag:dev
+```
+
+### Build AMD64 architecture
+AMD64 (works in general but emulating on ARM)
+```bash
+docker buildx build --platform linux/amd64 -t webklex-calmag:dev-amd64 .
+```
+
+### Build ARM64 architecture
+```bash
+docker buildx build --platform linux/arm64 -t webklex-calmag:dev-arm64 .
+```
+
+A precompiled image maintained by @manfredsteger can be found here: https://hub.docker.com/r/manfredsteger/webklex-calmag
+
 
 ## Configuration
 All configuration files are located in the `src/config` directory.
