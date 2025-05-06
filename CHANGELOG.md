@@ -11,7 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - NaN
 
-## [3.1.0] - 2025-05-06
+## [3.3.0] - 2025-05-06
 ### Added
 - Wizard added
 - Light-mode support added
