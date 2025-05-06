@@ -11,6 +11,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Wizard added
 - Light-mode support added
+- homegrow24 calmag added
 
 ## [3.0.0] - 2025-04-12
 ### Fixed

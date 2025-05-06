@@ -426,4 +426,36 @@ return [
             ],
         ],
     ],
+
+    "homegrow24" => [
+        "brand_name" => "Homegrow24",
+        "link"       => [
+            "de" => "https://homegrow24.store",
+            "us" => "https://homegrow24.store",
+        ],
+        "products"   => [
+            "calcium_magnesium_supplement" => [
+                "name"     => "CALMAG",
+                "elements" => [
+                    "nitrogen"  => [ // Gesamtstickstoff (N) - 4%
+                        "NO3" => 2.36, // Nitratstickstoff (NO3) 2.36%
+                        "NH4" => 0.14, // Ammoniumstickstoff (NH4) 0.14%
+                    ],
+                    "calcium"   => [
+                        "CaO" => 4.0,
+                    ],
+                    "magnesium" => [
+                        "MgO" => 1.0,
+                    ],
+                ],
+                "density"  => 1.0, // g/cm³
+                "ph"       => 7.0, // pH-Wert
+                "schedule" => false,
+                "link"     => [
+                    "de" => "https://homegrow24.store/products/calmag-pflanzen-supplement",
+                    "us" => "https://homegrow24.store/products/calmag-pflanzen-supplement",
+                ],
+            ],
+        ],
+    ],
 ];
