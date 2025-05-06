@@ -9,6 +9,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
+- NaN
+
+## [3.1.0] - 2025-05-06
+### Added
 - Wizard added
 - Light-mode support added
 - homegrow24 calmag added
