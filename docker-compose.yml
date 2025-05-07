@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: php_app
+    volumes:
+      - .:/var/www/html
+    expose:
+      - 9000
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app  # NGINX benötigt `app` (nur zur Dokumentation)

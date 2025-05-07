@@ -1,29 +1,20 @@
-# Verwende das PHP CLI Image
-FROM php:8.1-cli
+FROM composer:2 AS vendor
 
-# Arbeitsverzeichnis im Container
 WORKDIR /app
-
-# Systempakete installieren
-RUN apt-get update && apt-get install -y \
-    unzip \
-    git \
-    curl \
-    libzip-dev \
-    zip \
-    && docker-php-ext-install zip
-
-# Composer installieren (ARM-kompatibel)
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Projektdateien kopieren
-COPY . .
-
-# PHP-Abhängigkeiten installieren
+COPY composer.json composer.lock ./
 RUN composer install --no-interaction --optimize-autoloader
 
-# Exponiere Port 8000 für den eingebauten Server
-EXPOSE 8000
+FROM php:8.1-fpm-alpine
 
-# Starte den PHP Built-in Server im Container
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+WORKDIR /var/www/html
+
+RUN apk add --no-cache git curl unzip libzip-dev \
+    && docker-php-ext-install zip
+
+COPY . .
+COPY --from=vendor /app/vendor ./vendor
+
+RUN chown -R www-data:www-data /var/www/html
+
+EXPOSE 9000
+CMD ["php-fpm"]
