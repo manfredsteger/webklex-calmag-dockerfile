@@ -2,19 +2,26 @@ services:
   app:
     build:
       context: .
+      dockerfile: Dockerfile
     container_name: php_app
     volumes:
       - .:/var/www/html
-    expose:
-      - 9000
+    networks:
+      - app-network
 
-  nginx:
+  web:
     image: nginx:alpine
-    container_name: nginx
+    container_name: nginx_web
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - .:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - app  # NGINX benötigt `app` (nur zur Dokumentation)
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
