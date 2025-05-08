@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: php_app
+    container_name: calmag-app
     volumes:
       - .:/var/www/html
     networks:
@@ -11,7 +11,7 @@ services:
 
   web:
     image: nginx:alpine
-    container_name: nginx_web
+    container_name: calmag-web
     ports:
       - "80:80"
     volumes:
