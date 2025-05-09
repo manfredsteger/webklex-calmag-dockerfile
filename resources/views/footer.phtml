@@ -6,16 +6,61 @@
                 </div>
             </div>
         </div>
-        
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Check for dark mode preference
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    // Add dark class to BOTH body AND html
-                    document.documentElement.classList.add('dark');
-                    document.body.classList.add('dark');
-                }
-            });
-        </script>
-    </body>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Function to apply dark mode
+                    function applyDarkMode() {
+                        document.documentElement.classList.add('dark');
+                        document.body.classList.add('dark');
+                    }
+
+                    // Function to detect and apply dark mode
+                    function detectAndApplyDarkMode() {
+                        // Check browser's color scheme preference
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            applyDarkMode();
+                        }
+
+                        // Check if browser has an alternative way to detect OS dark theme
+                        // This helps with Windows 11 Chrome detection issues
+                        try {
+                            // Create a test element to detect if auto-dark theme is applied
+                            const detectionDiv = document.createElement('div');
+                            detectionDiv.style.display = 'none';
+                            detectionDiv.style.backgroundColor = 'canvas';
+                            detectionDiv.style.colorScheme = 'light';
+                            document.body.appendChild(detectionDiv);
+
+                            // If background is not white, then dark mode is applied by the system
+                            const bgColor = window.getComputedStyle(detectionDiv).backgroundColor;
+                            if (bgColor !== 'rgb(255, 255, 255)') {
+                                applyDarkMode();
+                            }
+
+                            // Remove test element
+                            document.body.removeChild(detectionDiv);
+                        } catch(e) {
+                            // Fallback to standard detection if anything fails
+                            console.error('Error in dark mode detection:', e);
+                        }
+                    }
+
+                    // Run detection immediately
+                    detectAndApplyDarkMode();
+
+                    // Listen for changes in color scheme preference
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                        if (e.matches) {
+                            applyDarkMode();
+                        } else {
+                            // If user switches to light mode, remove dark classes
+                            document.documentElement.classList.remove('dark');
+                            document.body.classList.remove('dark');
+                        }
+                    });
+                });
+            </script>
+
+            </body>
 </html>
