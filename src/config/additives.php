@@ -57,6 +57,13 @@ return [
             ],
             "concentration" => 10.0, // %
         ],
+        "SR_Organics_CalMag_Boost"  => [
+            "elements"      => [
+                "calcium" => 24.024, // % (60% CaCO3)
+                "magnesium" => 10.09, // % (35% MgCO3)
+            ],
+            "concentration" => 10.0, // %
+        ],
         "CaO"                => [
             // Calciumoxid
             "elements"      => [

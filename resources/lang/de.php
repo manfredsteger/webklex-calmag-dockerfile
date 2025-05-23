@@ -47,6 +47,7 @@ return [
         "CaCO3"                => "Calciumcarbonat",
         "MgCO3"                => "Magnesiumcarbonat",
         "Action_Gartenkalk"    => "Gartenkalk (Green Boots - Action)",
+        "SR_Organics_CalMag_Boost" => "S&R Organics Vegan CalMag Boost",
         "MgO"                  => "Magnesiumoxid",
         "CaO"                  => "Calciumoxid",
         "custom_calcium"       => "Calcium-Zusatzstoff",

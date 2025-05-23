@@ -9,7 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
-- NaN
+- New additive `S&R Organics Vegan CalMag Boost` added
 
 ## [3.3.0] - 2025-05-06
 ### Added
