@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - New additive `S&R Organics Vegan CalMag Boost` added
+- `CaS04` & `Ca(NO₃)` additives added
 
 ## [3.3.0] - 2025-05-06
 ### Added

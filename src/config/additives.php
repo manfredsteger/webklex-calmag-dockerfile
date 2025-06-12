@@ -48,6 +48,38 @@ return [
             ],
             "concentration" => 10.0, // %
         ],
+        "CaS04" => [
+            // Calciumsulfat - Anhydrous
+            "elements"      => [
+                "calcium" => 29.45,
+                "sulfur" => 23.55
+            ],
+            "concentration" => 10.0, // %
+        ],
+        "CaS042H2O" => [
+            // CaSO₄·2H₂O - Calciumsulfat-Dihydrat
+            "elements"      => [
+                "calcium" => 23.28,
+                "sulfur" => 18.63
+            ],
+            "concentration" => 10.0, // %
+        ],
+        "CaNO3" => [
+            // Ca(NO₃)₂ - Calciumnitrat
+            "elements"      => [
+                "calcium" => 24.43,
+                "nitrogen"  => 17.08, // % -> NO₃ 75,61%
+            ],
+            "concentration" => 10.0, // %
+        ],
+        "CaNO34H2O" => [
+            // Ca(NO₃)₂·4H₂O - Calciumnitrat-Tetrahydrat
+            "elements"      => [
+                "calcium" => 16.97,
+                "nitrogen"  => 11.87, // % -> NO₃ 52,52%
+            ],
+            "concentration" => 10.0, // %
+        ],
         "Action_Gartenkalk"  => [
             "elements"      => [
                 "calcium"   => [
