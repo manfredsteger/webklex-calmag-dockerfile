@@ -375,36 +375,70 @@ class Controller {
     /**
      * Render the API response
      * @param array $payload The input payload
+     * @param string|null $method
      * @return void
      */
-    public function api(array $payload): void {
-        try {
-            $this->validate($payload);
-        } catch (Exception $e) {
-            $this->validated = false;
-            $message = $e->getMessage();
-        }
-
+    public function api(array $payload, string $method = null): void {
         try {
             header('Content-Type: application/json');
         } catch (Exception $e) {
             // Handle the exception
         }
-        if (!$this->validated) {
-            echo json_encode([
-                                 "error" => $message ?? "Invalid input",
-                             ]);
-            try {
-                http_response_code(400);
-            } catch (Exception $e) {
-                // Handle the exception
+        $method = trim(strtolower($method));
+        switch ($method) {
+            case "models":
+                echo json_encode([
+                                     "version" => Application::VERSION,
+                                     "models"  => Config::get("app.models", []),
+                                 ]);
+                break;
+            case "additives":
+                $additives = $this->calculator->getAdditives();
+                foreach($additives as $element => $_additives) {
+                    foreach ($_additives as $index => $additive) {
+                        $additives[$element][$index]["name"] = __("additive.".$index);
+                    }
+                }
+                echo json_encode([
+                                     "version" => Application::VERSION,
+                                     "additives"  => $additives,
+                                 ]);
+                break;
+            case "fertilizers":
+                echo json_encode([
+                                     "version" => Application::VERSION,
+                                     "fertilizers"  => $this->calculator->getFertilizers(),
+                                 ]);
+                break;
+            case null: {
+                try {
+                    $this->validate($payload);
+                } catch (Exception $e) {
+                    $this->validated = false;
+                    $message = $e->getMessage();
+                }
+                if (!$this->validated) {
+                    echo json_encode([
+                                         "error" => $message ?? "Invalid input",
+                                     ]);
+                    try {
+                        http_response_code(400);
+                    } catch (Exception $e) {
+                        // Handle the exception
+                    }
+                    return;
+                }
+                echo json_encode([
+                                     "version" => Application::VERSION,
+                                     "result"  => $this->calculator->calculate(),
+                                 ]);
+                break;
             }
-            return;
+            default: {
+                header("HTTP/1.1 404 Welp, that's not gonna work");
+                exit(0);
+            }
         }
-        echo json_encode([
-                             "version" => Application::VERSION,
-                             "result"  => $this->calculator->calculate(),
-                         ]);
     }
 
     /**
