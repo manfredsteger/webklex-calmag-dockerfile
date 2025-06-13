@@ -44,6 +44,8 @@ class ApplicationTest extends TestCase {
         self::assertInstanceOf(Application::class, $app);
 
         $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['HTTP_ACCEPT'] = '';
+        $_SERVER['CONTENT_TYPE'] = '';
 
         ob_start();
         $app->route();
