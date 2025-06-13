@@ -9,6 +9,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - NaN
 
 ### Added
+- NaN
+
+## [3.4.0] - 2025-06-13
+### Added
 - New additive `S&R Organics Vegan CalMag Boost` added
 - `CaS04` & `Ca(NO₃)` additives added
 - Api endpoints for additives, fertilizers and models added

@@ -26,7 +26,7 @@ class Application {
     /**
      * @var string VERSION The current version of the application
      */
-    const VERSION = "3.3.0";
+    const VERSION = "3.4.0";
 
     /**
      * @var Controller $controller The controller instance handling all requests
@@ -81,6 +81,12 @@ class Application {
                     }
                 }
             }
+
+            // Check for potential json request and call the api if this is the case
+            if ($_SERVER["HTTP_ACCEPT"] === "application/json" || $_SERVER["CONTENT_TYPE"] === "application/json") {
+                $this->controller->api($payload, $_GET["method"]);
+                return;
+            }
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check for potential json request and call the api if this is the case
             if ($_SERVER["HTTP_ACCEPT"] === "application/json" || $_SERVER["CONTENT_TYPE"] === "application/json") {
@@ -88,7 +94,7 @@ class Application {
                 if (!is_array($payload)) {
                     $payload = [];
                 }
-                $this->controller->api($payload);
+                $this->controller->api($payload, $_GET["method"] ?? null);
                 return;
 
             }
