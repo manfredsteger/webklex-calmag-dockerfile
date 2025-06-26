@@ -18,4 +18,9 @@ logs:
 
 restart: stop rm run
 
+up: build run
+
+down: stop rm
+	docker rmi $(IMAGE_NAME) || true
+
 .PHONY: build run stop rm logs restart

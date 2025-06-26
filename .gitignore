@@ -14,3 +14,4 @@ phpunit.xml
 /node_modules/
 /build/
 .phpunit.result.cache
+webklex-calmag-dockerfile.code-workspace
