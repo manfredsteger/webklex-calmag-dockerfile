@@ -1,20 +1,22 @@
-# Verwende das PHP CLI Image
-FROM php:8.1-cli
+# Produktions-Setup: PHP-FPM + Nginx
 
-# Arbeitsverzeichnis im Container
-WORKDIR /app
+FROM php:8.1-fpm
 
 # Systempakete installieren
 RUN apt-get update && apt-get install -y \
+    nginx \
     unzip \
     git \
     curl \
     libzip-dev \
     zip \
-    && docker-php-ext-install zip
+    supervisor
 
-# Composer installieren (ARM-kompatibel)
+# Composer installieren
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Arbeitsverzeichnis
+WORKDIR /app
 
 # Projektdateien kopieren
 COPY . .
@@ -22,8 +24,12 @@ COPY . .
 # PHP-Abhängigkeiten installieren
 RUN composer install --no-interaction --optimize-autoloader
 
-# Exponiere Port 8000 für den eingebauten Server
+# Nginx-Konfiguration kopieren
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+
+# Supervisor-Konfiguration kopieren
+COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 EXPOSE 8000
 
-# Starte den PHP Built-in Server im Container
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+CMD ["/usr/bin/supervisord"]
