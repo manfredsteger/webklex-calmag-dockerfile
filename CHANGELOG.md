@@ -6,11 +6,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ## [UNRELEASED]
 ### Fixed
-- Remove fertilizer dependent ratio calculation
-- Set PPP-Ca/Mg as default model
+- NaN
 
 ### Added
 - NaN
+
+## [3.5.0] - 2025-06-13
+### Fixed
+- Remove fertilizer dependent ratio calculation
+- Set PPP-Ca/Mg as default model
 
 ## [3.4.0] - 2025-06-13
 ### Added
