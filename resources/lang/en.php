@@ -412,10 +412,10 @@ return [
                             "volume" => "Volume: Calculate total solution needed for your system",
                             "models" => [
                                 "title" => "Model Selection:",
-                                "linear" => "Linear/Fumu: Consistent ratios throughout growth",
                                 "ppp_ca" => "PPP-Ca: Optimized for calcium-heavy feeding",
                                 "ppp_mg" => "PPP-Mg: Optimized for magnesium-heavy feeding",
-                                "ppp_ca_mg" => "PPP-Ca/Mg: Dynamic ratio adjustment"
+                                "ppp_ca_mg" => "PPP-Ca/Mg: Dynamic ratio adjustment",
+                                "linear" => "Linear/Fumu: Consistent ratios throughout growth",
                             ],
                             "dilution" => "Dilution Support: Enable if your water has high mineral content"
                         ]

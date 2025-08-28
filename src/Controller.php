@@ -80,7 +80,7 @@ class Controller {
     /**
      * @var string Current calculation model
      */
-    protected string $target_model = "linear";
+    protected string $target_model = "dynamic_ca_mg";
 
     /**
      * @var float Volume for calculations in liters

@@ -7,6 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [UNRELEASED]
 ### Fixed
 - Remove fertilizer dependent ratio calculation
+- Set PPP-Ca/Mg as default model
 
 ### Added
 - NaN
