@@ -357,7 +357,7 @@
                                   min="0"
                                   name="ratio" id="ratio" 
                                   class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-l px-3 py-2 outline-none"
-                                  value="<?php echo round($form["ratio"] ?? $fertilizers[array_key_first($fertilizers)]["ration"] ?? 0.0, 2) ?>" />
+                                  value="<?php echo round($form["ratio"], 2) ?>" />
                             <span class="bg-slate-200 dark:bg-slate-900 text-slate-700 dark:text-slate-200 rounded-r px-3 py-2">:1</span>
                         </div>
                         <p class="text-xs pt-2 text-slate-500 dark:text-slate-400">
@@ -560,19 +560,6 @@
         return 0.0;
     }
 
-    function updateRatio(select){
-        const ratio = parseFloat(select.options[select.selectedIndex].getAttribute("data-ratio"));
-        if(ratio >= 2.9 && ratio <= 4.0){
-            document.getElementById("ratio").value = ratio;
-        }else if (ratio < 2.9){
-            document.getElementById("ratio").value = 2.9;
-        }else if (ratio > 4.0){
-            document.getElementById("ratio").value = 4.0;
-        }else{
-            document.getElementById("ratio").value = 3.5;
-        }
-    }
-
     function onFertilizerChanged(event){
         let select = event.target;
         let elements = select.options[select.selectedIndex].getAttribute("data-elements");
@@ -602,7 +589,6 @@
             magnesium.value = magnesium_value;
             magnesium_mgo.value = 0;
         }
-        updateRatio(select);
     }
 
     (function (){
@@ -616,8 +602,6 @@
         if((parseInt(calcium.value) + parseInt(calcium_cao.value) + parseInt(magnesium.value) + parseInt(magnesium_mgo.value)) === 0){
             onFertilizerChanged({target: fertilizer});
         }
-
-        //updateRatio(fertilizer);
 
         document.getElementById("fertilizer_elements_calcium").addEventListener("change", function(event){
             let value = parseFloat(event.target.value);
