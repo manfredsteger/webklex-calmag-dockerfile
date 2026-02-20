@@ -80,7 +80,7 @@ class Controller {
     /**
      * @var string Current calculation model
      */
-    protected string $target_model = "linear";
+    protected string $target_model = "dynamic_ca_mg";
 
     /**
      * @var float Volume for calculations in liters
@@ -212,7 +212,7 @@ class Controller {
                 "fertilizer"             => $this->fertilizer ?? array_key_first($fertilizers),
                 "additive"               => $this->additive,
                 "additive_elements"      => $this->additive_elements,
-                "ratio"                  => $fertilizers[array_key_first($fertilizers)]["ratio"],
+                "ratio"                  => $this->ratio,
                 "volume"                 => $this->volume,
                 "target_model"           => $this->target_model,
                 "support_dilution"       => $this->support_dilution,

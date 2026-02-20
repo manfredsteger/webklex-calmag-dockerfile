@@ -407,10 +407,10 @@ return [
                             "volume" => "Volumen: Berechne die benötigte Gesamtlösung für dein System",
                             "models" => [
                                 "title" => "Modellauswahl:",
-                                "linear" => "Linear/Fumu: Konstante Verhältnisse während des Wachstums",
                                 "ppp_ca" => "PPP-Ca: Optimiert für calciumlastige Fütterung",
                                 "ppp_mg" => "PPP-Mg: Optimiert für magnesiumlastige Fütterung",
-                                "ppp_ca_mg" => "PPP-Ca/Mg: Dynamische Verhältnisanpassung"
+                                "ppp_ca_mg" => "PPP-Ca/Mg: Dynamische Verhältnisanpassung",
+                                "linear" => "Linear/Fumu: Konstante Verhältnisse während des Wachstums",
                             ],
                             "dilution" => "Verdünnungsunterstützung: Aktivieren, wenn dein Wasser einen hohen Mineralgehalt hat"
                         ]

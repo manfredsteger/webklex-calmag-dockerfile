@@ -13,7 +13,7 @@ $payload = [
     "version" => \Webklex\CalMag\Application::VERSION,
     "region" => $form["region"] ?? "",
     "volume" => $form["volume"] ?? 0.0,
-    "target_model" => $form["target_model"] ?? "linear",
+    "target_model" => $form["target_model"] ?? "dynamic_ca_mg",
     "support_dilution" => $form["support_dilution"] ?? false,
     "target_offset" => $form["target_offset"] ?? 0,
     "additive_elements" => $form["additive_elements"] ?? [],
@@ -396,8 +396,8 @@ $payload_link = base64_encode(json_encode($payload));
                                 id="target_model"
                                 class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-600 rounded px-3 py-2 outline-none mb-2"
                                 required>
-                            <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
-                                Linear / Fumu
+                            <option value="dynamic_ca_mg" <?php echo "dynamic_ca_mg" == $form["target_model"] ? "selected" : "" ?>>
+                                PPP-Ca/Mg
                             </option>
                             <option value="dynamic_ca" <?php echo "dynamic_ca" == $form["target_model"] ? "selected" : "" ?>>
                                 PPP-Ca
@@ -405,8 +405,8 @@ $payload_link = base64_encode(json_encode($payload));
                             <option value="dynamic_mg" <?php echo "dynamic_mg" == $form["target_model"] ? "selected" : "" ?>>
                                 PPP-Mg
                             </option>
-                            <option value="dynamic_ca_mg" <?php echo "dynamic_ca_mg" == $form["target_model"] ? "selected" : "" ?>>
-                                PPP-Ca/Mg
+                            <option value="linear" <?php echo "linear" == $form["target_model"] ? "selected" : "" ?>>
+                                Linear / Fumu
                             </option>
                         </select>
                         <p class="text-xs text-slate-500 dark:text-slate-400">
