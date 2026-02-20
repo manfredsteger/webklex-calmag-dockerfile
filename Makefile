@@ -1,7 +1,7 @@
 DOCKER_USER    = manfredsteger
 IMAGE_NAME     = webklex-calmag
 CONTAINER_NAME = calmag-app
-VERSION        = $(shell grep '"version"' composer.json | sed 's/.*"version": "\(.*\)".*/\1/')
+VERSION        = $(shell git describe --tags --abbrev=0)
 FULL_IMAGE     = $(DOCKER_USER)/$(IMAGE_NAME)
 
 ## Lokales Build (nur native Arch, schnell zum Testen)
@@ -32,6 +32,14 @@ restart: stop rm run
 
 up: build run
 
+## Alles aufräumen, neu bauen und starten – kein manuelles Eingreifen nötig
+complete:
+	docker rm -f $(CONTAINER_NAME) 2>/dev/null || true
+	docker rmi $(FULL_IMAGE):latest 2>/dev/null || true
+	docker build -t $(FULL_IMAGE):$(VERSION) -t $(FULL_IMAGE):latest .
+	docker run -d --name $(CONTAINER_NAME) -p 8000:8000 $(FULL_IMAGE):latest
+	@echo "✅ $(FULL_IMAGE):$(VERSION) läuft auf http://localhost:8000"
+
 down: stop rm
 	docker rmi $(FULL_IMAGE):latest || true
 
@@ -43,4 +51,4 @@ version:
 help:
 	@grep -E '^[a-zA-Z_-]+:' Makefile | grep -v '^\s' | awk -F: '{printf "\033[36m%-12s\033[0m\n", $$1}'
 
-.PHONY: build release run stop rm logs restart up down version help
+.PHONY: build release run stop rm logs restart up down complete version help
