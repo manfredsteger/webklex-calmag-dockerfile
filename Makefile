@@ -1,11 +1,23 @@
-IMAGE_NAME=calmag-app
-CONTAINER_NAME=calmag-app
+DOCKER_USER    = manfredsteger
+IMAGE_NAME     = webklex-calmag
+CONTAINER_NAME = calmag-app
+VERSION        = $(shell grep '"version"' composer.json | sed 's/.*"version": "\(.*\)".*/\1/')
+FULL_IMAGE     = $(DOCKER_USER)/$(IMAGE_NAME)
 
+## Lokales Build (nur native Arch, schnell zum Testen)
 build:
-	docker build -t $(IMAGE_NAME) .
+	docker build -t $(FULL_IMAGE):$(VERSION) -t $(FULL_IMAGE):latest .
+
+## Multi-Arch Build + direkt zu Docker Hub pushen (amd64 + arm64)
+release:
+	docker buildx build \
+		--platform linux/amd64,linux/arm64 \
+		--tag $(FULL_IMAGE):$(VERSION) \
+		--tag $(FULL_IMAGE):latest \
+		--push .
 
 run:
-	docker run -d --name $(CONTAINER_NAME) -p 8000:8000 $(IMAGE_NAME)
+	docker run -d --name $(CONTAINER_NAME) -p 8000:8000 $(FULL_IMAGE):latest
 
 stop:
 	docker stop $(CONTAINER_NAME) || true
@@ -21,6 +33,14 @@ restart: stop rm run
 up: build run
 
 down: stop rm
-	docker rmi $(IMAGE_NAME) || true
+	docker rmi $(FULL_IMAGE):latest || true
 
-.PHONY: build run stop rm logs restart
+## Aktuelle Version anzeigen
+version:
+	@echo "Version: $(VERSION)"
+
+## Hilfe
+help:
+	@grep -E '^[a-zA-Z_-]+:' Makefile | grep -v '^\s' | awk -F: '{printf "\033[36m%-12s\033[0m\n", $$1}'
+
+.PHONY: build release run stop rm logs restart up down version help
