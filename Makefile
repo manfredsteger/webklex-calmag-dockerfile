@@ -32,16 +32,16 @@ restart: stop rm run
 
 up: build run
 
-## Alles aufräumen, neu bauen und starten – kein manuelles Eingreifen nötig
+## Alles aufräumen (alle lokalen Tags), neu bauen und starten
 complete:
 	docker rm -f $(CONTAINER_NAME) 2>/dev/null || true
-	docker rmi $(FULL_IMAGE):latest 2>/dev/null || true
+	docker images $(FULL_IMAGE) -q | xargs docker rmi -f 2>/dev/null || true
 	docker build -t $(FULL_IMAGE):$(VERSION) -t $(FULL_IMAGE):latest .
 	docker run -d --name $(CONTAINER_NAME) -p 8000:8000 $(FULL_IMAGE):latest
 	@echo "✅ $(FULL_IMAGE):$(VERSION) läuft auf http://localhost:8000"
 
 down: stop rm
-	docker rmi $(FULL_IMAGE):latest || true
+	docker images $(FULL_IMAGE) -q | xargs docker rmi -f 2>/dev/null || true
 
 ## Aktuelle Version anzeigen
 version:
